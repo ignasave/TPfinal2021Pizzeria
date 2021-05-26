@@ -1,8 +1,8 @@
-package com.company;
+package com.company.Product;
 
 import java.util.UUID;
 
-public abstract class Product {
+public class Product {
     private UUID id;
     private String name;
     private float sellPrice = 0;
