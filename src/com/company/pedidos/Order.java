@@ -1,10 +1,103 @@
 package com.company.pedidos;
 
+import com.company.Product.Product;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Locale;
+import java.util.UUID;
+
 public class Order {
     /* Productos: Array<Productos>
-    Precio final: float
-    Precio de productos: float
-    Costo total: float
+    Precio final: float  //costo final + delibery si hay
+    Precio de productos: float //costo final
+    Costo total: float // costo de materias primas
     id:UUID
-    Fecha de Crea: Datetime */
+    Fecha de Crea: Datetime  */
+
+    private ArrayList <Product> newArray;
+    private float finalPrice;
+    private float productPrice;
+    private float totalPrice;
+    private String id;
+    private LocalDateTime dateTime;
+
+    // region CONSTRUCTORS
+    public Order (){}
+
+    public Order(ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+        this.newArray = newArray;
+        this.finalPrice = finalPrice;
+        this.productPrice = productPrice;
+        this.totalPrice = totalPrice;
+        this.id= UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0,13);
+        this.dateTime = dateTime;
+    }
+
+    // endregion
+
+    // region GETTER & SETTER
+
+    public ArrayList<Product> getNewArray() {
+        return newArray;
+    }
+
+    public void setNewArray(ArrayList<Product> newArray) {
+        this.newArray = newArray;
+    }
+
+    public float getFinalPrice() {
+        return finalPrice;
+    }
+
+    public void setFinalPrice(float finalPrice) {
+        this.finalPrice = finalPrice;
+    }
+
+    public float getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(float productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getId (){return this.id;}
+
+    // endregion
+
+    // region HELPERS
+    public void showProducts (){
+        newArray.forEach((v)->v.toString());
+    }
+
+    public String toString (){
+        return "New order : \n" +
+                "--------------------------\n" +
+                 //showProducts() +
+                "\nFinal Price: " + getFinalPrice() +
+                "\nProduct Price: " + getProductPrice() +
+                "\nTotal Price: " + getTotalPrice() +
+                "\nID: " + getId() +
+                "\nTime: " + getDateTime();
+
+    }
+    // endregion
+
 }
