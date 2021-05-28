@@ -1,6 +1,7 @@
 package com.company.pedidos;
 
 import com.company.Product.Product;
+import com.company.persona.Client;
 import com.company.persona.Employee;
 
 import java.time.LocalDateTime;
@@ -22,47 +23,34 @@ public class Delivery extends Order {
     public Delivery(){}
 
 
-    public Delivery(ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime, float deliveryFloat, Employee employee, LocalDateTime out, String address) {
-        super(newArray, finalPrice, productPrice, totalPrice, dateTime);
+    public Delivery(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime, float deliveryFloat, Employee employee, LocalDateTime out) {
+        super(client, newArray, finalPrice, productPrice, totalPrice, dateTime);
         this.deliveryFloat = deliveryFloat;
         this.employee = employee;
         this.out = out;
-        this.address = address;
     }
 
     //endregion
 
     //region GETTER & SETTER
 
-    public float getDeliveryFloat() {
-        return deliveryFloat;
-    }
+    public float getDeliveryFloat() {return deliveryFloat;}
 
-    public void setDeliveryFloat(float deliveryFloat) {
-        this.deliveryFloat = deliveryFloat;
-    }
+    public void setDeliveryFloat(float deliveryFloat) {this.deliveryFloat = deliveryFloat;}
 
-    public Employee getEmployee() {
-        return employee;
-    }
+    public Employee getEmployee() {return employee;}
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+    public void setEmployee(Employee employee) {this.employee = employee;}
 
-    public LocalDateTime getOut() { return out; }
+    public LocalDateTime getOut() {return out;}
 
 //    public void setOut(LocalDateTime out) {
 //        this.out = out;
 //    }
 
-    public String getAddress() {
-        return address;
-    }
+    public String getAddress() {return address;}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    public void setAddress(String address) {this.address = address;}
 
     //endregion
 
