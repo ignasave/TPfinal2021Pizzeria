@@ -53,8 +53,31 @@ public class Beverage extends Product{
     public void setType(BeverageType type) {
         this.type = type;
     }
-    //endregion
 
-    //region HELPERS
-    //endregion
+
+    @Override
+    public String toString() {
+        return "Beverage{" +
+                super.toString() +
+                "brand=" + brand +
+                ", sizeInLt=" + sizeInLt +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Beverage))
+            return false;
+
+        Beverage beverage = (Beverage) o;
+        boolean answer = super.equals(o)
+                && this.brand == beverage.getBrand()
+                && this.sizeInLt == beverage.getSizeInLt();
+
+        return answer;
+    }
 }

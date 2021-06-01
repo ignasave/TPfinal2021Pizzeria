@@ -32,4 +32,14 @@ public class RawMaterial {
         this.price = price;
     }
     //endregion
+
+
+    @Override
+    public String toString() {
+        return "RawMaterial{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }
+

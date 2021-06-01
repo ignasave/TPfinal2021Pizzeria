@@ -1,6 +1,7 @@
 package com.company.Product;
 
 import com.company.RawMaterial.RawMaterial;
+import com.company.persona.Employee;
 
 import java.util.ArrayList;
 
@@ -53,8 +54,34 @@ public class Food extends Product{
     public void setIngredients(ArrayList<RawMaterial> ingredients) {
         this.ingredients = ingredients;
     }
-    //endregion
 
-    //region HELPERS
-    //endregion
+    public void showFood(){
+        System.out.println(toString());
+        System.out.println("ingredients: ");
+        ingredients.forEach((v)-> System.out.println(v));
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                super.toString()+
+                "foodType='" + foodType + '\'' +
+                ", description='" + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Food))
+            return false;
+
+        Food food = (Food) o;
+        boolean answer = super.equals(o) && this.foodType == food.getFoodType();
+
+        return answer;
+    }
 }
+
+

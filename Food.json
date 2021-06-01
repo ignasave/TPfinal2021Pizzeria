@@ -1,0 +1,106 @@
+[
+  {
+    "foodType": "Pizza",
+    "description": "Calabresa",
+    "ingredients": [
+      {
+        "name": "Harina",
+        "price": 50.0
+      },
+      {
+        "name": "Queso",
+        "price": 100.0
+      },
+      {
+        "name": "Tomate",
+        "price": 60.0
+      },
+      {
+        "name": "Aceitunas verdes",
+        "price": 60.0
+      }
+    ],
+    "id": "376B4EDB-F9AB",
+    "name": "Pizza calabresa",
+    "sellPrice": 250.0,
+    "costPrice": 450.0
+  },
+  {
+    "foodType": "Pizza",
+    "description": "muzzarella",
+    "ingredients": [
+      {
+        "name": "Harina",
+        "price": 50.0
+      },
+      {
+        "name": "Queso",
+        "price": 100.0
+      },
+      {
+        "name": "Tomate",
+        "price": 60.0
+      },
+      {
+        "name": "Aceitunas verdes",
+        "price": 60.0
+      }
+    ],
+    "id": "AF5EE699-8539",
+    "name": "Pizza muzzarella",
+    "sellPrice": 200.0,
+    "costPrice": 350.0
+  },
+  {
+    "foodType": "Pizza",
+    "description": "Rúcula y jamón crudo",
+    "ingredients": [
+      {
+        "name": "Harina",
+        "price": 50.0
+      },
+      {
+        "name": "Queso",
+        "price": 100.0
+      },
+      {
+        "name": "Tomate",
+        "price": 60.0
+      },
+      {
+        "name": "Aceitunas verdes",
+        "price": 60.0
+      }
+    ],
+    "id": "6DE5D0F4-CF59",
+    "name": "Pizza muzzarella",
+    "sellPrice": 250.0,
+    "costPrice": 450.0
+  },
+  {
+    "foodType": "Pizza",
+    "description": "Fugazzetta",
+    "ingredients": [
+      {
+        "name": "Harina",
+        "price": 50.0
+      },
+      {
+        "name": "Queso",
+        "price": 100.0
+      },
+      {
+        "name": "Tomate",
+        "price": 60.0
+      },
+      {
+        "name": "Aceitunas verdes",
+        "price": 60.0
+      }
+    ],
+    "id": "E25EB818-3216",
+    "name": "Pizza muzzarella",
+    "sellPrice": 220.0,
+    "costPrice": 400.0
+  }
+]
