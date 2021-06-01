@@ -55,6 +55,19 @@ public class Food extends Product{
         this.ingredients = ingredients;
     }
 
+    public void showFood(){
+        System.out.println(toString());
+        System.out.println("ingredients: ");
+        ingredients.forEach((v)-> System.out.println(v));
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                super.toString()+
+                "foodType='" + foodType + '\'' +
+                ", description='" + description;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -56,6 +56,16 @@ public class Beverage extends Product{
 
 
     @Override
+    public String toString() {
+        return "Beverage{" +
+                super.toString() +
+                "brand=" + brand +
+                ", sizeInLt=" + sizeInLt +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o)
             return true;
