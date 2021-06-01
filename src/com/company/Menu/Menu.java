@@ -1,15 +1,10 @@
 package com.company.Menu;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 
 public class Menu extends JFrame {
-    public int xd = 0;
-
     public Menu() {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

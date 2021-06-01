@@ -37,11 +37,58 @@ public class Stock {
     }
     //endregion
 
-    public void addToExistentRawMaterial (RawMaterial rawMaterial, int quantity) {
+    public void addToExistentStock (RawMaterial rawMaterial, int quantity) {
         if(rawMaterials.containsKey(rawMaterial)) {
             rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity );
         } else {
             //ERROR
         }
     }
+
+    public void addToExistentStock (Beverage beverage, int quantity) {
+        if(beverages.containsKey(beverage)) {
+            beverages.put(beverage, beverages.get(beverage) + quantity );
+        } else {
+            //ERROR
+        }
+    }
+
+    public void addNewStock (RawMaterial rawMaterial, int quantity) {
+        if(!rawMaterials.containsKey(rawMaterial)){
+            rawMaterials.put(rawMaterial, quantity);
+        } else {
+            //ERROR
+        }
+    }
+
+    public void addNewStock (Beverage beverage, int quantity) {
+        if(!beverages.containsKey(beverage)){
+            beverages.put(beverage, quantity);
+        } else {
+            //ERROR
+        }
+    }
+
+    public void removeFromExistentStock (RawMaterial rawMaterial, int quantity) {
+        if(rawMaterials.containsKey(rawMaterial)) {
+            int materialQuantity = rawMaterials.get(rawMaterial);
+            int res = materialQuantity - quantity;
+            if(res < 0) res = 0;
+            rawMaterials.put(rawMaterial, res );
+        } else {
+            //ERROR
+        }
+    }
+
+    public void removeFromExistentStock (Beverage beverage, int quantity) {
+        if(beverages.containsKey(beverage)) {
+            int materialQuantity = beverages.get(beverage);
+            int res = materialQuantity - quantity;
+            if(res < 0) res = 0;
+            beverages.put(beverage, materialQuantity - quantity );
+        } else {
+            //ERROR
+        }
+    }
+
 }
