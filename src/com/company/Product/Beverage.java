@@ -3,7 +3,7 @@ package com.company.Product;
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 
-public class Beverage {
+public class Beverage extends Product{
     private BeverageBrand brand;
     private float sizeInLt;
     private BeverageType type;
@@ -39,5 +39,22 @@ public class Beverage {
 
     public void setType(BeverageType type) {
         this.type = type;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Beverage))
+            return false;
+
+        Beverage beverage = (Beverage) o;
+        boolean answer = super.equals(o)
+                && this.brand == beverage.getBrand()
+                && this.sizeInLt == beverage.getSizeInLt();
+
+        return answer;
     }
 }

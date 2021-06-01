@@ -1,8 +1,9 @@
 package com.company.Product;
 
 import com.company.RawMaterial.RawMaterial;
+import com.company.persona.Employee;
 
-public class Food {
+public class Food extends Product{
     private String foodType;
     private String description;
     private RawMaterial[] ingredients;
@@ -11,6 +12,13 @@ public class Food {
     }
 
     public Food(String foodType, String description, RawMaterial[] ingredients) {
+        this.foodType = foodType;
+        this.description = description;
+        this.ingredients = ingredients;
+    }
+
+    public Food(String name, float sellPrice, float costPrice, String foodType, String description, RawMaterial[] ingredients) {
+        super(name, sellPrice, costPrice);
         this.foodType = foodType;
         this.description = description;
         this.ingredients = ingredients;
@@ -39,4 +47,21 @@ public class Food {
     public void setIngredients(RawMaterial[] ingredients) {
         this.ingredients = ingredients;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Food))
+            return false;
+
+        Food food = (Food) o;
+        boolean answer = super.equals(o) && this.foodType == food.getFoodType();
+
+        return answer;
+    }
 }
+
+
