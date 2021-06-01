@@ -67,7 +67,7 @@ public class Controller {
 //        createProductOrder(newProduct);
 
         ArrayList newListOfProducts = new ArrayList();
-        newListOfProducts = selectOrder();
+        newListOfProducts = selectProduct();
 
 
         System.out.println("------------------------------------\n\n");
@@ -94,7 +94,113 @@ public class Controller {
         return listOrder;
     }
 
-    public static ArrayList<Product> selectOrder() throws IOException {
+    public static ArrayList<Product> selectProduct () throws IOException {
+
+        ArrayList<Product> newOrder = new ArrayList<>();
+
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option; //Guardaremos la opcion del usuario
+        while(!out){
+            System.out.println("«1. Pizza»");
+            System.out.println("«2. Empanada»");
+            System.out.println("«3. Bebida»");
+            System.out.println("«6. Salir»");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch(option){
+                case 1:
+                    System.out.println("Menú Pizzas");
+                        selectPizza(newOrder);
+//                    System.in.read();
+
+                    break;
+                case 2:
+                    System.out.println("Menu Empanadas");
+
+//
+
+//                    System.in.read();
+                    break;
+                case 3:
+
+                    break;
+                case 6:
+                    out=true;
+                    break;
+                default:
+                    System.out.println("«Solo números entre 1 y 6»");
+            }
+
+        }
+        return newOrder;
+
+    }
+
+    public static void selectEmpanadas(ArrayList<Product> newOrder){
+
+        ArrayList<Product>materials;
+
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option; //Guardaremos la opcion del usuario
+        while(!out){
+            System.out.println("«1. Emp. Humita»");
+            System.out.println("«2. Emp. JyQ»");
+            System.out.println("«3. Emp. Carne»");
+            System.out.println("«4. Emp. Verdura»");
+            System.out.println("«6. Salir»");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch(option){
+                case 1:
+                    System.out.println("Has seleccionado la opcion 1");
+
+//                    Food newFood = createFood(muzzarella,"Pizza","Muzzarella",300);
+//                    newOrder.add(newFood);
+//                    System.in.read();
+
+                    break;
+                case 2:
+                    System.out.println("Has seleccionado la opcion 2");
+
+//                    Food newFood2 = createFood(muzzarella,"Pizza","Calabresa",300);
+//                    newOrder.add(newFood2);
+
+//                    System.in.read();
+                    break;
+                case 3:
+                    System.out.println("Has seleccionado la opcion 3");
+
+//                    Food newFood3 = createFood(muzzarella,"Pizza","Fugazzetta",300);
+//                    newOrder.add(newFood3);
+
+//                    System.in.read();
+                    break;
+                case 4:
+                    System.out.println("Has seleccionado la opción 4");
+//                    Food newFood4 = createFood(muzzarella,"Pizza","Rúcula y jamón crudo",300);
+//                    newOrder.add(newFood4);
+                    break;
+
+                case 5:
+                    System.out.println("Has seleccionado la opción 5");
+//                    Food newFood5 = createFood(muzzarella,"Pizza","Napolitana",300);
+//                    newOrder.add(newFood5);
+//                    System.in.read();
+
+                    break;
+                case 6:
+                    out=true;
+                    break;
+                default:
+                    System.out.println("«Solo números entre 1 y 6»");
+            }
+
+        }
+    }
+
+    public static void selectPizza(ArrayList<Product> newOrder) throws IOException {
 
         RawMaterial harina = new RawMaterial("Harina", 50);
         RawMaterial queso = new RawMaterial("Queso", 100);
@@ -108,7 +214,6 @@ public class Controller {
         muzzarella.add(tomate);
         muzzarella.add(aceitunas);
 
-        ArrayList<Product> newOrder = new ArrayList<>();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -168,7 +273,7 @@ public class Controller {
             }
 
         }
-        return newOrder;
+//        return newOrder;
     }
 
     //region FILE
