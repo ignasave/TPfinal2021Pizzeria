@@ -1,8 +1,15 @@
 package com.company.Stock;
 
 import com.company.Product.Beverage;
+import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Stock {
@@ -91,4 +98,84 @@ public class Stock {
         }
     }
 
+    public void saveMaterialsToFile (String nameFile){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(nameFile)));
+            gson.toJson(rawMaterials, rawMaterials.getClass(), bufferedWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void saveBeveragesToFile (String nameFile){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(new File(nameFile)));
+            gson.toJson(beverages, beverages.getClass(), bufferedWriter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(bufferedWriter != null) {
+                try {
+                    bufferedWriter.close();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void readMaterialsFromFile (String nameFile) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedReader bufferedReader = null;
+        try{
+            bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
+            this.rawMaterials = gson.fromJson(bufferedReader, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void readBeveragesFromFile (String nameFile) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedReader bufferedReader = null;
+        try{
+            bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
+            this.beverages = gson.fromJson(bufferedReader, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedReader != null) {
+                    bufferedReader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

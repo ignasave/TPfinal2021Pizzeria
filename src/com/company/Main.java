@@ -61,7 +61,12 @@ public class Main {
         shop.getStock().addNewStock(bagio, 42);
         shop.getStock().addNewStock(tomate, 22);
 
-        System.out.println(shop.getStock().getRawMaterials().toString());
-        System.out.println(shop.getStock().getBeverages().toString());
+        //shop.getStock().saveMaterialsToFile("Materiales.json");
+        //shop.getStock().saveBeveragesToFile("Bebidas.json");
+        //shop.getStock().readMaterialsFromFile("Materiales.json");
+        shop.getStock().readBeveragesFromFile("Bebidas.json");
+
+        //System.out.println(shop.getStock().getRawMaterials().toString());
+        //System.out.println(shop.getStock().getBeverages().toString());
     }
 }
