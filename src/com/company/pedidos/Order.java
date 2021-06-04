@@ -17,7 +17,7 @@ public class Order {
     Fecha de Crea: Datetime  */
 
     private Client client;
-    private ArrayList <Product> newArray;
+    private ArrayList <Product> products;
     private float finalPrice;
     private float productPrice;
     private float totalPrice;
@@ -29,7 +29,7 @@ public class Order {
 
     public Order(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
         this.client = client;
-        this.newArray = newArray;
+        this.products = newArray;
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;
         this.totalPrice = totalPrice;
@@ -42,11 +42,11 @@ public class Order {
     // region GETTER & SETTER
 
     public ArrayList<Product> getNewArray() {
-        return newArray;
+        return products;
     }
 
     public void setNewArray(ArrayList<Product> newArray) {
-        this.newArray = newArray;
+        this.products = newArray;
     }
 
     public float getFinalPrice() {
@@ -87,7 +87,7 @@ public class Order {
 
     // region HELPERS
     public void showProducts (){
-        newArray.forEach((v)->v.toString());
+        products.forEach((v)->v.toString());
     }
 
     public String toString (){

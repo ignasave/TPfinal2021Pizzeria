@@ -113,7 +113,7 @@ public class Controller {
             System.out.println("«1. Pizza»");
             System.out.println("«2. Empanada»");
             System.out.println("«3. Bebida»");
-            System.out.println("«9. Salir»");
+            System.out.println("«9. Finalizar »");
             System.out.println("«Escribe una de las opciones»");
             option = reader.nextInt();
             switch(option) {
@@ -400,13 +400,32 @@ public class Controller {
 
 //endregion
 
+    //region PRICE CALCULATE
+    public float calculateFinalPrice (ArrayList<Product> newArray){
+        float sellPrice = 0;
+        for (Product product:newArray) {
+            sellPrice += product.getSellPrice();
+        }
+       return sellPrice;
+    }
+    public float calculateProductPrice (ArrayList<Product> newArray){
+        float productPrice = 0;
+        for (Product product:newArray) {
+            productPrice += product.getCostPrice();
+        }
+        return productPrice;
+    }
 
+    //endregion
 
-    //tiene que llegar los datos del cliente y la comida a pedir
+    //region ORDER
+    public Order createOrder (Client client, ArrayList<Product> newArray, float totalPrice,
+                              LocalDateTime dateTime){
 
-    //to fill the archive
-    public Order createOrder (Client client, ArrayList<Product> newArray,
-     float finalPrice, float productPrice,float totalPrice, LocalDateTime dateTime){
+        float productPrice = calculateProductPrice(newArray);
+        float finalPrice = calculateFinalPrice(newArray);
+        //chequear cuanto es el monto del total price para cambiarlo y solo agregar un porcentaje
+        //asi eliminarlo de la referencia del metodo
 
         Order newOrder = new Order(client, newArray, finalPrice, productPrice,
         totalPrice, dateTime);
@@ -415,8 +434,11 @@ public class Controller {
     }
 
     public Delivery createOrderDelivery (Client client, ArrayList<Product> newArray, Employee
-            employee, float finalPrice, float productPrice,float totalPrice, LocalDateTime dateTime,float deliveryFloat
+            employee,float totalPrice, LocalDateTime dateTime, float deliveryFloat
     , LocalDateTime out){
+
+        float productPrice = calculateProductPrice(newArray);
+        float finalPrice = calculateFinalPrice(newArray);
 
         Delivery newDelivery = new Delivery(client, newArray, finalPrice, productPrice,
                 totalPrice, dateTime,  deliveryFloat, employee, out);
@@ -424,12 +446,58 @@ public class Controller {
         return newDelivery;
     }
 
+    //endregion
 
+    //region ORDERS STORE
+
+    //guardo todas las ordenes de forma local del día para poder trabajarlas y modificarlas de ser necesario
+    public void storeOrder(Order newOrder, ArrayList <Order> orderList){
+        orderList.add(newOrder);
+    }
+    // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
+
+    public void saveOrdersDay (ArrayList <Order> orderList, String nameFile){
+            /// el gson ahora tiene formato mas facil de leer
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            /** guardando un archivo con informacion json */
+
+            BufferedWriter fOut = null;
+
+            try {
+                fOut = new BufferedWriter(new FileWriter(new File(nameFile)));
+
+                gson.toJson(orderList, orderList.getClass(), fOut);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+
+            } finally {
+                if(fOut != null) {
+                    try {
+                        fOut.close();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+
+    //endregion
 
     //to manage the app
-    public void modifyOrder (){
-
+    public void modifyOrderPrice (ArrayList<Order> orderList, Order order2Find, float newPrice){
+        int index = orderList.indexOf(order2Find); // te devuelve el INDEX
+        order2Find = orderList.get(index);
+        
     }
+
+
     public void deleteOrder(){
 
     }
