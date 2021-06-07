@@ -20,36 +20,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
-    public static void main(String[] args) throws IOException {
 
 
-        Controller controller = new Controller();
-        ArrayList newListOfProducts = selectProduct();
-        Client client = new Client();
-
-        controller.createOrder(client,newListOfProducts);
-
-
-
-        System.out.println("------------------------------------\n\n");
-        newListOfProducts.forEach((v)-> {
-            if (v instanceof Food)
-                ((Food) v).showFood();
-            else if (v instanceof Beverage)
-                System.out.println(v.toString());
-
-        });
-
-    }
-
-    public static Food createFood (ArrayList<RawMaterial>materials,String name, String type, int price){
-        Food newFood = new Food (name + type, price, price+150, name,
-                type,materials);
+    public Food createFood(ArrayList<RawMaterial> materials, String name, String type, int price) {
+        Food newFood = new Food(name + type, price, price + 150, name,
+                type, materials);
         return newFood;
     }
 
     //region LISTRAWMATERIALS
-    public static void createListRawMaterialEmp(ArrayList<RawMaterial>newList, String type){
+    public static void createListRawMaterialEmp(ArrayList<RawMaterial> newList, String type) {
         RawMaterial flour = new RawMaterial("Harina", 5);
         RawMaterial cheese = new RawMaterial("Queso", 20);
         RawMaterial meat = new RawMaterial("Carne", 10);
@@ -58,20 +38,20 @@ public class Controller {
         RawMaterial vegetables = new RawMaterial("vegetales", 25);
 
         newList.add(flour);
-        if(type == "JyQ"){
+        if (type == "JyQ") {
             newList.add(jam);
             newList.add(cheese);
-        }else if (type == "humita")
+        } else if (type == "humita")
             newList.add(cornSauce);
-            else if (type == "carne")
-                newList.add(meat);
-                else {
+        else if (type == "carne")
+            newList.add(meat);
+        else {
             newList.add(vegetables);
             newList.add(cheese);
         }
     }
 
-    public static void createListRawMaterialPizza(ArrayList<RawMaterial>newList, String type){
+    public static void createListRawMaterialPizza(ArrayList<RawMaterial> newList, String type) {
         RawMaterial harina = new RawMaterial("Harina", 50);
         RawMaterial queso = new RawMaterial("Queso", 100);
         RawMaterial pureTomate = new RawMaterial("Pure de Tomate", 60);
@@ -79,49 +59,47 @@ public class Controller {
         RawMaterial aceitunasNegras = new RawMaterial("Aceitunas negras", 30);
         RawMaterial rucula = new RawMaterial("Rúcula", 40);
         RawMaterial jamonCrudo = new RawMaterial("Jamón Crudo", 100);
-        RawMaterial calabresa= new RawMaterial("Calabresa", 80);
+        RawMaterial calabresa = new RawMaterial("Calabresa", 80);
         RawMaterial cebolla = new RawMaterial("Cebolla", 20);
         RawMaterial tomate = new RawMaterial("Tomate", 25);
 
-            newList.add(harina);
-            newList.add(queso);
-            newList.add(pureTomate);
-            newList.add(aceitunas);
-            if (type == "Napolitana" || type == "napolitana")
-                newList.add(tomate);
-            else if(type == "Fugazzeta" || type == "fugazzeta"){
-                newList.add(cebolla);
-                newList.remove(aceitunas);
-            }
-            else if (type == "Rucula" || type == "rucula"){
-                newList.add(jamonCrudo);
-                newList.add(rucula);
-                newList.remove(aceitunas);
-                newList.add(aceitunasNegras);
-            }
-            else if (type == "calabresa" || type == "Calabresa")
-                newList.add(calabresa);
+        newList.add(harina);
+        newList.add(queso);
+        newList.add(pureTomate);
+        newList.add(aceitunas);
+        if (type == "Napolitana" || type == "napolitana")
+            newList.add(tomate);
+        else if (type == "Fugazzeta" || type == "fugazzeta") {
+            newList.add(cebolla);
+            newList.remove(aceitunas);
+        } else if (type == "Rucula" || type == "rucula") {
+            newList.add(jamonCrudo);
+            newList.add(rucula);
+            newList.remove(aceitunas);
+            newList.add(aceitunasNegras);
+        } else if (type == "calabresa" || type == "Calabresa")
+            newList.add(calabresa);
 
     }
     //endregion
 
     //region SELECTORS
 
-    public static ArrayList<Product> selectProduct () throws IOException {
+    public ArrayList<Product> selectProduct() throws IOException {
 
         ArrayList<Product> newOrder = new ArrayList<>();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
-        while(!out){
+        while (!out) {
             System.out.println("«1. Pizza»");
             System.out.println("«2. Empanada»");
             System.out.println("«3. Bebida»");
             System.out.println("«9. Finalizar »");
             System.out.println("«Escribe una de las opciones»");
             option = reader.nextInt();
-            switch(option) {
+            switch (option) {
                 case 1:
                     System.out.println("Menú Pizzas");
                     selectPizza(newOrder);
@@ -138,7 +116,7 @@ public class Controller {
                     selectBeverage(newOrder);
                     break;
                 case 9:
-                    out=true;
+                    out = true;
                     break;
                 default:
                     System.out.println("«Solo números entre 1 y 6»");
@@ -149,11 +127,11 @@ public class Controller {
 
     }
 
-    public static void selectBeverage (ArrayList<Product> newOrder){
+    public void selectBeverage(ArrayList<Product> newOrder) {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
-        while(!out){
+        while (!out) {
             System.out.println("«1. Coca Cola 1.25lt»");
             System.out.println("«2. Coca Cola 2.5lt»");
             System.out.println("«3. Coca Cola 3lt»");
@@ -165,51 +143,51 @@ public class Controller {
             System.out.println("«9. Salir»");
             System.out.println("«Escribe una de las opciones»");
             option = reader.nextInt();
-            switch(option){
+            switch (option) {
                 case 1:
-                    Beverage beverage = new Beverage("Coca cola",200,200,
-                            BeverageBrand.COCACOLA,1.25f, BeverageType.SODA);
+                    Beverage beverage = new Beverage("Coca cola", 200, 200,
+                            BeverageBrand.COCACOLA, 1.25f, BeverageType.SODA);
                     newOrder.add(beverage);
                     break;
                 case 2:
-                    Beverage beverage1 = new Beverage("Coca cola",200,200,
-                            BeverageBrand.COCACOLA,2.5f, BeverageType.SODA);
+                    Beverage beverage1 = new Beverage("Coca cola", 200, 200,
+                            BeverageBrand.COCACOLA, 2.5f, BeverageType.SODA);
                     newOrder.add(beverage1);
                     break;
                 case 3:
-                    Beverage beverage2 = new Beverage("Coca cola",200,200,
-                            BeverageBrand.COCACOLA,3f, BeverageType.SODA);
+                    Beverage beverage2 = new Beverage("Coca cola", 200, 200,
+                            BeverageBrand.COCACOLA, 3f, BeverageType.SODA);
                     newOrder.add(beverage2);
                     break;
                 case 4:
-                    Beverage beverage3 = new Beverage("Cristal",200,200,
-                            BeverageBrand.QUILMES,1f, BeverageType.ALCOHOLIC);
+                    Beverage beverage3 = new Beverage("Cristal", 200, 200,
+                            BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage3);
                     break;
 
                 case 5:
-                    Beverage beverage5 = new Beverage("1890",200,200,
-                            BeverageBrand.QUILMES,1f, BeverageType.ALCOHOLIC);
+                    Beverage beverage5 = new Beverage("1890", 200, 200,
+                            BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage5);
                     break;
                 case 6:
-                    Beverage beverage6 = new Beverage("Bock",200,200,
-                            BeverageBrand.QUILMES,1f, BeverageType.ALCOHOLIC);
+                    Beverage beverage6 = new Beverage("Bock", 200, 200,
+                            BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage6);
                     break;
                 case 7:
-                    Beverage beverage7 = new Beverage("Sprite",200,200,
-                            BeverageBrand.COCACOLA,1.25f, BeverageType.SODA);
+                    Beverage beverage7 = new Beverage("Sprite", 200, 200,
+                            BeverageBrand.COCACOLA, 1.25f, BeverageType.SODA);
                     newOrder.add(beverage7);
                     break;
                 case 8:
-                    Beverage beverage8 = new Beverage("Sprite",200,200,
-                            BeverageBrand.COCACOLA,2.5f, BeverageType.SODA);
+                    Beverage beverage8 = new Beverage("Sprite", 200, 200,
+                            BeverageBrand.COCACOLA, 2.5f, BeverageType.SODA);
                     newOrder.add(beverage8);
                     break;
 
                 case 9:
-                    out=true;
+                    out = true;
                     break;
                 default:
                     System.out.println("«Solo números entre 1 y 9»");
@@ -218,12 +196,12 @@ public class Controller {
         }
     }
 
-    public static void selectEmpanadas(ArrayList<Product> newOrder){
+    public void selectEmpanadas(ArrayList<Product> newOrder) {
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
-        while(!out){
+        while (!out) {
             System.out.println("«1. Emp. Humita»");
             System.out.println("«2. Emp. JyQ»");
             System.out.println("«3. Emp. Carne»");
@@ -231,13 +209,13 @@ public class Controller {
             System.out.println("«9. Salir»");
             System.out.println("«Escribe una de las opciones»");
             option = reader.nextInt();
-            switch(option){
+            switch (option) {
                 case 1:
-                    ArrayList<RawMaterial>empanadas = new ArrayList<>();
+                    ArrayList<RawMaterial> empanadas = new ArrayList<>();
 
-                    createListRawMaterialEmp(empanadas,"humita");
-                    Food newFood = createFood(empanadas,"Empanadas","humita",300);
-                     newOrder.add(newFood);
+                    createListRawMaterialEmp(empanadas, "humita");
+                    Food newFood = createFood(empanadas, "Empanadas", "humita", 300);
+                    newOrder.add(newFood);
 //                    System.in.read();
 
                     break;
@@ -271,7 +249,7 @@ public class Controller {
 
                     break;
                 case 9:
-                    out=true;
+                    out = true;
                     break;
                 default:
                     System.out.println("«Solo números entre 1 y 6»");
@@ -280,13 +258,13 @@ public class Controller {
         }
     }
 
-    public static void selectPizza(ArrayList<Product> newOrder) throws IOException {
+    public void selectPizza(ArrayList<Product> newOrder) throws IOException {
 
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
-        while(!out){
+        while (!out) {
             System.out.println("«1. Pizza Muzza»");
             System.out.println("«2. Pizza Calabresa»");
             System.out.println("«3. Pizza Fugazzetta»");
@@ -295,33 +273,33 @@ public class Controller {
             System.out.println("«9. Salir»");
             System.out.println("«Escribe una de las opciones»");
             option = reader.nextInt();
-            switch(option){
+            switch (option) {
                 case 1:
                     System.out.println("Has seleccionado la opcion 1");
                     ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
                     createListRawMaterialPizza(rawMaterialsList, "muzzarella");
-                    Food newFood = createFood(rawMaterialsList,"Pizza","Muzzarella",300);
+                    Food newFood = createFood(rawMaterialsList, "Pizza", "Muzzarella", 300);
                     newOrder.add(newFood);
                     break;
                 case 2:
                     System.out.println("Has seleccionado la opcion 2");
                     ArrayList<RawMaterial> rawMaterialsList1 = new ArrayList<>();
                     createListRawMaterialPizza(rawMaterialsList1, "calabresa");
-                    Food newFood2 = createFood(rawMaterialsList1,"Pizza","Calabresa",300);
+                    Food newFood2 = createFood(rawMaterialsList1, "Pizza", "Calabresa", 300);
                     newOrder.add(newFood2);
                     break;
                 case 3:
                     System.out.println("Has seleccionado la opcion 3");
                     ArrayList<RawMaterial> rawMaterialsList3 = new ArrayList<>();
                     createListRawMaterialPizza(rawMaterialsList3, "fugazzetta");
-                    Food newFood3 = createFood(rawMaterialsList3,"Pizza","Fugazzetta",300);
+                    Food newFood3 = createFood(rawMaterialsList3, "Pizza", "Fugazzetta", 300);
                     newOrder.add(newFood3);
                     break;
                 case 4:
                     System.out.println("Has seleccionado la opción 4");
                     ArrayList<RawMaterial> rawMaterialsList4 = new ArrayList<>();
                     createListRawMaterialPizza(rawMaterialsList4, "rucula");
-                    Food newFood4 = createFood(rawMaterialsList4,"Pizza","Rúcula y jamón crudo",300);
+                    Food newFood4 = createFood(rawMaterialsList4, "Pizza", "Rúcula y jamón crudo", 300);
                     newOrder.add(newFood4);
                     break;
                 case 5:
@@ -329,11 +307,11 @@ public class Controller {
                     ArrayList<RawMaterial> rawMaterialsList5 = new ArrayList<>();
 
                     createListRawMaterialPizza(rawMaterialsList5, "napolitana");
-                    Food newFood5 = createFood(rawMaterialsList5,"Pizza","Napolitana",300);
+                    Food newFood5 = createFood(rawMaterialsList5, "Pizza", "Napolitana", 300);
                     newOrder.add(newFood5);
                     break;
                 case 9:
-                    out=true;
+                    out = true;
                     break;
                 default:
                     System.out.println("«Solo números entre 1 y 6»");
@@ -343,79 +321,18 @@ public class Controller {
 
     //endregion
 
-    //region FILE
-    public static void fillFileOptions (String nameFile, ArrayList<Product> food){
-            /// el gson ahora tiene formato mas facil de leer
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            /** guardando un archivo con informacion json */
-
-            BufferedWriter fSalida = null;
-
-            try {
-                fSalida = new BufferedWriter(new FileWriter(new File(nameFile)));
-
-                gson.toJson(food, food.getClass(), fSalida);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-            } finally {
-                if(fSalida != null) {
-                    try {
-                        fSalida.close();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-
-        public static void readFileOptions (String nameFile, List<Food>productList){
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-            BufferedReader reader = null;
-
-            try {
-                reader = new BufferedReader(new FileReader(new File(nameFile)));
-
-                productList = gson.fromJson(reader, (new TypeToken<List<Food>>() {}.getType()));
-
-//                System.out.println(productList.getNombre());
-//                System.out.println("VIENDO ARCHIVO--------------------------------\n");
-//                productList.forEach((v)->System.out.println(v));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            } finally {
-                try {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-//endregion
-
     //region PRICE CALCULATE
-    public float calculateFinalPrice (ArrayList<Product> newArray){
+    public float calculateFinalPrice(ArrayList<Product> newArray) {
         float sellPrice = 0;
-        for (Product product:newArray) {
+        for (Product product : newArray) {
             sellPrice += product.getSellPrice();
         }
-       return sellPrice;
+        return sellPrice;
     }
-    public float calculateProductPrice (ArrayList<Product> newArray){
+
+    public float calculateProductPrice(ArrayList<Product> newArray) {
         float productPrice = 0;
-        for (Product product:newArray) {
+        for (Product product : newArray) {
             productPrice += product.getCostPrice();
         }
         return productPrice;
@@ -424,14 +341,13 @@ public class Controller {
     //endregion
 
     //region ORDER
-    public Order createOrder (Client client, ArrayList<Product> newArray){
-       LocalDateTime time =  LocalDateTime.now();
+    public Order createOrder(Client client, ArrayList<Product> newArray) {
+        LocalDateTime time = LocalDateTime.now();
 
         float productPrice = calculateProductPrice(newArray);
         float finalPrice = calculateFinalPrice(newArray);
         //chequear cuanto es el monto del total price para cambiarlo y solo agregar un porcentaje
         //asi eliminarlo de la referencia del metodo
-
 
 
         Order newOrder = new Order(client, newArray, finalPrice, productPrice,
@@ -440,10 +356,10 @@ public class Controller {
         return newOrder;
     }
 
-    public Delivery createOrderDelivery (Client client, ArrayList<Product> newArray, Employee
-            employee){
+    public Delivery createOrderDelivery(Client client, ArrayList<Product> newArray, Employee
+            employee) {
 
-        LocalDateTime time =  LocalDateTime.now();
+        LocalDateTime time = LocalDateTime.now();
         LocalDateTime timeOut = time.plusMinutes(30);
         float productPrice = calculateProductPrice(newArray);
         float finalPrice = calculateFinalPrice(newArray);
@@ -460,49 +376,49 @@ public class Controller {
     //region ORDERS STORE
 
     //guardo todas las ordenes de forma local del día para poder trabajarlas y modificarlas de ser necesario
-    public void storeOrder(Order newOrder, ArrayList <Order> orderList){
+    public void storeOrder(Order newOrder, ArrayList<Order> orderList) {
         orderList.add(newOrder);
     }
     // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
 
-    public static void saveOrdersDay (ArrayList <Order> orderList, String nameFile){
-            /// el gson ahora tiene formato mas facil de leer
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public void saveOrdersDay(ArrayList<Order> orderList, String nameFile) {
+        /// el gson ahora tiene formato mas facil de leer
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-            /** guardando un archivo con informacion json */
+        /** guardando un archivo con informacion json */
 
-            BufferedWriter fOut = null;
+        BufferedWriter fOut = null;
 
-            try {
-                fOut = new BufferedWriter(new FileWriter(new File(nameFile)));
+        try {
+            fOut = new BufferedWriter(new FileWriter(new File(nameFile)));
 
-                gson.toJson(orderList, orderList.getClass(), fOut);
+            gson.toJson(orderList, orderList.getClass(), fOut);
 
-            } catch (IOException e) {
-                e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
 
-            } finally {
-                if(fOut != null) {
-                    try {
-                        fOut.close();
+        } finally {
+            if (fOut != null) {
+                try {
+                    fOut.close();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
+    }
 
-        public static void readOrderFile (String nameFile, ArrayList<Food>productList){
+    public void readOrderFile(String nameFile, ArrayList<Food> productList) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(new File(nameFile)));
 
-            productList = gson.fromJson(reader, (new TypeToken<List<Food>>() {}.getType()));
+            productList = gson.fromJson(reader, (new TypeToken<List<Food>>(){}.getType()));
 
 //                System.out.println(productList.getNombre());
 //                System.out.println("VIENDO ARCHIVO--------------------------------\n");
@@ -534,23 +450,23 @@ public class Controller {
 //        });
 //    }
 
-    public Order searchOrderByID (ArrayList<Order> orderList, int index){
+    public Order searchOrderByID(ArrayList<Order> orderList, int index) {
         return orderList.get(index);
     }
 
 
-    public void discountPrice(Order order2Modify, int percent){
+    public void discountPrice(Order order2Modify, int percent) {
         float price = order2Modify.getTotalPrice();
-        order2Modify.setFinalPrice(((100-percent)*price)/100);
+        order2Modify.setFinalPrice(((100 - percent) * price) / 100);
     }
 
-    public void increaseOrderPrice (Order order2Modify, int percent){
+    public void increaseOrderPrice(Order order2Modify, int percent) {
         float price = order2Modify.getTotalPrice();
-        order2Modify.setFinalPrice(((100+percent)*price)/100);
+        order2Modify.setFinalPrice(((100 + percent) * price) / 100);
     }
 
 
-    public void deleteOrder(ArrayList<Order> orderList, int index){
+    public void deleteOrder(ArrayList<Order> orderList, int index) {
         orderList.remove(index);
     }
 

@@ -17,15 +17,16 @@ public class Order {
     Fecha de Crea: Datetime  */
 
     private Client client;
-    private ArrayList <Product> products;
+    private ArrayList<Product> products;
     private float finalPrice;
     private float productPrice;
     private float totalPrice;
     private String id;
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     // region CONSTRUCTORS
-    public Order (){}
+    public Order() {
+    }
 
     public Order(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
         this.client = client;
@@ -33,7 +34,7 @@ public class Order {
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;
         this.totalPrice = totalPrice;
-        this.id= UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0,5);
+        this.id = UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0, 5);
         this.dateTime = dateTime;
     }
 
@@ -81,19 +82,21 @@ public class Order {
         this.dateTime = dateTime;
     }
 
-    public String getId (){return this.id;}
+    public String getId() {
+        return this.id;
+    }
 
     // endregion
 
     // region HELPERS
-    public void showProducts (){
-        products.forEach((v)->v.toString());
+    public void showProducts() {
+        products.forEach((v) -> v.toString());
     }
 
-    public String toString (){
+    public String toString() {
         return "New order : \n" +
                 "--------------------------\n" +
-                 //showProducts() +
+                //showProducts() +
                 "\nFinal Price: " + getFinalPrice() +
                 "\nProduct Price: " + getProductPrice() +
                 "\nTotal Price: " + getTotalPrice() +

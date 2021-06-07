@@ -21,7 +21,7 @@ public class Delivery extends Order {
 
 
     //region CONSTRUCTORS
-    public Delivery(){
+    public Delivery() {
     }
 
 
@@ -35,23 +35,35 @@ public class Delivery extends Order {
 
     //region GETTER & SETTER
 
-    public float getDeliveryPrice() {return DELIVERYPRICE;}
+    public float getDeliveryPrice() {
+        return DELIVERYPRICE;
+    }
 
 //    public void setDeliveryFloat(float deliveryFloat) {this.deliveryFloat = deliveryFloat;}
 
-    public Employee getEmployee() {return employee;}
+    public Employee getEmployee() {
+        return employee;
+    }
 
-    public void setEmployee(Employee employee) {this.employee = employee;}
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 
-    public LocalDateTime getOut() {return out;}
+    public LocalDateTime getOut() {
+        return out;
+    }
 
 //    public void setOut(LocalDateTime out) {
 //        this.out = out;
 //    }
 
-    public String getAddress() {return address;}
+    public String getAddress() {
+        return address;
+    }
 
-    public void setAddress(String address) {this.address = address;}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     //endregion
 

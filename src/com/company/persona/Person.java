@@ -6,7 +6,8 @@ public abstract class Person {
     private String lastname;
 
     //region CONSTRUCTORS
-    public Person(){}
+    public Person() {
+    }
 
     public Person(String name, String lastname) {
         this.name = name;
@@ -35,8 +36,8 @@ public abstract class Person {
 
     //region HELPERS
     @Override
-    public String toString (){
-        return  "Name: " + getName() +
+    public String toString() {
+        return "Name: " + getName() +
                 "\nLastName: " + getLastname();
     }
 

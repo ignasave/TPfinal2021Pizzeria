@@ -3,7 +3,7 @@ package com.company.persona;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Person  {
+public class Client extends Person {
 
 
     private String address;
@@ -13,7 +13,8 @@ public class Client extends Person  {
 
     //region Construct
 
-    public Client(){}
+    public Client() {
+    }
 
     public Client(String firstName, String lastName, String address, String telNumber) {
         super(firstName, lastName);
@@ -82,7 +83,7 @@ public class Client extends Person  {
     @Override
     public int hashCode() {
         int answer = super.hashCode();
-        answer += 31* this.telNumber.hashCode();
+        answer += 31 * this.telNumber.hashCode();
         return answer;
     }
 
