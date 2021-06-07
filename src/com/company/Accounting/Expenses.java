@@ -1,5 +1,8 @@
 package com.company.Accounting;
 
+import com.company.Product.Beverage;
+import com.company.RawMaterial.RawMaterial;
+import com.company.persona.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,9 +15,11 @@ import java.util.List;
 
 public class Expenses2 extends Accounting {
 
-    private Bebidas bebidas;
-    private MateriaPrima matPrim;
+    private Beverage beverage;
+    private RawMaterial rawMat;
     private Employee employee;
+
+    private int quantity;
 
     private  static List<Expenses2> expensesArray = new ArrayList<>();
 
@@ -25,23 +30,26 @@ public class Expenses2 extends Accounting {
         super();
     }
 
-    public Expenses2(Bebidas beb) {
+    public Expenses2(Beverage beb,int quantity ) {
         super();
-        this.bebidas = beb;
+        this.beverage = beb;
+        this.quantity = quantity;
         expenseToBillsToPay(this);  //manda al arreglo bills to pay el monto del gasto
         expensesFile(this);
     }
 
-    public Expenses2(MateriaPrima matPrim) {
+    public Expenses2(RawMaterial rawMat, int quantity) {
         super();
-        this.matPrim = matPrim;
+        this.rawMat = rawMat;
+        this.quantity = quantity;
         expenseToBillsToPay(this);
         expensesFile(this);
     }
 
-    public Expenses2(Employee employee) {
+    public Expenses2(Employee employee,int quantity) {
         super();
         this.employee = employee;
+        this.quantity = quantity;
         expenseToBillsToPay(this);
         expensesFile(this);
     }
@@ -76,15 +84,15 @@ public class Expenses2 extends Accounting {
 
     public void expenseToBillsToPay(Expenses2 exp){
         double expense = 0;
-        if(exp.bebidas != null){
-            expense = exp.bebidas.getCantidadCompradas() * exp.bebidas.getCosto();
-        }else if (exp.matPrim != null){
-            expense = exp.matPrim.getCostoXkg() * exp.matPrim.getCantidadEnKg();
+        if(exp.beverage != null){
+            expense = exp.quantity * exp.beverage.getCostPrice();
+        }else if (exp.rawMat != null){
+            expense = exp.rawMat.getPrice() * exp.quantity;
         }else{
             expense = exp.employee.getWage();
         }
 
-        Accounts.expensesToPayFile(expense);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
+        Accounting.expensesToPayFile(expense);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
 
     }
 
@@ -94,8 +102,8 @@ public class Expenses2 extends Accounting {
         System.out.print("Comercio:          " + xp.COMPANYNAME);
         System.out.println( ". Cuit: " + xp .CUITNUMBER);
         System.out.println("ID empleado: " + xp.employee.getId());
-        System.out.println("Nombre: " + xp.employee.getFirstName());
-        System.out.println("Apellido: " + xp.employee.getLastName());
+        System.out.println("Nombre: " + xp.employee.getName());
+        System.out.println("Apellido: " + xp.employee.getLastname());
         System.out.println("DNI: " + xp.employee.getDni());
         System.out.println("Salario: " + xp.employee.getWage());
         System.out.println("-----------------------------------------------------");
@@ -109,15 +117,18 @@ public class Expenses2 extends Accounting {
 
         System.out.print("Comercio:          " + xp.COMPANYNAME);
         System.out.println( ". Cuit: " + xp .CUITNUMBER);
+        System.out.println("ID producto:          " + xp.beverage.getId());
         System.out.println("Fecha:             " + xp.date);
-        System.out.println("Producto:          " + xp.bebidas.getNombre());
-        System.out.println("Precio (x unidad): " + xp.bebidas.getCosto());
-        System.out.println("Cantidad:          " + xp.bebidas.getCantidadCompradas());
+        System.out.println("Nombre:          " + xp.beverage.getName());
+        System.out.println("Marca:          " + xp.beverage.getBrand());
+        System.out.println("Tamaño:          " + xp.beverage.getSizeInLt());
+        System.out.println("Precio (x unidad): " + xp.beverage.getCostPrice());
+        System.out.println("Cantidad:          " + xp.quantity);
 
-        System.out.println("                             Total: " + xp.bebidas.getCosto() * xp.bebidas.getCantidadCompradas());
+        System.out.println("                             Total: " + xp.beverage.getCostPrice() * xp.quantity);
         System.out.println("-----------------------------------------------------------------");
 
-        total = xp.bebidas.getCosto() * xp.bebidas.getCantidadCompradas();
+        total = xp.beverage.getCostPrice() * xp.quantity;
 
         return total;
     }
@@ -129,14 +140,14 @@ public class Expenses2 extends Accounting {
         System.out.print("Comercio        : " + xp.COMPANYNAME);
         System.out.println( ". Cuit: " + xp .CUITNUMBER);
         System.out.println("Fecha           : " + xp.date);
-        System.out.println("Producto        : " + xp.matPrim.getNombre());
-        System.out.println("Precio (x Kg)   : " + xp.matPrim.getCostoXkg());
-        System.out.println("Cantidad (en Kg): " + xp.matPrim.getCantidadEnKg());
+        System.out.println("Nombre        : " + xp.rawMat.getName());
+        System.out.println("Precio (x Kg)   : " + xp.rawMat.getPrice());
+        System.out.println("Cantidad (en Kg): " + xp.quantity);
 
-        System.out.println("                        Total: " + xp.matPrim.getCostoXkg() * xp.matPrim.getCantidadEnKg());
+        System.out.println("                        Total: " + xp.rawMat.getPrice() * xp.quantity);
         System.out.println("-----------------------------------------------------------------");
 
-        total = xp.matPrim.getCostoXkg() * xp.matPrim.getCantidadEnKg();
+        total = xp.rawMat.getPrice() * xp.quantity;
 
         return total;
     }
@@ -151,11 +162,11 @@ public class Expenses2 extends Accounting {
             System.out.println("-----------------------------------------------------------------");
             for(Expenses2 xp : expensesArray){
                 if(xp != null){
-                    if(xp.bebidas != null){
+                    if(xp.beverage != null){
 
                         aux = mostrarGastoUnaBebida(xp);
 
-                    }else if (xp.matPrim != null) {
+                    }else if (xp.rawMat != null) {
                         aux = mostrarGastoUnaMateriaPrima(xp);
                     }else
                         aux = printExpensesOneEmployee(xp);
@@ -205,7 +216,7 @@ public class Expenses2 extends Accounting {
         System.out.println("\n\n\t\tGASTOS EN MATERIAS PRIMAS");
         System.out.println("-----------------------------------------------------------------");
         for(Expenses2 xp : expensesArray){
-            if(xp.matPrim != null){
+            if(xp.rawMat != null){
 
                 aux = mostrarGastoUnaMateriaPrima(xp);
                 total += aux;
@@ -225,7 +236,7 @@ public class Expenses2 extends Accounting {
         System.out.println("GASTOS EN BEBIDAS");
         System.out.println("-----------------------------------------------------------------");
         for(Expenses2 xp : expensesArray) {
-            if (xp.bebidas != null) {
+            if (xp.beverage != null) {
                 aux = mostrarGastoUnaBebida(xp);
                 total = total + aux;
             }
@@ -236,19 +247,18 @@ public class Expenses2 extends Accounting {
     }
 
 
-
-
     @Override
     public String toString() {
-        return "Expenses{" +
-                "bebidas=" + bebidas +
-                ", matPrim=" + matPrim +
-                ", date=" + date +
+        return "Expenses2{" +
+                "COMPANYNAME='" + COMPANYNAME + '\'' +
+                ", CUITNUMBER='" + CUITNUMBER + '\'' +
+                ", date='" + date + '\'' +
+                ", beverage=" + beverage +
+                ", rawMat=" + rawMat +
+                ", employee=" + employee +
+                ", quantity=" + quantity +
                 '}';
     }
-
-
-
 
 
     public static void expensesFile(Expenses2 expense){

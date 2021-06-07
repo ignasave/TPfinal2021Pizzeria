@@ -1,5 +1,7 @@
 package com.company.Accounting;
 
+import com.company.pedidos.Delivery;
+import com.company.pedidos.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -10,11 +12,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Incomes extends Accounts {
+public class Incomes extends Accounting {
 
-    private Pedidos pedidos;
-    // private Bebidas bebidas;
-    //private Manufacturas manufacturas;
+    private Order order;
 
     private static List<Incomes> incomesArray = new ArrayList<>();
 
@@ -25,10 +25,10 @@ public class Incomes extends Accounts {
         super();
     }
 
-    public Incomes(Pedidos pedidos) {
+    public Incomes(Order order) {
         super();
-        this.pedidos = pedidos;
-        totalToCash();                //
+        this.order = order;
+        totalToCash();
         ticketsFile(this);
 
     }
@@ -37,33 +37,15 @@ public class Incomes extends Accounts {
 
     //region getter y setter
 
-    public Pedidos getPedidos() {
-        return pedidos;
-    }
 
-    public void setPedidos(Pedidos pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public static List<Incomes> getIngresos() {
-        return incomesArray;
-    }
-
-    public static void setIngresos(List<Incomes> ingresos) {
-        incomesArray = ingresos;
-    }
 
 
     //endregion
 
 
     public void  totalToCash(){
-        double total = 0;
-        if(pedidos.isDelivery()){
-            total += 80;
-        }
-        total += pedidos.getTotalAPagar();
-        Accounts.setCash( getCash() + total);
+
+        Accounting.setCash( getCash() + order.getFinalPrice());
     }
 
 
@@ -89,8 +71,9 @@ public class Incomes extends Accounts {
 
         System.out.print("Comercio:          " + inc.COMPANYNAME);
         System.out.println( ". Cuit: " + inc .CUITNUMBER);
+        System.out.println( ". C: " + inc.order);
         System.out.println("Fecha: " + inc.date);
-        System.out.println("Nombre: " + inc.pedidos.getApenom());
+        System.out.println("Nombre: " + inc.order.);
         System.out.println("Direccion: " + inc.pedidos.getDireccion());
         System.out.println("Telefono: " + inc.pedidos.getTel());
 

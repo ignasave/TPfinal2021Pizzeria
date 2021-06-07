@@ -15,7 +15,7 @@ public class FileHandling {
     public FileHandling() {
 
     }
-    
+
     public static <T> List<T> openListFileToArray(List<T> a, String filename) {
 
         //lee el archivo  incomes.json y pasa su contenido a incomesArray para no perder
