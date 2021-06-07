@@ -1,6 +1,7 @@
 package com.company.pedidos;
 
 import com.company.Product.Product;
+import com.company.persona.Client;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Order {
     id:UUID
     Fecha de Crea: Datetime  */
 
+    private Client client;
     private ArrayList <Product> newArray;
     private float finalPrice;
     private float productPrice;
@@ -25,7 +27,8 @@ public class Order {
     // region CONSTRUCTORS
     public Order (){}
 
-    public Order(ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+    public Order(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+        this.client = client;
         this.newArray = newArray;
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;

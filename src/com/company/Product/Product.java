@@ -1,19 +1,20 @@
 package com.company.Product;
 
-import java.util.UUID;
+import com.company.Utils.Utils;
 
 public class Product {
-    private UUID id;
+    private String id;
     private String name;
     private float sellPrice = 0;
     private float costPrice = 0;
 
     //region CONSTRUCTORS
     public Product() {
+        this.id = Utils.generateUniqueID();
     }
 
     public Product(String name, float sellPrice, float costPrice) {
-        this.id = UUID.randomUUID();
+        this.id = Utils.generateUniqueID();
         this.name = name;
         this.sellPrice = sellPrice;
         this.costPrice = costPrice;
@@ -21,11 +22,11 @@ public class Product {
     //endregion
 
     //region GETTER & SETTER
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -63,6 +64,21 @@ public class Product {
                 ", sellPrice=" + sellPrice +
                 ", costPrice=" + costPrice +
                 '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Product))
+            return false;
+
+        Product product = (Product) o;
+        boolean answer = this.name == product.getName();
+
+        return answer;
     }
     //endregion
 }

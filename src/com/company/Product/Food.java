@@ -1,21 +1,36 @@
 package com.company.Product;
 
 import com.company.RawMaterial.RawMaterial;
+import com.company.persona.Employee;
 
-public class Food {
+import java.util.ArrayList;
+
+public class Food extends Product {
     private String foodType;
     private String description;
-    private RawMaterial[] ingredients;
+    private ArrayList<RawMaterial> ingredients;
+
+    //region CONSTRUCTORS
 
     public Food() {
     }
 
-    public Food(String foodType, String description, RawMaterial[] ingredients) {
+    public Food(String foodType, String description, ArrayList<RawMaterial> ingredients) {
         this.foodType = foodType;
         this.description = description;
         this.ingredients = ingredients;
     }
 
+    public Food(String name, float sellPrice, float costPrice, String foodType, String description, ArrayList<RawMaterial> ingredients) {
+        super(name, sellPrice, costPrice);
+        this.foodType = foodType;
+        this.description = description;
+        this.ingredients = ingredients;
+    }
+
+    //endregion
+
+    //region GETTER & SETTER
     public String getFoodType() {
         return foodType;
     }
@@ -32,11 +47,41 @@ public class Food {
         this.description = description;
     }
 
-    public RawMaterial[] getIngredients() {
+    public ArrayList<RawMaterial> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(RawMaterial[] ingredients) {
+    public void setIngredients(ArrayList<RawMaterial> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public void showFood() {
+        System.out.println(toString());
+        System.out.println("ingredients: ");
+        ingredients.forEach((v) -> System.out.println(v));
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                super.toString() +
+                "foodType='" + foodType + '\'' +
+                ", description='" + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Food))
+            return false;
+
+        Food food = (Food) o;
+        boolean answer = super.equals(o) && this.foodType == food.getFoodType();
+
+        return answer;
+    }
 }
+
+
