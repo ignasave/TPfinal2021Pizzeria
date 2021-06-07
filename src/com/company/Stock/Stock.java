@@ -44,61 +44,61 @@ public class Stock {
     }
     //endregion
 
-    public void addToExistentStock (RawMaterial rawMaterial, int quantity) {
-        if(rawMaterials.containsKey(rawMaterial)) {
-            rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity );
+    public void addToExistentStock(RawMaterial rawMaterial, int quantity) {
+        if (rawMaterials.containsKey(rawMaterial)) {
+            rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
         } else {
             //ERROR
         }
     }
 
-    public void addToExistentStock (Beverage beverage, int quantity) {
-        if(beverages.containsKey(beverage)) {
-            beverages.put(beverage, beverages.get(beverage) + quantity );
+    public void addToExistentStock(Beverage beverage, int quantity) {
+        if (beverages.containsKey(beverage)) {
+            beverages.put(beverage, beverages.get(beverage) + quantity);
         } else {
             //ERROR
         }
     }
 
-    public void addNewStock (RawMaterial rawMaterial, int quantity) {
-        if(!rawMaterials.containsKey(rawMaterial)){
+    public void addNewStock(RawMaterial rawMaterial, int quantity) {
+        if (!rawMaterials.containsKey(rawMaterial)) {
             rawMaterials.put(rawMaterial, quantity);
         } else {
             //ERROR
         }
     }
 
-    public void addNewStock (Beverage beverage, int quantity) {
-        if(!beverages.containsKey(beverage)){
+    public void addNewStock(Beverage beverage, int quantity) {
+        if (!beverages.containsKey(beverage)) {
             beverages.put(beverage, quantity);
         } else {
             //ERROR
         }
     }
 
-    public void removeFromExistentStock (RawMaterial rawMaterial, int quantity) {
-        if(rawMaterials.containsKey(rawMaterial)) {
+    public void removeFromExistentStock(RawMaterial rawMaterial, int quantity) {
+        if (rawMaterials.containsKey(rawMaterial)) {
             int materialQuantity = rawMaterials.get(rawMaterial);
             int res = materialQuantity - quantity;
-            if(res < 0) res = 0;
-            rawMaterials.put(rawMaterial, res );
+            if (res < 0) res = 0;
+            rawMaterials.put(rawMaterial, res);
         } else {
             //ERROR
         }
     }
 
-    public void removeFromExistentStock (Beverage beverage, int quantity) {
-        if(beverages.containsKey(beverage)) {
+    public void removeFromExistentStock(Beverage beverage, int quantity) {
+        if (beverages.containsKey(beverage)) {
             int materialQuantity = beverages.get(beverage);
             int res = materialQuantity - quantity;
-            if(res < 0) res = 0;
-            beverages.put(beverage, materialQuantity - quantity );
+            if (res < 0) res = 0;
+            beverages.put(beverage, materialQuantity - quantity);
         } else {
             //ERROR
         }
     }
 
-    public void saveMaterialsToFile (String nameFile){
+    public void saveMaterialsToFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedWriter bufferedWriter = null;
         try {
@@ -109,7 +109,7 @@ public class Stock {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(bufferedWriter != null) {
+            if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
                 } catch (IOException e) {
@@ -119,7 +119,7 @@ public class Stock {
         }
     }
 
-    public void saveBeveragesToFile (String nameFile){
+    public void saveBeveragesToFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedWriter bufferedWriter = null;
         try {
@@ -130,7 +130,7 @@ public class Stock {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(bufferedWriter != null) {
+            if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
 
@@ -141,10 +141,10 @@ public class Stock {
         }
     }
 
-    public void readMaterialsFromFile (String nameFile) {
+    public void readMaterialsFromFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
-        try{
+        try {
             bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
             this.rawMaterials = gson.fromJson(bufferedReader, Map.class);
         } catch (IOException e) {
@@ -160,10 +160,10 @@ public class Stock {
         }
     }
 
-    public void readBeveragesFromFile (String nameFile) {
+    public void readBeveragesFromFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
-        try{
+        try {
             bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
             this.beverages = gson.fromJson(bufferedReader, Map.class);
         } catch (IOException e) {

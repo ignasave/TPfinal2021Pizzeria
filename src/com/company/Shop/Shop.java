@@ -31,10 +31,10 @@ public class Shop {
     //endregion
 
     public void initializeShop() {
-        //mainMenu();
-        menu.add(new IntField("Comprar","Etiqueta" , new IntCallbackAction() { public void callback(int response) {
+        mainMenu();
+        /*menu.add(new IntField("Comprar","Etiqueta" , new IntCallbackAction() { public void callback(int response) {
             System.out.println(response);
-        }}));
+        }}));*/
     }
 
     private void buyRawMaterialMenu() {

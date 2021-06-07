@@ -5,7 +5,7 @@ import com.company.persona.Employee;
 
 import java.util.ArrayList;
 
-public class Food extends Product{
+public class Food extends Product {
     private String foodType;
     private String description;
     private ArrayList<RawMaterial> ingredients;
@@ -55,16 +55,16 @@ public class Food extends Product{
         this.ingredients = ingredients;
     }
 
-    public void showFood(){
+    public void showFood() {
         System.out.println(toString());
         System.out.println("ingredients: ");
-        ingredients.forEach((v)-> System.out.println(v));
+        ingredients.forEach((v) -> System.out.println(v));
     }
 
     @Override
     public String toString() {
         return "Food{" +
-                super.toString()+
+                super.toString() +
                 "foodType='" + foodType + '\'' +
                 ", description='" + description;
     }
