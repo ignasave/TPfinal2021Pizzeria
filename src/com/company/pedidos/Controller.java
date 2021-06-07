@@ -13,6 +13,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,12 @@ public class Controller {
     public static void main(String[] args) throws IOException {
 
 
-        ArrayList newListOfProducts = new ArrayList();
-        newListOfProducts = selectProduct();
+        Controller controller = new Controller();
+        ArrayList newListOfProducts = selectProduct();
+        Client client = new Client();
+
+        controller.createOrder(client,newListOfProducts);
+
 
 
         System.out.println("------------------------------------\n\n");
@@ -419,8 +424,8 @@ public class Controller {
     //endregion
 
     //region ORDER
-    public Order createOrder (Client client, ArrayList<Product> newArray,
-                              LocalDateTime dateTime){
+    public Order createOrder (Client client, ArrayList<Product> newArray){
+       LocalDateTime time =  LocalDateTime.now();
 
         float productPrice = calculateProductPrice(newArray);
         float finalPrice = calculateFinalPrice(newArray);
@@ -430,20 +435,22 @@ public class Controller {
 
 
         Order newOrder = new Order(client, newArray, finalPrice, productPrice,
-                finalPrice, dateTime);
+                finalPrice, time);
 
         return newOrder;
     }
 
     public Delivery createOrderDelivery (Client client, ArrayList<Product> newArray, Employee
-            employee, LocalDateTime dateTime, LocalDateTime out){
+            employee){
 
+        LocalDateTime time =  LocalDateTime.now();
+        LocalDateTime timeOut = time.plusMinutes(30);
         float productPrice = calculateProductPrice(newArray);
         float finalPrice = calculateFinalPrice(newArray);
         float totalPrice = finalPrice + Delivery.DELIVERYPRICE;
 
         Delivery newDelivery = new Delivery(client, newArray, finalPrice, productPrice,
-                totalPrice, dateTime, employee, out);
+                totalPrice, time, employee, timeOut);
 
         return newDelivery;
     }
@@ -458,7 +465,7 @@ public class Controller {
     }
     // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
 
-    public void saveOrdersDay (ArrayList <Order> orderList, String nameFile){
+    public static void saveOrdersDay (ArrayList <Order> orderList, String nameFile){
             /// el gson ahora tiene formato mas facil de leer
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -489,6 +496,31 @@ public class Controller {
             }
         }
 
+        public static void readOrderFile (String nameFile, ArrayList<Food>productList){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(new File(nameFile)));
+
+            productList = gson.fromJson(reader, (new TypeToken<List<Food>>() {}.getType()));
+
+//                System.out.println(productList.getNombre());
+//                System.out.println("VIENDO ARCHIVO--------------------------------\n");
+//                productList.forEach((v)->System.out.println(v));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     //endregion
 
