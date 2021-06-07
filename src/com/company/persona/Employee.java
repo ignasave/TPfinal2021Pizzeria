@@ -3,7 +3,7 @@ package com.company.persona;
 import java.util.Locale;
 import java.util.UUID;
 
-public class Employee extends Person{
+public class Employee extends Person {
 
     private float wage;
     private boolean active = true;
@@ -12,7 +12,8 @@ public class Employee extends Person{
     private boolean extern;
 
     //region CONSTRUCTORS
-    public Employee(){}
+    public Employee() {
+    }
 
 
     public Employee(String name, String lastname, float wage, boolean active, int dni, boolean extern) {
@@ -20,7 +21,7 @@ public class Employee extends Person{
         this.wage = wage;
         this.active = active;
         this.dni = dni;
-        this.id= UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0,13);
+        this.id = UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0, 13);
         this.extern = extern;
 
     }
@@ -32,23 +33,36 @@ public class Employee extends Person{
     public boolean isActive() {
         return active;
     }
+
     public void setActive(boolean active) {
         this.active = active;
     }
 
-    public float getWage() {return wage;}
-    public void setWage(float wage) {this.wage = wage; }
+    public float getWage() {
+        return wage;
+    }
 
-    public String getId(){return this.id;}
+    public void setWage(float wage) {
+        this.wage = wage;
+    }
 
-    public int getDni (){return dni;}
-    public void setDni (int dni){this.dni = dni;}
+    public String getId() {
+        return this.id;
+    }
+
+    public int getDni() {
+        return dni;
+    }
+
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 
     //endregion
 
     //region HELPERS
     @Override
-    public String toString(){
+    public String toString() {
         return super.toString() +
                 "\nWage: " + getWage();
     }
@@ -71,7 +85,7 @@ public class Employee extends Person{
     @Override
     public int hashCode() {
         int answer = super.hashCode();
-        answer += 31* Integer.hashCode(this.dni);
+        answer += 31 * Integer.hashCode(this.dni);
         return answer;
     }
 
