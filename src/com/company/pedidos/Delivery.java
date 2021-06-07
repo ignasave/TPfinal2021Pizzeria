@@ -14,18 +14,19 @@ public class Delivery extends Order {
 //    Fecha de salida del reparto: Datetime
 //    Direccion: String
 
-    private float deliveryFloat;
+    public static final float DELIVERYPRICE = 50;
     private Employee employee;
     private LocalDateTime out;
     private String address;
 
+
     //region CONSTRUCTORS
-    public Delivery(){}
+    public Delivery(){
+    }
 
 
-    public Delivery(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime, float deliveryFloat, Employee employee, LocalDateTime out) {
+    public Delivery(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime, Employee employee, LocalDateTime out) {
         super(client, newArray, finalPrice, productPrice, totalPrice, dateTime);
-        this.deliveryFloat = deliveryFloat;
         this.employee = employee;
         this.out = out;
     }
@@ -34,9 +35,9 @@ public class Delivery extends Order {
 
     //region GETTER & SETTER
 
-    public float getDeliveryFloat() {return deliveryFloat;}
+    public float getDeliveryPrice() {return DELIVERYPRICE;}
 
-    public void setDeliveryFloat(float deliveryFloat) {this.deliveryFloat = deliveryFloat;}
+//    public void setDeliveryFloat(float deliveryFloat) {this.deliveryFloat = deliveryFloat;}
 
     public Employee getEmployee() {return employee;}
 
@@ -59,7 +60,7 @@ public class Delivery extends Order {
     @Override
     public String toString() {
         return "\nDelivery " +
-                "\ndeliveryFloat: " + getDeliveryFloat() +
+                "\ndeliveryFloat: " + getDeliveryPrice() +
                 "\nemployee: " + getOut() +
                 "\nout: " + getOut() +
                 "\naddress: " + getAddress();

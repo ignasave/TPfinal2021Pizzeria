@@ -33,7 +33,7 @@ public class Order {
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;
         this.totalPrice = totalPrice;
-        this.id= UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0,13);
+        this.id= UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0,5);
         this.dateTime = dateTime;
     }
 

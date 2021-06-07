@@ -65,6 +65,26 @@ public class Client extends Person  {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+
+        if (!(o instanceof Client))
+            return false;
+
+        Client client = (Client) o;
+        boolean answer = super.equals(o) && this.telNumber == client.getTelNumber();
+
+        return answer;
+    }
+
+    @Override
+    public int hashCode() {
+        int answer = super.hashCode();
+        answer += 31* this.telNumber.hashCode();
+        return answer;
+    }
 
     //endregion
 

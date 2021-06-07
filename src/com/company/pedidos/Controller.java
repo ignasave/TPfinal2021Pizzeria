@@ -419,7 +419,7 @@ public class Controller {
     //endregion
 
     //region ORDER
-    public Order createOrder (Client client, ArrayList<Product> newArray, float totalPrice,
+    public Order createOrder (Client client, ArrayList<Product> newArray,
                               LocalDateTime dateTime){
 
         float productPrice = calculateProductPrice(newArray);
@@ -427,21 +427,23 @@ public class Controller {
         //chequear cuanto es el monto del total price para cambiarlo y solo agregar un porcentaje
         //asi eliminarlo de la referencia del metodo
 
+
+
         Order newOrder = new Order(client, newArray, finalPrice, productPrice,
-        totalPrice, dateTime);
+                finalPrice, dateTime);
 
         return newOrder;
     }
 
     public Delivery createOrderDelivery (Client client, ArrayList<Product> newArray, Employee
-            employee,float totalPrice, LocalDateTime dateTime, float deliveryFloat
-    , LocalDateTime out){
+            employee, LocalDateTime dateTime, LocalDateTime out){
 
         float productPrice = calculateProductPrice(newArray);
         float finalPrice = calculateFinalPrice(newArray);
+        float totalPrice = finalPrice + Delivery.DELIVERYPRICE;
 
         Delivery newDelivery = new Delivery(client, newArray, finalPrice, productPrice,
-                totalPrice, dateTime,  deliveryFloat, employee, out);
+                totalPrice, dateTime, employee, out);
 
         return newDelivery;
     }
@@ -490,16 +492,34 @@ public class Controller {
 
     //endregion
 
-    //to manage the app
-    public void modifyOrderPrice (ArrayList<Order> orderList, Order order2Find, float newPrice){
-        int index = orderList.indexOf(order2Find); // te devuelve el INDEX
-        order2Find = orderList.get(index);
-        
+//    public void showOrdersClient (ArrayList<Order> orderList, Client client){
+//        orderList.forEach( (v)-> {
+//            if (){ //chequear esto
+//                System.out.println(v.toString());
+//                int index = orderList.indexOf(v); // te devuelve el INDEX
+//                System.out.println(index);
+//            }
+//        });
+//    }
+
+    public Order searchOrderByID (ArrayList<Order> orderList, int index){
+        return orderList.get(index);
     }
 
 
-    public void deleteOrder(){
+    public void discountPrice(Order order2Modify, int percent){
+        float price = order2Modify.getTotalPrice();
+        order2Modify.setFinalPrice(((100-percent)*price)/100);
+    }
 
+    public void increaseOrderPrice (Order order2Modify, int percent){
+        float price = order2Modify.getTotalPrice();
+        order2Modify.setFinalPrice(((100+percent)*price)/100);
+    }
+
+
+    public void deleteOrder(ArrayList<Order> orderList, int index){
+        orderList.remove(index);
     }
 
 }
