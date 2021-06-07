@@ -34,7 +34,7 @@ public class Main {
         options.add("opcion 3");
         menu.showOptionsMenu(options, title, callbackActions);
 
-*/
+
 
         Stock stock = new Stock();
         RawMaterial harina = new RawMaterial("Harina", 50);
@@ -68,5 +68,10 @@ public class Main {
 
         //System.out.println(shop.getStock().getRawMaterials().toString());
         //System.out.println(shop.getStock().getBeverages().toString());
+        */
+
+        Shop shop = new Shop();
+        shop.initializeShop();
+
     }
 }

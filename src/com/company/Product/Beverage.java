@@ -53,7 +53,7 @@ public class Beverage extends Product{
     public void setType(BeverageType type) {
         this.type = type;
     }
-
+    //endregion
 
     @Override
     public String toString() {

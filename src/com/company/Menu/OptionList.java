@@ -52,18 +52,18 @@ class OptionList extends JPanel implements KeyListener {
                 if(selectedOption + 1 < options.size()){
                     selectedOption++;
                 }
+                paintComponent(this.getGraphics());
                 break;
             case KeyEvent.VK_UP:
                 if(selectedOption > 0) {
                     selectedOption--;
                 }
+                paintComponent(this.getGraphics());
                 break;
-
             case KeyEvent.VK_ENTER:
                 callbackActions[selectedOption].callback();
                 break;
         }
-        paintComponent(this.getGraphics());
     }
 
     @Override
