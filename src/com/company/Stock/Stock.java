@@ -44,6 +44,18 @@ public class Stock {
     }
     //endregion
 
+    public void showBeverages() {
+        beverages.forEach((k,v) -> {
+            System.out.println(k.show() + " | Existencias: " + v);
+        });
+    }
+
+    public void showRawMaterials() {
+        rawMaterials.forEach((k,v) -> {
+            System.out.println(k.show() + " | Existencias: " + v);
+        });
+    }
+
     public void addToExistentStock(RawMaterial rawMaterial, int quantity) {
         if (rawMaterials.containsKey(rawMaterial)) {
             rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
@@ -92,7 +104,7 @@ public class Stock {
             int materialQuantity = beverages.get(beverage);
             int res = materialQuantity - quantity;
             if (res < 0) res = 0;
-            beverages.put(beverage, materialQuantity - quantity);
+            beverages.put(beverage, res);
         } else {
             //ERROR
         }
@@ -149,6 +161,26 @@ public class Stock {
             }
         }
         return flag;
+    }
+
+    public RawMaterial searchMaterialByName(String name) {
+        RawMaterial rawMaterial = null;
+        for( RawMaterial rawMaterialK : rawMaterials.keySet()) {
+            if(rawMaterialK.getName().equals(name)){
+                rawMaterial = rawMaterialK;
+            }
+        }
+        return rawMaterial;
+    }
+
+    public Beverage searchBeverageById(String id) {
+        Beverage beverage = null;
+        for( Beverage beverageK : beverages.keySet()) {
+            if(beverageK.getId().equals(id)){
+                beverage = beverageK;
+            }
+        }
+        return beverage;
     }
 
     public void readMaterialsFromFile(String nameFile) {

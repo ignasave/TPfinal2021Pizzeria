@@ -3,7 +3,7 @@ package com.company.Product;
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 
-public class Beverage extends Product{
+public class Beverage extends Product {
     private BeverageBrand brand;
     private float sizeInLt;
     private BeverageType type;
@@ -54,6 +54,11 @@ public class Beverage extends Product{
         this.type = type;
     }
     //endregion
+
+    @Override
+    public String show() {
+        return super.show() + " | Marca: " + brand.getName() + " | Tamaño en L: " + sizeInLt + " | Tipo de bebida: " + type.getName();
+    }
 
     @Override
     public String toString() {

@@ -23,7 +23,6 @@ public class Shop {
     //endregion
 
     public void mainMenu() {
-
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
