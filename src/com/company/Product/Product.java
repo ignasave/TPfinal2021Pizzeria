@@ -56,6 +56,11 @@ public class Product {
     //endregion
 
     //region HELPERS
+
+    public String show() {
+        return "ID: " + getId() + " | Nombre: " + getName() + " | Precio de venta: " + getSellPrice() + " | Precio de costo: " + getCostPrice();
+    }
+
     @Override
     public String toString() {
         return "Product{" +

@@ -26,8 +26,12 @@ public class Shop {
 
     //endregion
 
+<<<<<<< HEAD
     public void mainMenu() throws IOException {
 
+=======
+    public void mainMenu() {
+>>>>>>> dev
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
