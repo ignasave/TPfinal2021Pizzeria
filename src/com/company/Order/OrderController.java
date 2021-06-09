@@ -21,15 +21,17 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderController {
-    public void showOneOrder(Order order){
+    public void showOneOrder(Order order) {
         order.toString();
         order.showProducts();
     }
-    public void showOrders(ArrayList<Order>orderList){
-        orderList.forEach((v)->{
-           showOneOrder(v);
+
+    public void showOrders(ArrayList<Order> orderList) {
+        orderList.forEach((v) -> {
+            showOneOrder(v);
         });
     }
+
     //Genera una comida harcodeada (borrar luego)
     public Food createFood(ArrayList<RawMaterial> materials, String name, String type, int price) {
         Food newFood = new Food(name + type, price + 150, price, name,
@@ -98,8 +100,13 @@ public class OrderController {
 
     public void menuOrders() throws IOException {
         //descargo todos los pedidos que tengo para trabajarlo localmente
-        ArrayList <Order> orderList = new ArrayList<>();
-        readOrderFile("Orders.json", orderList);
+        ArrayList<Order> orderList = new ArrayList<>();
+        File orderFile = new File ("Orders.json");
+
+        if (!orderFile.exists())
+            System.out.println("El archivo no existe, va a ser creado a continuación");
+        else
+            readOrderFile(orderFile, orderList);
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -118,7 +125,7 @@ public class OrderController {
                     System.out.println("Creación de pedido");
                     Client client = new Client();//BUSCAR LA FORMA DE PASARLO DESDE OTRO LUGAR
                     ArrayList<Product> products = selectProduct();
-                    storeOrder(createOrder(client,products),orderList);
+                    storeOrder(createOrder(client, products), orderList);
                     break;
                 case 2:
                     System.out.println("Lista de pedidos");
@@ -132,7 +139,7 @@ public class OrderController {
                     System.out.println("Buscador por id");
                     System.out.println("Seleccionar ID a buscar: ");
                     int idx = reader.nextInt(); // cambiar ID por int
-                    Order order = searchOrderByID(orderList,idx);
+                    Order order = searchOrderByID(orderList, idx);
                     showOneOrder(order);
 
                     System.out.println("Seleccione una tecla para finalizar");
@@ -145,51 +152,12 @@ public class OrderController {
                 default:
                     System.out.println("Valor incorrecto");
             }
-        //Una vez realizado los cambios guardo todo al archivo
+            //Una vez realizado los cambios guardo todo al archivo
             saveOrdersDay("Orders.json", orderList);
         }
 
     }
 
-//    public void menuDeleteOrders (ArrayList<Order>orderList) throws IOException {
-//        Scanner reader = new Scanner(System.in);
-//        boolean out = false;
-//        int option;
-//        while (!out) {
-//            System.out.println("«1. Ver todos»");
-//            System.out.println("«2. Buscar por ID»");
-//            System.out.println("«9. Finalizar »");
-//            System.out.println("«Escribe una de las opciones»");
-//            option = reader.nextInt();
-//            switch (option) {
-//                case 1:
-//                    System.out.println("Lista de pedidos");
-//
-//                    showOrders(orderList);
-//
-//                    System.out.println("Seleccione una tecla para finalizar");
-//                    System.in.read();
-//                    break;
-//                case 2:
-//                    System.out.println("Buscador por id");
-//                    System.out.println("Seleccionar ID a buscar: ");
-//                    int idx = reader.nextInt(); // cambiar ID por int
-//                    Order order = searchOrderByID(orderList,idx)
-//                    showOneOrder(order);
-//
-//                    System.out.println("Seleccione una tecla para finalizar");
-//                    System.in.read();
-//                    break;
-//
-//                case 9:
-//                    out = true;
-//                    break;
-//                default:
-//                    System.out.println("Valor incorrecto");
-//            }
-//
-//        }
-//    }
     //endregion
 
 
@@ -246,11 +214,13 @@ public class OrderController {
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
+            Utils.cls();
+
             System.out.println("«1. Coca Cola 1.25lt»");
             System.out.println("«2. Coca Cola 2.5lt»");
             System.out.println("«3. Coca Cola 3lt»");
             System.out.println("«4. Cerveza Quilmes Cristal»");
-            System.out.println("«5. Cerveza Quilmes 1890 »");
+            System.out.println("«5. Cerveza Quilmes 1890»");
             System.out.println("«6. Cerveza Quilmes Bock»");
             System.out.println("«7. Sprite 1.25lt»");
             System.out.println("«8. Sprite 2.5lt»");
@@ -259,45 +229,61 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
+
                     Beverage beverage = new Beverage("Coca cola", 200, 200,
                             BeverageBrand.COCACOLA, 1.25f, BeverageType.SODA);
                     newOrder.add(beverage);
+                    System.out.println("Agregado al pedido");
                     break;
                 case 2:
                     Beverage beverage1 = new Beverage("Coca cola", 200, 200,
                             BeverageBrand.COCACOLA, 2.5f, BeverageType.SODA);
                     newOrder.add(beverage1);
+
+                    System.out.println("Agregado al pedido");
                     break;
                 case 3:
                     Beverage beverage2 = new Beverage("Coca cola", 200, 200,
                             BeverageBrand.COCACOLA, 3f, BeverageType.SODA);
                     newOrder.add(beverage2);
+
+                    System.out.println("Agregado al pedido");
                     break;
                 case 4:
                     Beverage beverage3 = new Beverage("Cristal", 200, 200,
                             BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage3);
+
+                    System.out.println("Agregado al pedido");
                     break;
 
                 case 5:
                     Beverage beverage5 = new Beverage("1890", 200, 200,
                             BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage5);
+
+                    System.out.println("Agregado al pedido");
                     break;
                 case 6:
                     Beverage beverage6 = new Beverage("Bock", 200, 200,
                             BeverageBrand.QUILMES, 1f, BeverageType.ALCOHOLIC);
                     newOrder.add(beverage6);
+
+                    System.out.println("Agregado al pedido");
                     break;
                 case 7:
                     Beverage beverage7 = new Beverage("Sprite", 200, 200,
                             BeverageBrand.COCACOLA, 1.25f, BeverageType.SODA);
                     newOrder.add(beverage7);
+
+                    System.out.println("Agregado al pedido");
                     break;
                 case 8:
                     Beverage beverage8 = new Beverage("Sprite", 200, 200,
                             BeverageBrand.COCACOLA, 2.5f, BeverageType.SODA);
                     newOrder.add(beverage8);
+
+                    System.out.println("Agregado al pedido");
                     break;
 
                 case 9:
@@ -529,11 +515,11 @@ public class OrderController {
         }
     }
 
-    public void readOrderFile(String nameFile, ArrayList<Order> orderList) {
+    public void readOrderFile(File nameFile, ArrayList<Order> orderList) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(new File(nameFile)));
+            reader = new BufferedReader(new FileReader(nameFile));
 
             orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {
             }.getType()));
