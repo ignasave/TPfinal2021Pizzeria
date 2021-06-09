@@ -15,6 +15,8 @@ import java.util.Map;
 public class Stock {
     Map<RawMaterial, Integer> rawMaterials;
     Map<Beverage, Integer> beverages;
+    public static final String rawMaterialFile = "RawMaterials.json";
+    public static final String beverageFile = "Beverages.json";
 
     //region CONSTRUCTORS
     public Stock(Map<RawMaterial, Integer> rawMaterials, Map<Beverage, Integer> beverages) {
