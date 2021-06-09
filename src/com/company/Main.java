@@ -2,8 +2,6 @@ package com.company;
 
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
-import com.company.Menu.CallbackAction;
-import com.company.Menu.Menu;
 import com.company.Product.Beverage;
 import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
@@ -71,7 +69,7 @@ public class Main {
         */
 
         Shop shop = new Shop();
-        shop.initializeShop();
+        shop.mainMenu();
 
     }
 }

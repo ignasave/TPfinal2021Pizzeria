@@ -4,10 +4,12 @@ import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 import com.company.Product.Beverage;
 import com.company.RawMaterial.RawMaterial;
+import com.company.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class StockController {
     private Stock stock;
@@ -36,6 +38,40 @@ public class StockController {
 
     public void setStock(Stock stock) {
         this.stock = stock;
+    }
+
+
+    public void stockMenu () {
+
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option; //Guardaremos la opcion del usuario
+        while (!out) {
+            Utils.cls();
+            System.out.println("«1. Materia Prima»");
+            System.out.println("«2. Bebidas»");
+            System.out.println("«3. Ver Stock»");
+            System.out.println("«9. Atras»");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch (option) {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 9:
+                    out = true;
+                    break;
+                default:
+                    System.out.println("«Solo números entre 1 y 6»");
+            }
+
+        }
     }
 
 }
