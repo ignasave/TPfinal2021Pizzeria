@@ -2,7 +2,6 @@ package com.company.Stock;
 
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
-import com.company.Menu.*;
 import com.company.Product.Beverage;
 import com.company.RawMaterial.RawMaterial;
 
@@ -37,74 +36,6 @@ public class StockController {
 
     public void setStock(Stock stock) {
         this.stock = stock;
-    }
-
-
-    //Raw Materials
-    public void buyNewRawMaterial(Menu menu) {
-        StringField stringField = new StringField("Siguiente", "Nombre:", new StringCallbackAction() {
-            public void callback(String sresult) {
-                if (!stock.searchMaterialNameExists(sresult)) {
-                    FloatField floatField = new FloatField("Siguiente", "Precio:", new FloatCallbackAction() {
-                        public void callback(float fresult) {
-                            RawMaterial rawMaterial = new RawMaterial(sresult, fresult);
-                            stock.addNewStock(rawMaterial, 0);
-                            selectExistentRawMaterialForBuy(rawMaterial, menu);
-                        }
-                    });
-                    menu.showFloatField(floatField);
-                }
-            }
-        });
-        menu.showStringField(stringField);
-    }
-
-    public void buyExistentRawMaterial(Menu menu) {
-        ArrayList<RawMaterial> rawMaterials = new ArrayList<>();
-        stock.getRawMaterials().forEach((k, v) -> {
-            rawMaterials.add(k);
-        });
-        CallbackActionGeneric<RawMaterial> callbackActionGeneric = new CallbackActionGeneric<RawMaterial>() {
-            public void callback(RawMaterial response) {
-                selectExistentRawMaterialForBuy(response, menu);
-            }
-        };
-        RawMaterialList rawMaterialList = new RawMaterialList(rawMaterials, callbackActionGeneric);
-        menu.showRawMaterialList(rawMaterialList);
-    }
-
-    private void selectExistentRawMaterialForBuy(RawMaterial rawMaterial, Menu menu) {
-        IntField intField = new IntField("Comprar", "Cantidad:", new IntCallbackAction() {
-            public void callback(int response) {
-                stock.addToExistentStock(rawMaterial, response);
-                System.out.println(stock.getRawMaterials().toString());
-            }
-        });
-        menu.showIntField(intField);
-    }
-
-    public void removeRawMaterial(Menu menu) {
-        ArrayList<RawMaterial> rawMaterials = new ArrayList<>();
-        stock.getRawMaterials().forEach((k, v) -> {
-            rawMaterials.add(k);
-        });
-        CallbackActionGeneric<RawMaterial> callbackActionGeneric = new CallbackActionGeneric<RawMaterial>() {
-            public void callback(RawMaterial response) {
-                selectRawMaterialForRemove(response, menu);
-            }
-        };
-        RawMaterialList rawMaterialList = new RawMaterialList(rawMaterials, callbackActionGeneric);
-        menu.showRawMaterialList(rawMaterialList);
-    }
-
-    private void selectRawMaterialForRemove(RawMaterial rawMaterial, Menu menu) {
-        IntField intField = new IntField("Remover", "Cantidad:", new IntCallbackAction() {
-            public void callback(int response) {
-                stock.removeFromExistentStock(rawMaterial, response);
-                System.out.println(stock.getRawMaterials().toString());
-            }
-        });
-        menu.showIntField(intField);
     }
 
 }
