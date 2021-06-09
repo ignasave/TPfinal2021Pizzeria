@@ -8,18 +8,28 @@ import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
 import com.company.Person.Client;
 import com.company.Person.Employee;
+import com.company.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class OrderController {
-
+    public void showOneOrder(Order order){
+        order.toString();
+        order.showProducts();
+    }
+    public void showOrders(ArrayList<Order>orderList){
+        orderList.forEach((v)->{
+           showOneOrder(v);
+        });
+    }
     //Genera una comida harcodeada (borrar luego)
     public Food createFood(ArrayList<RawMaterial> materials, String name, String type, int price) {
         Food newFood = new Food(name + type, price + 150, price, name,
@@ -84,6 +94,105 @@ public class OrderController {
     }
     //endregion
 
+    //region MENU
+
+    public void menuOrders() throws IOException {
+        //descargo todos los pedidos que tengo para trabajarlo localmente
+        ArrayList <Order> orderList = new ArrayList<>();
+        readOrderFile("Orders.json", orderList);
+
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option;
+        while (!out) {
+            Utils.cls();
+
+            System.out.println("«1. Crear pedido»");
+            System.out.println("«2. Ver Pedidos»");
+            System.out.println("«3. Eliminar pedido»");
+            System.out.println("«9. Finalizar »");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Creación de pedido");
+                    Client client = new Client();//BUSCAR LA FORMA DE PASARLO DESDE OTRO LUGAR
+                    ArrayList<Product> products = selectProduct();
+                    storeOrder(createOrder(client,products),orderList);
+                    break;
+                case 2:
+                    System.out.println("Lista de pedidos");
+
+                    showOrders(orderList);
+
+                    System.out.println("Seleccione una tecla para finalizar");
+                    System.in.read();
+                    break;
+                case 3:
+                    System.out.println("Buscador por id");
+                    System.out.println("Seleccionar ID a buscar: ");
+                    int idx = reader.nextInt(); // cambiar ID por int
+                    Order order = searchOrderByID(orderList,idx);
+                    showOneOrder(order);
+
+                    System.out.println("Seleccione una tecla para finalizar");
+                    System.in.read();
+                    break;
+
+                case 9:
+                    out = true;
+                    break;
+                default:
+                    System.out.println("Valor incorrecto");
+            }
+        //Una vez realizado los cambios guardo todo al archivo
+            saveOrdersDay("Orders.json", orderList);
+        }
+
+    }
+
+//    public void menuDeleteOrders (ArrayList<Order>orderList) throws IOException {
+//        Scanner reader = new Scanner(System.in);
+//        boolean out = false;
+//        int option;
+//        while (!out) {
+//            System.out.println("«1. Ver todos»");
+//            System.out.println("«2. Buscar por ID»");
+//            System.out.println("«9. Finalizar »");
+//            System.out.println("«Escribe una de las opciones»");
+//            option = reader.nextInt();
+//            switch (option) {
+//                case 1:
+//                    System.out.println("Lista de pedidos");
+//
+//                    showOrders(orderList);
+//
+//                    System.out.println("Seleccione una tecla para finalizar");
+//                    System.in.read();
+//                    break;
+//                case 2:
+//                    System.out.println("Buscador por id");
+//                    System.out.println("Seleccionar ID a buscar: ");
+//                    int idx = reader.nextInt(); // cambiar ID por int
+//                    Order order = searchOrderByID(orderList,idx)
+//                    showOneOrder(order);
+//
+//                    System.out.println("Seleccione una tecla para finalizar");
+//                    System.in.read();
+//                    break;
+//
+//                case 9:
+//                    out = true;
+//                    break;
+//                default:
+//                    System.out.println("Valor incorrecto");
+//            }
+//
+//        }
+//    }
+    //endregion
+
+
     //region SELECTORS
 
     //pasar a modo menu
@@ -95,6 +204,8 @@ public class OrderController {
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
+            Utils.cls();
+
             System.out.println("«1. Pizza»");
             System.out.println("«2. Empanada»");
             System.out.println("«3. Bebida»");
@@ -121,7 +232,7 @@ public class OrderController {
                     out = true;
                     break;
                 default:
-                    System.out.println("«Solo números entre 1 y 6»");
+                    System.out.println("Opción incorrecta");
             }
 
         }
@@ -206,12 +317,14 @@ public class OrderController {
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
+            Utils.cls();
+
             System.out.println("«1. Emp. Humita»");
             System.out.println("«2. Emp. JyQ»");
             System.out.println("«3. Emp. Carne»");
             System.out.println("«4. Emp. Verdura»");
             System.out.println("«9. Salir»");
-            System.out.println("«Escribe una de las opciones»");
+            System.out.println("Opción incorrecta");
             option = reader.nextInt();
             switch (option) {
                 case 1:
@@ -256,7 +369,7 @@ public class OrderController {
                     out = true;
                     break;
                 default:
-                    System.out.println("«Solo números entre 1 y 6»");
+                    System.out.println("Opción incorrecta");
             }
 
         }
@@ -270,6 +383,8 @@ public class OrderController {
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
+            Utils.cls();
+
             System.out.println("«1. Pizza Muzza»");
             System.out.println("«2. Pizza Calabresa»");
             System.out.println("«3. Pizza Fugazzetta»");
@@ -319,7 +434,7 @@ public class OrderController {
                     out = true;
                     break;
                 default:
-                    System.out.println("«Solo números entre 1 y 6»");
+                    System.out.println("Opción incorrecta");
             }
         }
     }
@@ -383,7 +498,7 @@ public class OrderController {
     }
     // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
 
-    public void saveOrdersDay(ArrayList<Order> orderList, String nameFile) {
+    public void saveOrdersDay( String nameFile, ArrayList<Order> orderList) {
         /// el gson ahora tiene formato mas facil de leer
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -414,18 +529,15 @@ public class OrderController {
         }
     }
 
-    public void readOrderFile(String nameFile, ArrayList<Food> productList) {
+    public void readOrderFile(String nameFile, ArrayList<Order> orderList) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(new File(nameFile)));
 
-            productList = gson.fromJson(reader, (new TypeToken<List<Food>>() {
+            orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {
             }.getType()));
 
-//                System.out.println(productList.getNombre());
-//                System.out.println("VIENDO ARCHIVO--------------------------------\n");
-//                productList.forEach((v)->System.out.println(v));
 
         } catch (IOException e) {
             e.printStackTrace();
