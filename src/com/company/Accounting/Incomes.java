@@ -1,5 +1,6 @@
 package com.company.Accounting;
 
+import com.company.Product.Product;
 import com.company.pedidos.Delivery;
 import com.company.pedidos.Order;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import java.util.List;
 public class Incomes extends Accounting {
 
     private Order order;
+
 
     private static List<Incomes> incomesArray = new ArrayList<>();
 
@@ -71,31 +73,33 @@ public class Incomes extends Accounting {
 
         System.out.print("Comercio:          " + inc.COMPANYNAME);
         System.out.println( ". Cuit: " + inc .CUITNUMBER);
-        System.out.println( ". C: " + inc.order);
         System.out.println("Fecha: " + inc.date);
-        System.out.println("Nombre: " + inc.order.);
-        System.out.println("Direccion: " + inc.order.);
-        System.out.println("Telefono: " + inc.pedidos.getTel());
+        System.out.println( "ID orden: " + inc.order);
+        System.out.println("Nombre Cliente: " + inc.order.getClient().getName() + "" + inc.order.getClient().getLastname());
+        System.out.println("Direccion: " + inc.order.getClient().getAddress());
+        System.out.println("Telefono: " + inc.order.getClient().getTelNumber());
 
-        System.out.println("\nHash pedidos hechos: ");
-        for(Integer arre : inc.pedidos.getArregloCodigoProdPedidos()){
-            if (arre != null){
-                System.out.println(arre);
+
+        System.out.println("\n pedidos solicitados: ");
+
+        for(Product mylist : inc.order.getProducts()){
+            if (inc!= null){
+                System.out.println(mylist);
             }
         }
-        System.out.println("Delivery: " + inc.pedidos.isDelivery());
 
-        if(inc.pedidos.isDelivery() ){
-            total += 80;
+        if(inc.order.getFinalPrice() != inc.order.getTotalPrice()){
+            System.out.println("Costo delivery: " + (inc.order.getTotalPrice() - inc.order.getFinalPrice()));
         }
-        System.out.println("Total a pagar = $" +  (total += inc.pedidos.getTotalAPagar()));
+
+        System.out.println("Total a pagar = $" +  inc.order.getFinalPrice());
         System.out.println("-----------------------------------------------------");
 
 
     }
 
 
-    public static  void mostrarTickets() {
+    public static  void printTickets() {
 
         System.out.println("\n\n\t\tTickets del mes");
         System.out.println("-----------------------------------------------------------------");
@@ -109,9 +113,26 @@ public class Incomes extends Accounting {
     }
 
 
+    public static String creatingFileName(){
+
+        return AccountHandler.createFileName("tickets-");
+    }
 
 
+    public  void  ticketsFile(Incomes income){
 
+        //sobreescribe archivo con el expensesArray (donde estan todos los ingresos)
+
+        String filename = creatingFileName();
+
+        AccountHandler.filenameToFilenameArray(filename,fileNameArray);
+
+        incomesArray = AccountHandler.writingListFile(incomesArray,filename,income);
+
+
+    }
+
+/*
     public  void  ticketsFile(Incomes income){
 
         //sobreescribe archivo con el expensesArray (donde estan todos los ingresos)
@@ -123,11 +144,7 @@ public class Incomes extends Accounting {
 
     }
 
-
-
-
-
-
+*/
 
 
 
@@ -146,7 +163,7 @@ public class Incomes extends Accounting {
             incomesArray = gson.fromJson(reader,new TypeToken<List<Incomes>>(){}.getType());
 
 
-            mostrarTickets();     ///print content of  incomes
+            printTickets();     ///print content of  incomes
 
         }catch(IOException e){
             e.printStackTrace();
@@ -161,7 +178,11 @@ public class Incomes extends Accounting {
         }
     }
 
+    public static void printFileWithExpensesAndTicketNames(){
 
+        AccountHandler.printFilenameFile(fileNameArray,"tic");
+
+    }
 
 
 }

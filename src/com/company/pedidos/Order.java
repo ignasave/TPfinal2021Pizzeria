@@ -86,7 +86,25 @@ public class Order {
         return this.id;
     }
 
+    public Client getClient() {
+        return client;
+    }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     // endregion
 

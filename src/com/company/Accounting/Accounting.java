@@ -31,7 +31,7 @@ public  class Accounting {
 
     //region Construct
 
-    public Accounts() {
+    public Accounting() {
         this.date = LocalDatetoString();
     }
 
@@ -46,7 +46,7 @@ public  class Accounting {
     }
 
     public static void setCash(double cash) {
-        Accounts.cash = cash;
+        Accounting.cash = cash;
     }
 
     public double getCashclose() {
@@ -62,7 +62,7 @@ public  class Accounting {
     }
 
     public void setCuentaCorriente(double[] cuentaCorriente) {
-        Accounts.cuentaCorriente = cuentaCorriente;
+        Accounting.cuentaCorriente = cuentaCorriente;
     }
 
     public double[] getCuentasAPagar() {
@@ -70,7 +70,7 @@ public  class Accounting {
     }
 
     public void setCuentasAPagar(double[] cuentasAPagar) {
-        Accounts.billsToPay = cuentasAPagar;
+        Accounting.billsToPay = cuentasAPagar;
     }
 
     public String getDate() {
@@ -86,7 +86,7 @@ public  class Accounting {
     }
 
     public static void setBillsToPay(double[] billsToPay) {
-        Accounts.billsToPay = billsToPay;
+        Accounting.billsToPay = billsToPay;
     }
 
     public static String[] getFileNameArray() {
@@ -94,7 +94,7 @@ public  class Accounting {
     }
 
     public static void setFileNameArray(String[] fileNameArray) {
-        Accounts.fileNameArray = fileNameArray;
+        Accounting.fileNameArray = fileNameArray;
     }
 
     //endregion
