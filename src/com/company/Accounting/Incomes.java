@@ -51,7 +51,7 @@ public class Incomes extends Accounting {
 
 
     public  static String createFileName() {     // adds year and month to "tickets-"
-        // when a new month begins it will create a new file and the last one will be
+        // when a new month begins it will create a new file
         LocalDate date = LocalDate.now();
         String begins = "tickets-";
 
@@ -74,7 +74,7 @@ public class Incomes extends Accounting {
         System.out.println( ". C: " + inc.order);
         System.out.println("Fecha: " + inc.date);
         System.out.println("Nombre: " + inc.order.);
-        System.out.println("Direccion: " + inc.pedidos.getDireccion());
+        System.out.println("Direccion: " + inc.order.);
         System.out.println("Telefono: " + inc.pedidos.getTel());
 
         System.out.println("\nHash pedidos hechos: ");
