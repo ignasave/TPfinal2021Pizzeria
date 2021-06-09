@@ -1,4 +1,6 @@
-package com.company.persona;
+package com.company.Person;
+
+import com.company.Utils.Utils;
 
 import java.util.Locale;
 import java.util.UUID;
@@ -21,7 +23,7 @@ public class Employee extends Person {
         this.wage = wage;
         this.active = active;
         this.dni = dni;
-        this.id = UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0, 13);
+        this.id = Utils.generateUniqueID();
         this.extern = extern;
 
     }

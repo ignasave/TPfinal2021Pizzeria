@@ -1,4 +1,4 @@
-package com.company.pedidos;
+package com.company.Order;
 
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
@@ -6,29 +6,29 @@ import com.company.Product.Beverage;
 import com.company.Product.Food;
 import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
-import com.company.persona.Client;
-import com.company.persona.Employee;
+import com.company.Person.Client;
+import com.company.Person.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Controller {
+public class OrderController {
 
-
+    //Genera una comida harcodeada (borrar luego)
     public Food createFood(ArrayList<RawMaterial> materials, String name, String type, int price) {
-        Food newFood = new Food(name + type, price, price + 150, name,
+        Food newFood = new Food(name + type, price + 150, price, name,
                 type, materials);
         return newFood;
     }
 
-    //region LISTRAWMATERIALS
+    //region LIST RAWMATERIALS
+    //Genera una array de materia prima harcodeada (borrar luego)
     public static void createListRawMaterialEmp(ArrayList<RawMaterial> newList, String type) {
         RawMaterial flour = new RawMaterial("Harina", 5);
         RawMaterial cheese = new RawMaterial("Queso", 20);
@@ -51,6 +51,7 @@ public class Controller {
         }
     }
 
+    //Genera una array de materia prima harcodeada (borrar luego)
     public static void createListRawMaterialPizza(ArrayList<RawMaterial> newList, String type) {
         RawMaterial harina = new RawMaterial("Harina", 50);
         RawMaterial queso = new RawMaterial("Queso", 100);
@@ -85,6 +86,7 @@ public class Controller {
 
     //region SELECTORS
 
+    //pasar a modo menu
     public ArrayList<Product> selectProduct() throws IOException {
 
         ArrayList<Product> newOrder = new ArrayList<>();
@@ -127,6 +129,7 @@ public class Controller {
 
     }
 
+    //pasar a modo menu
     public void selectBeverage(ArrayList<Product> newOrder) {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -196,6 +199,7 @@ public class Controller {
         }
     }
 
+    //pasar a modo menu
     public void selectEmpanadas(ArrayList<Product> newOrder) {
 
         Scanner reader = new Scanner(System.in);
@@ -258,6 +262,7 @@ public class Controller {
         }
     }
 
+    //pasar a modo menu
     public void selectPizza(ArrayList<Product> newOrder) throws IOException {
 
 
@@ -322,17 +327,17 @@ public class Controller {
     //endregion
 
     //region PRICE CALCULATE
-    public float calculateFinalPrice(ArrayList<Product> newArray) {
+    public float calculateFinalPrice(ArrayList<Product> products) {
         float sellPrice = 0;
-        for (Product product : newArray) {
+        for (Product product : products) {
             sellPrice += product.getSellPrice();
         }
         return sellPrice;
     }
 
-    public float calculateProductPrice(ArrayList<Product> newArray) {
+    public float calculateProductPrice(ArrayList<Product> products) {
         float productPrice = 0;
-        for (Product product : newArray) {
+        for (Product product : products) {
             productPrice += product.getCostPrice();
         }
         return productPrice;
@@ -341,31 +346,28 @@ public class Controller {
     //endregion
 
     //region ORDER
-    public Order createOrder(Client client, ArrayList<Product> newArray) {
+    public Order createOrder(Client client, ArrayList<Product> products) {
         LocalDateTime time = LocalDateTime.now();
 
-        float productPrice = calculateProductPrice(newArray);
-        float finalPrice = calculateFinalPrice(newArray);
-        //chequear cuanto es el monto del total price para cambiarlo y solo agregar un porcentaje
-        //asi eliminarlo de la referencia del metodo
+        float productPrice = calculateProductPrice(products);
+        float finalPrice = calculateFinalPrice(products);
 
-
-        Order newOrder = new Order(client, newArray, finalPrice, productPrice,
+        Order newOrder = new Order(client, products, finalPrice, productPrice,
                 finalPrice, time);
 
         return newOrder;
     }
 
-    public Delivery createOrderDelivery(Client client, ArrayList<Product> newArray, Employee
+    public Delivery createOrderDelivery(Client client, ArrayList<Product> products, Employee
             employee) {
 
         LocalDateTime time = LocalDateTime.now();
         LocalDateTime timeOut = time.plusMinutes(30);
-        float productPrice = calculateProductPrice(newArray);
-        float finalPrice = calculateFinalPrice(newArray);
-        float totalPrice = finalPrice + Delivery.DELIVERYPRICE;
+        float productPrice = calculateProductPrice(products);
+        float finalPrice = calculateFinalPrice(products);
+        float totalPrice = finalPrice + Delivery.DELIVERY_PRICE;
 
-        Delivery newDelivery = new Delivery(client, newArray, finalPrice, productPrice,
+        Delivery newDelivery = new Delivery(client, products, finalPrice, productPrice,
                 totalPrice, time, employee, timeOut);
 
         return newDelivery;
@@ -418,7 +420,8 @@ public class Controller {
         try {
             reader = new BufferedReader(new FileReader(new File(nameFile)));
 
-            productList = gson.fromJson(reader, (new TypeToken<List<Food>>(){}.getType()));
+            productList = gson.fromJson(reader, (new TypeToken<List<Food>>() {
+            }.getType()));
 
 //                System.out.println(productList.getNombre());
 //                System.out.println("VIENDO ARCHIVO--------------------------------\n");
@@ -440,20 +443,9 @@ public class Controller {
 
     //endregion
 
-//    public void showOrdersClient (ArrayList<Order> orderList, Client client){
-//        orderList.forEach( (v)-> {
-//            if (){ //chequear esto
-//                System.out.println(v.toString());
-//                int index = orderList.indexOf(v); // te devuelve el INDEX
-//                System.out.println(index);
-//            }
-//        });
-//    }
-
     public Order searchOrderByID(ArrayList<Order> orderList, int index) {
         return orderList.get(index);
     }
-
 
     public void discountPrice(Order order2Modify, int percent) {
         float price = order2Modify.getTotalPrice();
@@ -464,7 +456,6 @@ public class Controller {
         float price = order2Modify.getTotalPrice();
         order2Modify.setFinalPrice(((100 + percent) * price) / 100);
     }
-
 
     public void deleteOrder(ArrayList<Order> orderList, int index) {
         orderList.remove(index);

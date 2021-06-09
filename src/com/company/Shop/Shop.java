@@ -5,46 +5,39 @@ import com.company.Menu.IntCallbackAction;
 import com.company.Menu.Menu;
 import com.company.Menu.IntField;
 import com.company.Stock.Stock;
+import com.company.Stock.StockController;
 
 import java.util.ArrayList;
 
 public class Shop {
-    private Stock stock;
+    private StockController stockController;
     private Menu menu;
 
     //region CONSTRUCTORS
     public Shop() {
-        this.stock = new Stock();
+        this.stockController = new StockController();
         this.menu = new Menu();
     }
     //endregion
 
     //region GETTER & SETTER
 
-    public Stock getStock() {
-        return stock;
-    }
-
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
     //endregion
 
     public void initializeShop() {
         mainMenu();
-        /*menu.add(new IntField("Comprar","Etiqueta" , new IntCallbackAction() { public void callback(int response) {
-            System.out.println(response);
-        }}));*/
     }
-
+    
     private void buyRawMaterialMenu() {
         ArrayList<String> options = new ArrayList<String>() {{
             add("Materia Prima Nueva");
             add("Materia Prima Existente");
         }};
         String title = "Comprar Materia Prima";
-        CallbackAction[] callbackActions = new CallbackAction[] {
 
+        CallbackAction[] callbackActions = new CallbackAction[] {
+                new CallbackAction() {  public void callback() { stockController.buyNewRawMaterial(menu); } },
+                new CallbackAction() {  public void callback() { stockController.buyExistentRawMaterial(menu); } },
         };
 
         menu.showOptionsMenu(options,title,callbackActions);
@@ -58,6 +51,7 @@ public class Shop {
         String title = "Materia Prima";
         CallbackAction[] callbackActions = new CallbackAction[] {
                 new CallbackAction() {  public void callback() { buyRawMaterialMenu(); } },
+                new CallbackAction() {  public void callback() { stockController.removeRawMaterial(menu); } },
         };
 
         menu.showOptionsMenu(options,title,callbackActions);

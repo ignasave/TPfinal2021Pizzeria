@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class StringField extends JPanel implements ActionListener {
     private TextField textField;
-    private JButton button;
+    public JButton button;
     private String buttonName;
     private StringCallbackAction callbackAction;
 
@@ -16,6 +16,7 @@ public class StringField extends JPanel implements ActionListener {
     public StringField(String buttonName, String labelName, StringCallbackAction callbackAction) {
         setBackground(Color.DARK_GRAY);
         setFont(textFont);
+        setVisible(true);
 
         this.callbackAction = callbackAction;
 

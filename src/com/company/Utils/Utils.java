@@ -4,6 +4,6 @@ import java.util.UUID;
 
 public class Utils {
     public static String generateUniqueID () {
-        return UUID.randomUUID().toString().toUpperCase().substring(0,13);
+        return UUID.randomUUID().toString().toUpperCase().substring(0,7);
     }
 }

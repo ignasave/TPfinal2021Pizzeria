@@ -1,17 +1,14 @@
-package com.company.persona;
+package com.company.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Client extends Person {
 
-
     private String address;
     private String telNumber;
-    private static List<Client> clientArray = new ArrayList<>();
 
-
-    //region Construct
+    //region CONSTRUCTOR
 
     public Client() {
     }
@@ -22,11 +19,9 @@ public class Client extends Person {
         this.telNumber = telNumber;
     }
 
-
     //endregion
 
-
-    //region getter y setter
+    //region GETTER & SETTER
 
     public String getAddress() {
         return address;
@@ -44,18 +39,9 @@ public class Client extends Person {
         this.telNumber = telNumber;
     }
 
-    public static List<Client> getClientArray() {
-        return clientArray;
-    }
-
-    public static void setClientArray(List<Client> clientArray) {
-        Client.clientArray = clientArray;
-    }
-
     //endregion
 
-
-    //region Helper
+    //region HELPER
 
     @Override
     public String toString() {

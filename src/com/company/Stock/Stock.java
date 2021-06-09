@@ -141,6 +141,16 @@ public class Stock {
         }
     }
 
+    public boolean searchMaterialNameExists(String name) {
+        boolean flag = false;
+        for( RawMaterial rawMaterialK : rawMaterials.keySet()) {
+            if(rawMaterialK.getName().equals(name)){
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
     public void readMaterialsFromFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
@@ -178,4 +188,5 @@ public class Stock {
             }
         }
     }
+
 }
