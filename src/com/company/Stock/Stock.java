@@ -146,7 +146,6 @@ public class Stock {
             if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -187,43 +186,52 @@ public class Stock {
     public void readMaterialsFromFile(String nameFile) {
         Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
-            this.rawMaterials = gson.fromJson(bufferedReader, (new TypeToken<Map<RawMaterial, Integer>>() {
-                    }.getType())
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.rawMaterials = new HashMap<RawMaterial, Integer>();
-        } finally {
+        File file = new File(nameFile);
+        if (file.exists()) {
             try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
+                bufferedReader = new BufferedReader(new FileReader(file));
+                this.rawMaterials = gson.fromJson(bufferedReader, (new TypeToken<Map<RawMaterial, Integer>>() {
+                        }.getType())
+                );
             } catch (IOException e) {
                 e.printStackTrace();
+
+            } finally {
+                try {
+                    if (bufferedReader != null) {
+                        bufferedReader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            this.rawMaterials = new HashMap<RawMaterial, Integer>();
         }
     }
 
     public void readBeveragesFromFile(String nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
-            this.beverages = gson.fromJson(bufferedReader, (new TypeToken<Map<Beverage, Integer>>() {
-            }.getType()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            this.beverages = new HashMap<Beverage, Integer>();
-        } finally {
+        File file = new File(nameFile);
+        if (file.exists()) {
             try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
+                bufferedReader = new BufferedReader(new FileReader(file));
+                this.beverages = gson.fromJson(bufferedReader, (new TypeToken<Map<Beverage, Integer>>() {
+                }.getType()));
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (bufferedReader != null) {
+                        bufferedReader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            this.beverages = new HashMap<Beverage, Integer>();
         }
     }
 
