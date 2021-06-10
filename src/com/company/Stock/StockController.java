@@ -3,6 +3,7 @@ package com.company.Stock;
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 import com.company.Product.Beverage;
+import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
 import com.company.Utils.Utils;
 
@@ -237,6 +238,39 @@ public class StockController {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
         }
+    }
+
+    public void sellBeverage(ArrayList<Product> productsList) {
+        Scanner reader = new Scanner(System.in);
+        Utils.cls();
+        stock.showBeverages();
+        System.out.println("«Ingresar ID de bebida a vender: »");
+        String id = reader.nextLine();
+        Beverage beverage = stock.searchBeverageById(id);
+        if (beverage != null) {
+            Utils.cls();
+            System.out.println("«Ingrese la cantidad: »");
+            int quantity = reader.nextInt();
+            stock.removeFromExistentStock(beverage,quantity);
+            productsList.add(beverage);
+        } else {
+            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
+            String confirmation = reader.nextLine();
+        }
+    }
+
+    public boolean checkRawMaterial (ArrayList <RawMaterial> rawMaterialsList){
+        Integer value;
+        boolean available = true;
+
+        for (RawMaterial rawMaterial : rawMaterialsList) {
+            value = this.stock.getRawMaterials().get(rawMaterial);
+            if(value == 0){
+                System.out.println(rawMaterial.getName() + " No disponible ");
+                available = false;
+            }
+        }
+        return available;
     }
 
     private void removeBeverage() {

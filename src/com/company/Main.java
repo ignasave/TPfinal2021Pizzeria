@@ -8,13 +8,14 @@ import com.company.RawMaterial.RawMaterial;
 import com.company.Shop.Shop;
 import com.company.Stock.Stock;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         Shop shop = new Shop();
         shop.mainMenu();

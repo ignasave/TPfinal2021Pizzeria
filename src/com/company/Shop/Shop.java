@@ -1,14 +1,18 @@
 package com.company.Shop;
 
+import com.company.Order.Order;
+import com.company.Order.OrderController;
 import com.company.Stock.Stock;
 import com.company.Stock.StockController;
 import com.company.Utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Shop {
     private StockController stockController;
+    private OrderController orderController;
 
 
     //region CONSTRUCTORS
@@ -16,6 +20,7 @@ public class Shop {
         this.stockController = new StockController();
         stockController.getStock().readMaterialsFromFile("RawMaterials.json");
         stockController.getStock().readBeveragesFromFile("Beverages.json");
+        orderController = new OrderController();
     }
     //endregion
 
@@ -41,7 +46,7 @@ public class Shop {
                     stockController.stockMenu();
                     break;
                 case 2:
-
+                    orderController.menuOrders();
                     break;
                 case 3:
 
@@ -50,7 +55,7 @@ public class Shop {
                     out = true;
                     break;
                 default:
-                    System.out.println("«Solo números entre 1 y 6»");
+                    System.out.println("Opción Incorrecta");
             }
 
         }
