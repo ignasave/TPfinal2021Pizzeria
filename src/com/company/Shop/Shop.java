@@ -14,7 +14,8 @@ public class Shop {
     //region CONSTRUCTORS
     public Shop() {
         this.stockController = new StockController();
-
+        stockController.getStock().readMaterialsFromFile("RawMaterials.json");
+        stockController.getStock().readBeveragesFromFile("Beverages.json");
     }
     //endregion
 

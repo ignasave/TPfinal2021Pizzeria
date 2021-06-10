@@ -1,0 +1,14 @@
+[
+  [
+    {
+      "brand": "COCACOLA",
+      "sizeInLt": 1.0,
+      "type": "SODA",
+      "id": "F5421BA",
+      "name": "Coca de 1l",
+      "sellPrice": 120.0,
+      "costPrice": 100.0
+    },
+    10
+  ]
+]

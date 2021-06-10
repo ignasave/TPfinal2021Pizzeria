@@ -45,13 +45,13 @@ public class Stock {
     //endregion
 
     public void showBeverages() {
-        beverages.forEach((k,v) -> {
+        beverages.forEach((k, v) -> {
             System.out.println(k.show() + " | Existencias: " + v);
         });
     }
 
     public void showRawMaterials() {
-        rawMaterials.forEach((k,v) -> {
+        rawMaterials.forEach((k, v) -> {
             System.out.println(k.show() + " | Existencias: " + v);
         });
     }
@@ -111,11 +111,12 @@ public class Stock {
     }
 
     public void saveMaterialsToFile(String nameFile) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
         BufferedWriter bufferedWriter = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(new File(nameFile)));
-            gson.toJson(rawMaterials, rawMaterials.getClass(), bufferedWriter);
+            gson.toJson(rawMaterials, bufferedWriter);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -132,11 +133,11 @@ public class Stock {
     }
 
     public void saveBeveragesToFile(String nameFile) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
         BufferedWriter bufferedWriter = null;
         try {
             bufferedWriter = new BufferedWriter(new FileWriter(new File(nameFile)));
-            gson.toJson(beverages, beverages.getClass(), bufferedWriter);
+            gson.toJson(beverages, bufferedWriter);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -155,8 +156,8 @@ public class Stock {
 
     public boolean searchMaterialNameExists(String name) {
         boolean flag = false;
-        for( RawMaterial rawMaterialK : rawMaterials.keySet()) {
-            if(rawMaterialK.getName().equals(name)){
+        for (RawMaterial rawMaterialK : rawMaterials.keySet()) {
+            if (rawMaterialK.getName().equals(name)) {
                 flag = true;
             }
         }
@@ -165,8 +166,8 @@ public class Stock {
 
     public RawMaterial searchMaterialByName(String name) {
         RawMaterial rawMaterial = null;
-        for( RawMaterial rawMaterialK : rawMaterials.keySet()) {
-            if(rawMaterialK.getName().equals(name)){
+        for (RawMaterial rawMaterialK : rawMaterials.keySet()) {
+            if (rawMaterialK.getName().equals(name)) {
                 rawMaterial = rawMaterialK;
             }
         }
@@ -175,8 +176,8 @@ public class Stock {
 
     public Beverage searchBeverageById(String id) {
         Beverage beverage = null;
-        for( Beverage beverageK : beverages.keySet()) {
-            if(beverageK.getId().equals(id)){
+        for (Beverage beverageK : beverages.keySet()) {
+            if (beverageK.getId().equals(id)) {
                 beverage = beverageK;
             }
         }
@@ -184,13 +185,16 @@ public class Stock {
     }
 
     public void readMaterialsFromFile(String nameFile) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().setPrettyPrinting().create();
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
-            this.rawMaterials = gson.fromJson(bufferedReader, Map.class);
+            this.rawMaterials = gson.fromJson(bufferedReader, (new TypeToken<Map<RawMaterial, Integer>>() {
+                    }.getType())
+            );
         } catch (IOException e) {
             e.printStackTrace();
+            this.rawMaterials = new HashMap<RawMaterial, Integer>();
         } finally {
             try {
                 if (bufferedReader != null) {
@@ -207,9 +211,11 @@ public class Stock {
         BufferedReader bufferedReader = null;
         try {
             bufferedReader = new BufferedReader(new FileReader(new File(nameFile)));
-            this.beverages = gson.fromJson(bufferedReader, Map.class);
+            this.beverages = gson.fromJson(bufferedReader, (new TypeToken<Map<Beverage, Integer>>() {
+            }.getType()));
         } catch (IOException e) {
             e.printStackTrace();
+            this.beverages = new HashMap<Beverage, Integer>();
         } finally {
             try {
                 if (bufferedReader != null) {

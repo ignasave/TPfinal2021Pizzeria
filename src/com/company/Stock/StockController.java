@@ -14,10 +14,9 @@ import java.util.Scanner;
 public class StockController {
     private Stock stock;
 
-    public StockController() {
+    public StockController() {/*
         RawMaterial harina = new RawMaterial("Harina", 50);
         RawMaterial queso = new RawMaterial("Queso", 100);
-        RawMaterial tomate = new RawMaterial("Tomate", 60);
 
         Map<RawMaterial, Integer> rawMaterials = new HashMap<>();
         rawMaterials.put(harina, 0);
@@ -25,11 +24,11 @@ public class StockController {
 
         Map<Beverage, Integer> beverages = new HashMap<Beverage, Integer>();
         Beverage coca = new Beverage(BeverageBrand.COCACOLA, 1, BeverageType.SODA);
-        Beverage bagio = new Beverage(BeverageBrand.BAGIO, 2, BeverageType.JUICE);
 
         beverages.put(coca, 0);
 
-        this.stock = new Stock(rawMaterials, beverages);
+        this.stock = new Stock(rawMaterials, beverages);*/
+        this.stock = new Stock();
     }
 
     public Stock getStock() {
@@ -54,6 +53,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.addNewStock(new RawMaterial(name, price), quantity);
+            stock.saveMaterialsToFile("RawMaterials.json");
         } else {
             System.out.println("El nombre ya existe! -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
@@ -72,6 +72,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.addToExistentStock(rawMaterial, quantity);
+            stock.saveMaterialsToFile("RawMaterials.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
@@ -91,6 +92,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.removeFromExistentStock(rawMaterial, quantity);
+            stock.saveMaterialsToFile("RawMaterials.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
@@ -215,6 +217,7 @@ public class StockController {
         int quantity = reader.nextInt();
         stock.addNewStock(new Beverage(name, sellPrice, costPrice, beverageBrand,
                 sizeInL, beverageType), quantity);
+        stock.saveBeveragesToFile("Beverages.json");
     }
 
     private void buyExistentBeverage() {
@@ -229,6 +232,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.addToExistentStock(beverage, quantity);
+            stock.saveBeveragesToFile("Beverages.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
@@ -247,6 +251,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.removeFromExistentStock(beverage, quantity);
+            stock.saveBeveragesToFile("Beverages.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
             String confirmation = reader.nextLine();
