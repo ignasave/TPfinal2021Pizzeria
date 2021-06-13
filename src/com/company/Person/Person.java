@@ -1,4 +1,4 @@
-package com.company.persona;
+package com.company.Person;
 
 public abstract class Person {
 
@@ -32,7 +32,6 @@ public abstract class Person {
         this.lastname = lastname;
     }
     //endregion
-
 
     //region HELPERS
     @Override

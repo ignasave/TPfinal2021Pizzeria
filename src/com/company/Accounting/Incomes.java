@@ -1,8 +1,8 @@
 package com.company.Accounting;
 
 import com.company.Product.Product;
-import com.company.pedidos.Delivery;
-import com.company.pedidos.Order;
+import com.company.Order.Delivery;
+import com.company.Order.Order;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -16,8 +16,6 @@ import java.util.List;
 public class Incomes extends Accounting {
 
     private Order order;
-
-
     private static List<Incomes> incomesArray = new ArrayList<>();
 
 
@@ -39,32 +37,35 @@ public class Incomes extends Accounting {
 
     //region getter y setter
 
+    public Order getOrder() {
+        return order;
+    }
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public static List<Incomes> getIncomesArray() {
+        return incomesArray;
+    }
+
+    public static void setIncomesArray(List<Incomes> incomesArray) {
+        Incomes.incomesArray = incomesArray;
+    }
 
 
     //endregion
 
 
+
+
+
     public void  totalToCash(){
+        //adds in cash the total income from the order
 
         Accounting.setCash( getCash() + order.getFinalPrice());
     }
 
-
-
-    public  static String createFileName() {     // adds year and month to "tickets-"
-        // when a new month begins it will create a new file
-        LocalDate date = LocalDate.now();
-        String begins = "tickets-";
-
-
-        begins += date;
-        String filename =  begins.substring(0, begins.length() - 3);
-        filename += ".json";
-
-
-        return filename;
-    }
 
 
     public static void printIncomeOneTicket(Incomes inc){
@@ -78,7 +79,6 @@ public class Incomes extends Accounting {
         System.out.println("Nombre Cliente: " + inc.order.getClient().getName() + "" + inc.order.getClient().getLastname());
         System.out.println("Direccion: " + inc.order.getClient().getAddress());
         System.out.println("Telefono: " + inc.order.getClient().getTelNumber());
-
 
         System.out.println("\n pedidos solicitados: ");
 
@@ -114,6 +114,7 @@ public class Incomes extends Accounting {
 
 
     public static String creatingFileName(){
+        //creates the file name concatenating tickets with localdate except day
 
         return AccountHandler.createFileName("tickets-");
     }
@@ -121,36 +122,23 @@ public class Incomes extends Accounting {
 
     public  void  ticketsFile(Incomes income){
 
-        //sobreescribe archivo con el expensesArray (donde estan todos los ingresos)
+        //creates filename and puts it in a file(filename.json).
+        //adds ticket(income) in  incomesArray
 
         String filename = creatingFileName();
 
         AccountHandler.filenameToFilenameArray(filename,fileNameArray);
 
-        incomesArray = AccountHandler.writingListFile(incomesArray,filename,income);
+        incomesArray = AccountHandler.writingListFile(incomesArray,filename,income); //generic method
 
 
     }
-
-/*
-    public  void  ticketsFile(Incomes income){
-
-        //sobreescribe archivo con el expensesArray (donde estan todos los ingresos)
-
-        String filename = createFileName();
-
-        incomesArray = FileHandling.writingListFile(incomesArray,filename,income);
-
-
-    }
-
-*/
 
 
 
 
     public static void printFileTickets(String filename){
-
+        //prints tickets in the tickets-......json file
         //filename is in the parameter because of the historic expenses,
 
 
@@ -179,6 +167,7 @@ public class Incomes extends Accounting {
     }
 
     public static void printFileWithExpensesAndTicketNames(){
+        //print files names in the file filenames.json
 
         AccountHandler.printFilenameFile(fileNameArray,"tic");
 

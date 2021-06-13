@@ -8,7 +8,7 @@ public enum BeverageBrand {
     BAGIO("Bagio");
 
     //region FIELDS & CONSTRUCTOR & METHODS
-    private final String name;
+    String name;
 
     BeverageBrand(String name) {
         this.name = name;

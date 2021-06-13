@@ -2,7 +2,7 @@ package com.company.Accounting;
 
 import com.company.Product.Beverage;
 import com.company.RawMaterial.RawMaterial;
-import com.company.persona.Employee;
+import com.company.Person.Employee;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -46,10 +46,9 @@ public class Expenses extends Accounting {
         expensesFile(this);
     }
 
-    public Expenses(Employee employee,int quantity) {
+    public Expenses(Employee employee) {
         super();
         this.employee = employee;
-        this.quantity = quantity;
         expenseToBillsToPay(this);
         expensesFile(this);
     }
@@ -106,29 +105,18 @@ public class Expenses extends Accounting {
 
 
     public static String creatingFileName(){
-
+        //creates the file name concatenating expenses- with localdate except day
         return AccountHandler.createFileName("expenses-");
     }
 
 
 
-/*
-    public  static String createFileName() {     // adds year and month to "expenses-"
-        // when a new month begins it will create a new file and the last one will be
-        LocalDate date = LocalDate.now();
-        String begins = "expenses-";
-
-        begins += date;
-        String filename =  begins.substring(0, begins.length() - 3);
-        filename += ".json";
-
-
-        return filename;
-    }
-*/
 
 
     public void expenseToBillsToPay(Expenses exp){
+        //finds out  about wich objet is the expense (exp) and send the
+        // total expense to billsToPay array, in Accounting class
+
         double expense = 0;
         if(exp.beverage != null){
             expense = exp.quantity * exp.beverage.getCostPrice();
@@ -138,7 +126,8 @@ public class Expenses extends Accounting {
             expense = exp.employee.getWage();
         }
 
-        Accounting.expensesToPayFile(expense);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
+
+        Accounting.expensesToPayOrAddingInCurrentFile(expense,1);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
 
     }
 
@@ -199,7 +188,10 @@ public class Expenses extends Accounting {
     }
 
 
+
     public static void printExpenses( int option){
+        ///option 0 = all expenses. 1: just beverages. 2: just rawMaterial. 3: just employee
+
         double total = 0;
         double aux = 0;
 
@@ -309,28 +301,17 @@ public class Expenses extends Accounting {
 
 
     public  void expensesFile(Expenses expense){
-        //creates a name for the file ,goes to AccountHandler and opens file,
-        // adds the expense to the expensesarray
+        //creates filename and puts it in a file(filename.json).
+        //adds expense in expensesArray
 
         String filename = creatingFileName();
 
         AccountHandler.filenameToFilenameArray(filename,fileNameArray); // adds filename into filenameArray (if doesnt exist)
 
-        expensesArray = AccountHandler.writingListFile(expensesArray,filename,expense);
+        expensesArray = AccountHandler.writingListFile(expensesArray,filename,expense);  //generic method
 
 
     }
-
-    /*
-    public static void expensesFile(Expenses2 expense){
-        //creates a name for the file ,goes to Filehandling and opens file,
-        // adds the expense to the expensesarray
-
-        String filename = createFileName();
-
-        expensesArray = FileHandling.writingListFile(expensesArray,filename,expense);
-    }
-*/
 
 
 
@@ -366,7 +347,7 @@ public class Expenses extends Accounting {
 
 
     public static void printFileWithExpensesAndTicketNames(){
-        //prints the filenames.json string array (contains all the files names for expenses and for incomes)
+        //prints the filenames.json string array (contains all the files names for expenses and for incomes(tickets))
 
         AccountHandler.printFilenameFile(fileNameArray,"exp");
 

@@ -1,7 +1,8 @@
-package com.company.pedidos;
+package com.company.Order;
 
 import com.company.Product.Product;
-import com.company.persona.Client;
+import com.company.Person.Client;
+import com.company.Utils.Utils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,32 +10,25 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class Order {
-    /* Productos: Array<Productos>
-    Precio final: float  //costo final + delibery si hay
-    Precio de productos: float //costo final
-    Costo total: float // costo de materias primas
-    id:UUID
-    Fecha de Crea: Datetime  */
-
     private Client client;
     private ArrayList<Product> products;
     private float finalPrice;
     private float productPrice;
     private float totalPrice;
     private String id;
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private LocalDateTime dateTime;
 
     // region CONSTRUCTORS
     public Order() {
     }
 
-    public Order(Client client, ArrayList<Product> newArray, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+    public Order(Client client, ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
         this.client = client;
-        this.products = newArray;
+        this.products = products;
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;
         this.totalPrice = totalPrice;
-        this.id = UUID.randomUUID().toString().toUpperCase(Locale.ROOT).substring(0, 5);
+        this.id = Utils.generateUniqueID();
         this.dateTime = dateTime;
     }
 
@@ -42,12 +36,20 @@ public class Order {
 
     // region GETTER & SETTER
 
-    public ArrayList<Product> getNewArray() {
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public void setNewArray(ArrayList<Product> newArray) {
-        this.products = newArray;
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
     }
 
     public float getFinalPrice() {
@@ -74,6 +76,14 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }
@@ -82,29 +92,8 @@ public class Order {
         this.dateTime = dateTime;
     }
 
-    public String getId() {
-        return this.id;
-    }
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public ArrayList<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     // endregion
 

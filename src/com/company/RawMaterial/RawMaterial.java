@@ -33,6 +33,9 @@ public class RawMaterial {
     }
     //endregion
 
+    public String show() {
+        return "Nombre: " + name + " | Precio de costo: " + price;
+    }
 
     @Override
     public String toString() {

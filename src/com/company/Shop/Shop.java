@@ -1,95 +1,59 @@
 package com.company.Shop;
 
-import com.company.Menu.CallbackAction;
-import com.company.Menu.IntCallbackAction;
-import com.company.Menu.Menu;
-import com.company.Menu.IntField;
 import com.company.Stock.Stock;
+import com.company.Stock.StockController;
+import com.company.Utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Shop {
-    private Stock stock;
-    private Menu menu;
+    private StockController stockController;
+
 
     //region CONSTRUCTORS
     public Shop() {
-        this.stock = new Stock();
-        this.menu = new Menu();
+        this.stockController = new StockController();
+
     }
     //endregion
 
     //region GETTER & SETTER
 
-    public Stock getStock() {
-        return stock;
-    }
-
-    public void setStock(Stock stock) {
-        this.stock = stock;
-    }
     //endregion
 
-    public void initializeShop() {
-        mainMenu();
-        /*menu.add(new IntField("Comprar","Etiqueta" , new IntCallbackAction() { public void callback(int response) {
-            System.out.println(response);
-        }}));*/
+    public void mainMenu() {
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option; //Guardaremos la opcion del usuario
+        while (!out) {
+            Utils.cls();
+            System.out.println("«1. Stock»");
+            System.out.println("«2. Pedidos»");
+            System.out.println("«3. Empleados»");
+            System.out.println("«4. Caja»");
+            System.out.println("«9. Cerrar»");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch (option) {
+                case 1:
+                    stockController.stockMenu();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                case 9:
+                    out = true;
+                    break;
+                default:
+                    System.out.println("«Solo números entre 1 y 6»");
+            }
+
+        }
     }
 
-    private void buyRawMaterialMenu() {
-        ArrayList<String> options = new ArrayList<String>() {{
-            add("Materia Prima Nueva");
-            add("Materia Prima Existente");
-        }};
-        String title = "Comprar Materia Prima";
-        CallbackAction[] callbackActions = new CallbackAction[] {
-
-        };
-
-        menu.showOptionsMenu(options,title,callbackActions);
-    }
-
-    private void rawMaterialMenu() {
-        ArrayList<String> options = new ArrayList<String>() {{
-            add("Comprar Materia Prima");
-            add("Deshacer Materia Prima");
-        }};
-        String title = "Materia Prima";
-        CallbackAction[] callbackActions = new CallbackAction[] {
-                new CallbackAction() {  public void callback() { buyRawMaterialMenu(); } },
-        };
-
-        menu.showOptionsMenu(options,title,callbackActions);
-    }
-
-    private void stockMenu() {
-        ArrayList<String> options = new ArrayList<String>() {{
-            add("Materia Prima");
-            add("Bebidas");
-            add("Ver Stock");
-        }};
-        String title = "Stock";
-        CallbackAction[] callbackActions = new CallbackAction[] {
-                new CallbackAction() {  public void callback() { rawMaterialMenu(); } },
-        };
-
-        menu.showOptionsMenu(options,title,callbackActions);
-    }
-
-    private void mainMenu() {
-        ArrayList<String> options = new ArrayList<String>() {{
-                add("Stock");
-                add("Pedidos");
-                add("Empleados");
-                add("Facturacion");
-            }};
-        String title = "Menu Principal";
-        CallbackAction[] callbackActions = new CallbackAction[] {
-                new CallbackAction() {  public void callback() { stockMenu(); } },
-        };
-
-        menu.showOptionsMenu(options,title,callbackActions);
-    }
 
 }

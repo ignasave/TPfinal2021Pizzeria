@@ -7,7 +7,7 @@ public enum BeverageType {
     JUICE("Jugo");
 
     //region FIELDS & CONSTRUCTOR & METHODS
-    private final String name;
+    String name;
 
     BeverageType(String name) {
         this.name = name;

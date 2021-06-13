@@ -20,8 +20,7 @@ public class AccountHandler {
 
     public  static <T> List<T> openListFileToArray(List<T> a, String filename){
 
-        //lee el archivo  incomes.json y pasa su contenido a incomesArray para no perder
-        // los datos ya que  despues el arreglo siempre sobreescribe el archivo
+        //generic method that reads arraylist file and returns the arraylist
 
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -29,17 +28,17 @@ public class AccountHandler {
 
 
 
-        try{
+        try {
 
             reader = new BufferedReader(new FileReader(new File(filename)));
-            a = gson.fromJson(reader,new TypeToken<List<T>>(){}.getType());
-/*
-            if(option >=0){
-                mostrarGastos(option,a);
-            }
-*/
-        }catch(IOException e){
-            System.out.println("Creando Archivo: "+ filename);
+            a = gson.fromJson(reader, new TypeToken<List<T>>() {
+            }.getType());
+
+
+        }catch(FileNotFoundException e){
+            System.out.println("Archivo no existe pero se creara");
+        }catch(Exception e){
+            e.printStackTrace();
         }finally {
             try{
                 if(reader != null){
@@ -60,8 +59,7 @@ public class AccountHandler {
 
     public  static <T> List<T> writingListFile(List <T> a , String filename,T dato){
 
-
-        //sobreescribe archivo con el expensesArray (donde estan todos los ingresos)
+        // generic method that overwrite file of list
 
         List<T> x  = openListFileToArray(a,filename);
         x.add(dato);
@@ -70,14 +68,16 @@ public class AccountHandler {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedWriter fSalida  = null;
-        try{
+        try {
 
-            fSalida = new BufferedWriter(new FileWriter(new File( filename)));
-            String json = gson.toJson(x,x.getClass());
+            fSalida = new BufferedWriter(new FileWriter(new File(filename)));
+            String json = gson.toJson(x, x.getClass());
             //System.out.println( "soy el string jason \n " + json);
             fSalida.write(json);
 
-        }catch(IOException e){
+        }catch(FileNotFoundException e){
+            System.out.println("Archivo no existe");
+        }catch(Exception e){
             e.printStackTrace();
         }finally{
             if(fSalida != null){
@@ -93,8 +93,9 @@ public class AccountHandler {
 
 
 
-    public  static String createFileName(String begins) {     // adds year and month to "expenses-"
-        // when a new month begins it will create a new file and the last one will be
+    public  static String createFileName(String begins) {
+        // adds year and month to "expenses-.....json" or "tickets-....json"
+        // when a new month begins it will create a new file and the last one will still exist
         LocalDate date = LocalDate.now();
 
         begins += date;
@@ -107,26 +108,6 @@ public class AccountHandler {
 
 
 
-/*
-
-    public static boolean addToFilenameArray(String filename, String [] fileNameArray){
-
-        //checks if the filename is or not in the filenameArray file
-
-        boolean flag = false;   //the filename in the parameter doesnt exist in the array so i have to add it
-
-        for(String fn : fileNameArray){
-            if( fn != null && fn.equals(filename)){
-                flag = true;
-            }
-        }
-        if(!flag){
-            fileNameArray[fileNameArray.length -1] = filename;
-        }
-
-        return flag;
-    }
-*/
 
 
 
@@ -134,18 +115,22 @@ public class AccountHandler {
 
 
     public  static String[] filenameFileRead(String filename, String[]fileNameArray){
-        //reads file  filenames.json
+        //reads file  filenames.json where all expenses and tickets filenames are saved
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
 
-        try{
+        try {
 
             reader = new BufferedReader(new FileReader(new File("filenames.json")));
-            fileNameArray = gson.fromJson(reader,new TypeToken<String[]>(){}.getType());
+            fileNameArray = gson.fromJson(reader, new TypeToken<String[]>() {
+            }.getType());
 
-        }catch(IOException e){
-            System.out.println("creando archivo");
+
+        }catch(FileNotFoundException e){
+            System.out.println("Archivo no existe");
+        }catch(Exception e){
+            e.printStackTrace();
         }finally {
             try{
                 if(reader != null){
@@ -160,23 +145,15 @@ public class AccountHandler {
     }
 
 
-    public static void  filenameToFilenameArray(String filename , String [] filenameArray){   //sobreescribe archivo con el employeeArray (donde estan todos los empleados)
+    public static void  filenameToFilenameArray(String filename , String [] filenameArray){
+        //ovewrite filenameArray and saved it in a file
 
         filenameArray = filenameFileRead(filename ,filenameArray);
 
         //checks if the filename is or not in the filenameArray file
 
         boolean flag = false;   //the filename in the parameter doesnt exist in the array so i have to add it
-/*
-        for(String fn : filenameArray){
-            if( fn != null && fn.equals(filename)){
-                flag = true;
-            }
-        }
-        if(!flag){
-            filenameArray[filenameArray.length -1] = filename;
-        }
-*/
+
         int i = 0;
 
         for ( i = 0;i < filenameArray.length;i++){
@@ -192,18 +169,20 @@ public class AccountHandler {
 
         }
 
-        if(!flag){//if the filename is not in the filenameArray we re-write the filenameArray file
+        if(!flag){      //if the filename is not in the filenameArray we re-write the filenameArray file
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             BufferedWriter fSalida  = null;
-            try{
+            try {
 
-                fSalida = new BufferedWriter(new FileWriter(new File( "filenames.json")));
-                String json = gson.toJson(filenameArray,filenameArray.getClass());
-                System.out.println( "soy el string jason de filename \n " + json);
+                fSalida = new BufferedWriter(new FileWriter(new File("filenames.json")));
+                String json = gson.toJson(filenameArray, filenameArray.getClass());
+                System.out.println("soy el string jason de filename \n " + json);
                 fSalida.write(json);
 
-            }catch(IOException e){
-                System.out.println("Creando archivo employee.json");
+            }catch(FileNotFoundException e){
+                System.out.println("Archivo no existe");
+            }catch(Exception e){
+                e.printStackTrace();
             }finally{
                 if(fSalida != null){
                     try{
@@ -218,6 +197,8 @@ public class AccountHandler {
     }
 
     public static void printFileName(String[]fileNameArray,String begins){
+
+        //prints filename (where all filenames from expenses and tichets live)
 
         if(begins.equals("exp")){
             System.out.println("\nNombre de archivos expenses");
@@ -236,19 +217,26 @@ public class AccountHandler {
     }
 
 
+
+
     public static void printFilenameFile(String []fileNameArray,String begins){
+
+        //prints filename (where all filenames from expenses and tichets live)
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
 
-        try{
+        try {
 
             reader = new BufferedReader(new FileReader(new File("filenames.json")));
-            fileNameArray = gson.fromJson(reader,new TypeToken<String[]>(){}.getType());
+            fileNameArray = gson.fromJson(reader, new TypeToken<String[]>() {
+            }.getType());
 
-            printFileName(fileNameArray,begins);     ///print content of  expenses
+            printFileName(fileNameArray, begins);     ///print content of  expenses
 
-        }catch(IOException e){
+        }catch(FileNotFoundException e){
+            System.out.println("Archivo no existe");
+        }catch(Exception e){
             e.printStackTrace();
         }finally {
             try{
