@@ -57,6 +57,7 @@ public class Shop {
                 case 3:
                     employeeController.readEmployeeFile("Employee.json");
                     employeeController.showEmployees();
+                    System.out.println("Cualquiera para continuar");
                     Scanner reader1 = new Scanner(System.in);
                     reader1.nextLine();
                     break;

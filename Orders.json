@@ -1,0 +1,41 @@
+[
+  {
+    "products": [
+      {
+        "foodType": "Pizza",
+        "description": "Muzzarella",
+        "ingredients": [],
+        "id": "9B03E15",
+        "name": "PizzaMuzzarella",
+        "sellPrice": 150.0,
+        "costPrice": 0.0
+      },
+      {
+        "foodType": "Pizza",
+        "description": "Calabresa",
+        "ingredients": [],
+        "id": "D0767D2",
+        "name": "PizzaCalabresa",
+        "sellPrice": 150.0,
+        "costPrice": 0.0
+      }
+    ],
+    "finalPrice": 300.0,
+    "productPrice": 0.0,
+    "totalPrice": 300.0,
+    "id": "F92A57C",
+    "dateTime": {
+      "date": {
+        "year": 2021,
+        "month": 6,
+        "day": 14
+      },
+      "time": {
+        "hour": 19,
+        "minute": 28,
+        "second": 51,
+        "nano": 175398200
+      }
+    }
+  }
+]
