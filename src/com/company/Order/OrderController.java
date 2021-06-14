@@ -2,6 +2,7 @@ package com.company.Order;
 
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
+import com.company.Person.EmployeeController;
 import com.company.Product.Beverage;
 import com.company.Product.Food;
 import com.company.Product.Product;
@@ -35,7 +36,7 @@ public class OrderController {
     }
 
     //Genera una comida harcodeada (borrar luego)
-    public Food createFood(ArrayList<RawMaterial> materials, String name, String type, int price) {
+    public Food createFood(ArrayList<RawMaterial> materials, String name, String type, float price) {
         Food newFood = new Food(name + type, price + 150, price, name,
                 type, materials);
         return newFood;
@@ -43,67 +44,51 @@ public class OrderController {
 
     //region LIST RAWMATERIALS
     //Genera una array de materia prima harcodeada (borrar luego)
-    public static void createListRawMaterialEmp(ArrayList<RawMaterial> newList, String type) {
-        RawMaterial flour = new RawMaterial("Harina", 5);
-        RawMaterial cheese = new RawMaterial("Queso", 20);
-        RawMaterial meat = new RawMaterial("Carne", 10);
-        RawMaterial jam = new RawMaterial("Jamón", 20);
-        RawMaterial cornSauce = new RawMaterial("Humita", 25);
-        RawMaterial vegetables = new RawMaterial("vegetales", 25);
 
-        newList.add(flour);
-        if (type == "JyQ") {
-            newList.add(jam);
-            newList.add(cheese);
-        } else if (type == "humita")
-            newList.add(cornSauce);
-        else if (type == "carne")
-            newList.add(meat);
-        else {
-            newList.add(vegetables);
-            newList.add(cheese);
+    public boolean checkRawMaterialList(ArrayList<String> recipe, StockController stockController) {
+        boolean flag = false;
+        for (String rawMaterial : recipe) {
+            flag = stockController.getStock().searchMaterialNameExists(rawMaterial);
+            if (!flag) {
+                return flag;
+            }
+        }
+        return flag;
+    }
+
+    public boolean createListRawMaterial (ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe, StockController stockController) {
+       boolean flag = checkRawMaterialList(recipe, stockController);
+        if (flag){
+            for (int i = 0; i < recipe.size(); i++) {
+                rawMaterialsList.add(stockController.getStock().searchMaterialByName(recipe.get(i)));
+            }
+        }
+       return flag;
+    }
+
+    public void add2Order (ArrayList<RawMaterial> rawMaterialsList, ArrayList<Product> newOrder,
+                           String name, String type, StockController stockController){
+
+        if (stockController.checkRawMaterial(rawMaterialsList)) {
+            float price = calculateRawMaterialPrice(rawMaterialsList);
+            Food newFood = createFood(rawMaterialsList, name, type, price);
+            newOrder.add(newFood);
         }
     }
 
-    //Genera una array de materia prima harcodeada (borrar luego)
-    public static void createListRawMaterialPizza(ArrayList<RawMaterial> newList, String type) {
-        RawMaterial harina = new RawMaterial("Harina", 50);
-        RawMaterial queso = new RawMaterial("Queso", 100);
-        RawMaterial pureTomate = new RawMaterial("Pure de Tomate", 60);
-        RawMaterial aceitunas = new RawMaterial("Aceitunas verdes", 30);
-        RawMaterial aceitunasNegras = new RawMaterial("Aceitunas negras", 30);
-        RawMaterial rucula = new RawMaterial("Rúcula", 40);
-        RawMaterial jamonCrudo = new RawMaterial("Jamón Crudo", 100);
-        RawMaterial calabresa = new RawMaterial("Calabresa", 80);
-        RawMaterial cebolla = new RawMaterial("Cebolla", 20);
-        RawMaterial tomate = new RawMaterial("Tomate", 25);
-
-        newList.add(harina);
-        newList.add(queso);
-        newList.add(pureTomate);
-        newList.add(aceitunas);
-        if (type == "Napolitana" || type == "napolitana")
-            newList.add(tomate);
-        else if (type == "Fugazzeta" || type == "fugazzeta") {
-            newList.add(cebolla);
-            newList.remove(aceitunas);
-        } else if (type == "Rucula" || type == "rucula") {
-            newList.add(jamonCrudo);
-            newList.add(rucula);
-            newList.remove(aceitunas);
-            newList.add(aceitunasNegras);
-        } else if (type == "calabresa" || type == "Calabresa")
-            newList.add(calabresa);
-
-    }
     //endregion
 
     //region MENU
 
-    public void menuOrders() throws IOException {
+
+    public void menuOrders(EmployeeController employeeController) throws IOException {
         //descargo todos los pedidos que tengo para trabajarlo localmente
         ArrayList<Order> orderList = new ArrayList<>();
-        File orderFile = new File ("Orders.json");
+        ArrayList<Employee> employeeList = new ArrayList<>();
+
+
+        File orderFile = new File("Orders.json");
+
 
         if (!orderFile.exists())
             System.out.println("El archivo no existe, va a ser creado a continuación");
@@ -125,9 +110,8 @@ public class OrderController {
             switch (option) {
                 case 1:
                     System.out.println("Creación de pedido");
-                    Client client = new Client();//BUSCAR LA FORMA DE PASARLO DESDE OTRO LUGAR
                     ArrayList<Product> products = selectProduct();
-                    storeOrder(createOrder(client, products), orderList);
+                    storeOrder(createOrder(products), orderList);
                     break;
                 case 2:
                     System.out.println("Lista de pedidos");
@@ -156,6 +140,55 @@ public class OrderController {
             }
             //Una vez realizado los cambios guardo todo al archivo
             saveOrdersDay("Orders.json", orderList);
+        }
+
+    }
+
+    public void selectTypeOrder (EmployeeController employeeController) throws IOException {
+        //descargo todos los pedidos que tengo para trabajarlo localmente
+        ArrayList<Order> orderList = new ArrayList<>();
+        File orderFile = new File("Orders.json");
+
+        if (!orderFile.exists())
+            System.out.println("El archivo no existe, va a ser creado a continuación");
+        else
+            readOrderFile(orderFile, orderList);
+
+        Scanner reader = new Scanner(System.in);
+        boolean out = false;
+        int option;
+        while (!out) {
+            Utils.cls();
+
+            System.out.println("«1. Take away»");
+            System.out.println("«2. Delivery»");
+            System.out.println("«9. Finalizar »");
+            System.out.println("«Escribe una de las opciones»");
+            option = reader.nextInt();
+            switch (option) {
+                case 1:
+                    System.out.println("Take away");
+                    ArrayList<Product> products = selectProduct();
+                    storeOrder(createOrder(products), orderList);
+                    break;
+                case 2:
+                    System.out.println("Delivery\n");
+                    System.out.println("Escriba la dirección de destino: ");
+                    String address = reader.nextLine();
+
+                    ArrayList<Product> products2 = selectProduct();
+
+                    Employee employee = employeeController.getEmployeeDelivery();
+                    storeOrder(createOrderDelivery(products2,address, employee), orderList);
+                    break;
+
+
+                case 9:
+                    out = true;
+                    break;
+                default:
+                    System.out.println("Valor incorrecto");
+            }
         }
 
     }
@@ -197,7 +230,6 @@ public class OrderController {
                 case 2:
                     System.out.println("Menu Empanadas");
                     selectEmpanadas(newOrder, stockController);
-//                    System.in.read();
                     break;
                 case 3:
                     stockController.sellBeverage(newOrder);
@@ -213,7 +245,6 @@ public class OrderController {
         return newOrder;
 
     }
-
 
 
     //pasar a modo menu
@@ -309,13 +340,15 @@ public class OrderController {
 
 
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
-        Food newFood = new Food ();
+        Food newFood = new Food();
+        ArrayList<String> recipe = new ArrayList<>();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
             Utils.cls();
+            recipe.clear();
 
             System.out.println("«1. Emp. Humita»");
             System.out.println("«2. Emp. JyQ»");
@@ -326,63 +359,34 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
-                    rawMaterialsList.clear();
-                    createListRawMaterialEmp(rawMaterialsList, "humita");
+                    recipe.add("Choclo");
+                    recipe.add("Queso");
+                    createListRawMaterial(rawMaterialsList,recipe,stockController);
 
-
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Empanadas", "humita", 300);
-                        newOrder.add(newFood);
-                    }
-
+                    add2Order(rawMaterialsList,newOrder,"Empanada","Humita",stockController);
                     break;
                 case 2:
-                    System.out.println("Has seleccionado la opcion 2");
+                    recipe.add("Jamón");
+                    recipe.add("Queso");
+                    createListRawMaterial(rawMaterialsList,recipe,stockController);
 
-                    rawMaterialsList.clear();
-                    createListRawMaterialEmp(rawMaterialsList, "humita");
-
-
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Empanadas", "humita", 300);
-                        newOrder.add(newFood);
-                    }
+                    add2Order(rawMaterialsList,newOrder,"Empanada","JYQ",stockController);
                     break;
                 case 3:
-                    System.out.println("Has seleccionado la opcion 3");
-                    rawMaterialsList.clear();
-                    createListRawMaterialEmp(rawMaterialsList, "humita");
+                    recipe.add("Carne");
+                    recipe.add("Cebolla");
+                    createListRawMaterial(rawMaterialsList,recipe,stockController);
 
-
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Empanadas", "humita", 300);
-                        newOrder.add(newFood);
-                    }
+                    add2Order(rawMaterialsList,newOrder,"Empanada","Carne",stockController);
                     break;
                 case 4:
-                    System.out.println("Has seleccionado la opción 4");
-                    rawMaterialsList.clear();
-                    createListRawMaterialEmp(rawMaterialsList, "humita");
+                    recipe.add("Verdura");
+                    recipe.add("Queso");
+                    createListRawMaterial(rawMaterialsList,recipe,stockController);
 
-
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Empanadas", "humita", 300);
-                        newOrder.add(newFood);
-                    }
+                    add2Order(rawMaterialsList,newOrder,"Empanada","Verdura",stockController);
                     break;
 
-                case 5:
-                    System.out.println("Has seleccionado la opción 5");
-                    rawMaterialsList.clear();
-                    createListRawMaterialEmp(rawMaterialsList, "humita");
-
-
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Empanadas", "humita", 300);
-                        newOrder.add(newFood);
-                    }
-
-                    break;
                 case 9:
                     out = true;
                     break;
@@ -399,11 +403,21 @@ public class OrderController {
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
         Food newFood = new Food();
 
+
+        ArrayList<String> recipe = new ArrayList<>();
+
+
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
         while (!out) {
             Utils.cls();
+
+            recipe.clear();
+
+            recipe.add("Harina");
+            recipe.add("Queso");
+            recipe.add("Pure de Tomate");
 
             System.out.println("«1. Pizza Muzza»");
             System.out.println("«2. Pizza Calabresa»");
@@ -415,70 +429,66 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
-                    System.out.println("Has seleccionado la opcion 1");
-                    rawMaterialsList.clear();
-                    createListRawMaterialPizza(rawMaterialsList, "muzzarella");
+                    recipe.add("Aceitunas");
+                    createListRawMaterial(rawMaterialsList,recipe,stockController);
 
+                    add2Order(rawMaterialsList,newOrder,"Pizza","Muzzarella",stockController);
 
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Pizza", "Muzzarella", 300);
-                        newOrder.add(newFood);
-                    }
+            break;
+            case 2:
 
-                    break;
-                case 2:
-                    System.out.println("Has seleccionado la opcion 2");
-                    rawMaterialsList.clear();
-                    createListRawMaterialPizza(rawMaterialsList, "calabresa");
+                recipe.add("Calabresa");
+                recipe.add("Aceitunas");
 
-                    if(stockController.checkRawMaterial(rawMaterialsList)){
-                        newFood = createFood(rawMaterialsList, "Pizza", "Calabresa", 300);
-                        newOrder.add(newFood);
-                    }
+                createListRawMaterial(rawMaterialsList,recipe,stockController);
 
-                    break;
-                case 3:
-                    System.out.println("Has seleccionado la opcion 3");
-                    rawMaterialsList.clear();
-                    createListRawMaterialPizza(rawMaterialsList, "fugazzetta");
+                add2Order(rawMaterialsList,newOrder,"Pizza","Calabresa",stockController);
 
-                    if(stockController.checkRawMaterial(rawMaterialsList)) {
-                        newFood = createFood(rawMaterialsList, "Pizza", "Fugazzetta", 300);
-                        newOrder.add(newFood);
-                    }
-                    break;
-                case 4:
-                    System.out.println("Has seleccionado la opción 4");
-                    rawMaterialsList.clear();
-                    createListRawMaterialPizza(rawMaterialsList, "rucula");
+                break;
+            case 3:
 
-                    if(stockController.checkRawMaterial(rawMaterialsList)) {
-                        newFood = createFood(rawMaterialsList, "Pizza", "Rúcula y jamón crudo", 300);
-                        newOrder.add(newFood);
-                    }
-                    break;
-                case 5:
-                    System.out.println("Has seleccionado la opción 5");
-                    rawMaterialsList.clear();
-                    createListRawMaterialPizza(rawMaterialsList, "napolitana");
+                recipe.add("Cebolla");
+                createListRawMaterial(rawMaterialsList,recipe,stockController);
+                add2Order(rawMaterialsList,newOrder,"Pizza","Fugazzetta",stockController);
 
-                    if(stockController.checkRawMaterial(rawMaterialsList)) {
-                        newFood = createFood(rawMaterialsList, "Pizza", "Napolitana", 300);
-                        newOrder.add(newFood);
-                    }
-                    break;
-                case 9:
-                    out = true;
-                    break;
-                default:
-                    System.out.println("Opción incorrecta");
-            }
+                break;
+            case 4:
+
+                recipe.add("Rucula");
+                recipe.add("Jamon Crudo");
+                recipe.add("Aceituna");
+
+                createListRawMaterial(rawMaterialsList,recipe,stockController);
+                add2Order(rawMaterialsList,newOrder,"Pizza","Rucula",stockController);
+                break;
+            case 5:
+
+                recipe.add("Tomate");
+                recipe.add("Aceituna");
+                createListRawMaterial(rawMaterialsList,recipe,stockController);
+                add2Order(rawMaterialsList,newOrder,"Pizza","Napolitana",stockController);
+                break;
+            case 9:
+                out = true;
+                break;
+            default:
+                System.out.println("Opción incorrecta");
         }
     }
+
+}
 
     //endregion
 
     //region PRICE CALCULATE
+    public float calculateRawMaterialPrice (ArrayList<RawMaterial> rawMaterialsList){
+        float price = 0;
+        for (RawMaterial rawMaterial:rawMaterialsList) {
+            price = rawMaterial.getPrice();
+        }
+        return price;
+    }
+
     public float calculateFinalPrice(ArrayList<Product> products) {
         float sellPrice = 0;
         for (Product product : products) {
@@ -498,19 +508,19 @@ public class OrderController {
     //endregion
 
     //region ORDER
-    public Order createOrder(Client client, ArrayList<Product> products) {
+    public Order createOrder(ArrayList<Product> products) {
         LocalDateTime time = LocalDateTime.now();
 
         float productPrice = calculateProductPrice(products);
         float finalPrice = calculateFinalPrice(products);
 
-        Order newOrder = new Order(client, products, finalPrice, productPrice,
+        Order newOrder = new Order(products, finalPrice, productPrice,
                 finalPrice, time);
 
         return newOrder;
     }
 
-    public Delivery createOrderDelivery(Client client, ArrayList<Product> products, Employee
+    public Delivery createOrderDelivery(ArrayList<Product> products,String address, Employee
             employee) {
 
         LocalDateTime time = LocalDateTime.now();
@@ -519,8 +529,8 @@ public class OrderController {
         float finalPrice = calculateFinalPrice(products);
         float totalPrice = finalPrice + Delivery.DELIVERY_PRICE;
 
-        Delivery newDelivery = new Delivery(client, products, finalPrice, productPrice,
-                totalPrice, time, employee, timeOut);
+        Delivery newDelivery = new Delivery(products, finalPrice, productPrice,
+                totalPrice, time, employee, timeOut,address);
 
         return newDelivery;
     }
@@ -535,7 +545,7 @@ public class OrderController {
     }
     // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
 
-    public void saveOrdersDay( String nameFile, ArrayList<Order> orderList) {
+    public void saveOrdersDay(String nameFile, ArrayList<Order> orderList) {
         /// el gson ahora tiene formato mas facil de leer
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

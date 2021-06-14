@@ -20,10 +20,12 @@ public class Delivery extends Order {
     }
 
 
-    public Delivery(Client client, ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime, Employee employee, LocalDateTime out) {
-        super(client, products, finalPrice, productPrice, totalPrice, dateTime);
+    public Delivery(ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice,
+                    LocalDateTime dateTime, Employee employee, LocalDateTime out, String address) {
+        super(products, finalPrice, productPrice, totalPrice, dateTime);
         this.employee = employee;
         this.out = out;
+        this.address = address;
     }
 
     //endregion

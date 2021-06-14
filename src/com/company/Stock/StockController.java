@@ -269,6 +269,7 @@ public class StockController {
         return available;
     }
 
+
     private void removeBeverage() {
         Scanner reader = new Scanner(System.in);
         Utils.cls();

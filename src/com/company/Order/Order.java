@@ -22,8 +22,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(Client client, ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
-        this.client = client;
+    public Order( ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+
         this.products = products;
         this.finalPrice = finalPrice;
         this.productPrice = productPrice;

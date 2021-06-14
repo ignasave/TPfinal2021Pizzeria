@@ -32,14 +32,6 @@ public class Employee extends Person {
 
     //region GETTER & SETTER
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public float getWage() {
         return wage;
     }
@@ -48,8 +40,12 @@ public class Employee extends Person {
         this.wage = wage;
     }
 
-    public String getId() {
-        return this.id;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getDni() {
@@ -59,6 +55,23 @@ public class Employee extends Person {
     public void setDni(int dni) {
         this.dni = dni;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isExtern() {
+        return extern;
+    }
+
+    public void setExtern(boolean extern) {
+        this.extern = extern;
+    }
+
 
     //endregion
 
