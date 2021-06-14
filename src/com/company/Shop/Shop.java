@@ -38,7 +38,7 @@ public class Shop {
             Utils.cls();
             System.out.println("«1. Stock»");
             System.out.println("«2. Pedidos»");
-            System.out.println("«3. Empleados»");
+            System.out.println("«3. Mostrar Empleados»");
             System.out.println("«4. Caja»");
             System.out.println("«9. Cerrar»");
             System.out.println("«Escribe una de las opciones»");
@@ -51,7 +51,10 @@ public class Shop {
                     orderController.menuOrders(employeeController);
                     break;
                 case 3:
-
+                    employeeController.readEmployeeFile("Employee.json");
+                    employeeController.showEmployees();
+                    Scanner reader1 = new Scanner(System.in);
+                    reader1.nextLine();
                     break;
                 case 9:
                     out = true;

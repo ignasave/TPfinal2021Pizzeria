@@ -2,6 +2,8 @@ package com.company;
 
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
+import com.company.Person.Employee;
+import com.company.Person.EmployeeController;
 import com.company.Product.Beverage;
 import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
@@ -68,6 +70,22 @@ public class Main {
         //System.out.println(shop.getStock().getRawMaterials().toString());
         //System.out.println(shop.getStock().getBeverages().toString());
         */
+
+
+
+//        EmployeeController employeeController = new EmployeeController();
+//        Employee employee = new Employee("David", "Cabrera", 50000, true, 36562321, false);
+//        Employee employee1 = new Employee("Ignacio", "Bazquez", 200000, true, 38562321, false);
+//        Employee employee2 = new Employee("Santiago", "Raho", 90000, true, 20562321, true);
+//        Employee employee3 = new Employee("Marcos", "Falso", 10000, false, 40562321, true);
+//
+//
+//        employeeController.getEmployee().add(employee);
+//        employeeController.getEmployee().add(employee1);
+//        employeeController.getEmployee().add(employee2);
+//        employeeController.getEmployee().add(employee3);
+//
+//        employeeController.saveEmployee("Employee.json");
 
         Shop shop = new Shop();
         shop.mainMenu();
