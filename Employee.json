@@ -1,0 +1,38 @@
+[
+  {
+    "wage": 50000.0,
+    "active": true,
+    "dni": 36562321,
+    "id": "CF74C78",
+    "extern": false,
+    "name": "David",
+    "lastname": "Cabrera"
+  },
+  {
+    "wage": 200000.0,
+    "active": true,
+    "dni": 38562321,
+    "id": "FB722F2",
+    "extern": false,
+    "name": "Ignacio",
+    "lastname": "Bazquez"
+  },
+  {
+    "wage": 90000.0,
+    "active": true,
+    "dni": 20562321,
+    "id": "2332EA5",
+    "extern": true,
+    "name": "Santiago",
+    "lastname": "Raho"
+  },
+  {
+    "wage": 10000.0,
+    "active": false,
+    "dni": 40562321,
+    "id": "AEA54C5",
+    "extern": true,
+    "name": "Marcos",
+    "lastname": "Falso"
+  }
+]
