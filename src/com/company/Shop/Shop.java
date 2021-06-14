@@ -2,6 +2,7 @@ package com.company.Shop;
 
 import com.company.Order.Order;
 import com.company.Order.OrderController;
+import com.company.Person.EmployeeController;
 import com.company.Stock.Stock;
 import com.company.Stock.StockController;
 import com.company.Utils.Utils;
@@ -13,12 +14,14 @@ import java.util.Scanner;
 public class Shop {
     private StockController stockController;
     private OrderController orderController;
+    private EmployeeController employeeController;
 
 
     //region CONSTRUCTORS
     public Shop() {
         this.stockController = new StockController();
         this.orderController = new OrderController();
+        this.employeeController = new EmployeeController();
     }
     //endregion
 
@@ -26,12 +29,8 @@ public class Shop {
 
     //endregion
 
-<<<<<<< HEAD
-    public void mainMenu() throws IOException {
 
-=======
     public void mainMenu() {
->>>>>>> dev
         Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; //Guardaremos la opcion del usuario
@@ -49,7 +48,7 @@ public class Shop {
                     stockController.stockMenu();
                     break;
                 case 2:
-                    orderController.menuOrders();
+                    orderController.menuOrders(employeeController);
                     break;
                 case 3:
 
