@@ -10,7 +10,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class Order {
-    private Client client;
     private ArrayList<Product> products;
     private float finalPrice;
     private float productPrice;
@@ -36,13 +35,7 @@ public class Order {
 
     // region GETTER & SETTER
 
-    public Client getClient() {
-        return client;
-    }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public ArrayList<Product> getProducts() {
         return products;

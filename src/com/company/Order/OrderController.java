@@ -109,9 +109,9 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
-                    System.out.println("Creación de pedido");
-                    ArrayList<Product> products = selectProduct();
-                    storeOrder(createOrder(products), orderList);
+
+                    selectTypeOrder(employeeController,orderList);
+
                     break;
                 case 2:
                     System.out.println("Lista de pedidos");
@@ -142,15 +142,10 @@ public class OrderController {
 
     }
 
-    public void selectTypeOrder (EmployeeController employeeController) throws IOException {
+    public Order selectTypeOrder (EmployeeController employeeController, ArrayList<Order> orderList) {
         //descargo todos los pedidos que tengo para trabajarlo localmente
-        ArrayList<Order> orderList = new ArrayList<>();
-        File orderFile = new File("Orders.json");
-
-        if (!orderFile.exists())
-            System.out.println("El archivo no existe, va a ser creado a continuación");
-        else
-            readOrderFile(orderFile, orderList);
+        ArrayList<Product> products = new ArrayList<>();
+        Order order = new Order ();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -165,19 +160,24 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
+                    products.clear();
                     System.out.println("Take away");
-                    ArrayList<Product> products = selectProduct();
-                    storeOrder(createOrder(products), orderList);
+
+                    products = selectProduct();
+                    order = createOrder(products);
+                    orderList.add(order);
+
                     break;
                 case 2:
+                    products.clear();
                     System.out.println("Delivery\n");
                     System.out.println("Escriba la dirección de destino: ");
                     String address = reader.nextLine();
 
-                    ArrayList<Product> products2 = selectProduct();
+                    products = selectProduct();
 
                     Employee employee = employeeController.getEmployeeDelivery();
-                    storeOrder(createOrderDelivery(products2,address, employee), orderList);
+                    storeOrder(createOrderDelivery(products,address, employee), orderList);
                     break;
 
 
@@ -188,6 +188,7 @@ public class OrderController {
                     System.out.println("Valor incorrecto");
             }
         }
+        return order;
     }
 
     //endregion
@@ -490,8 +491,7 @@ public class OrderController {
         try {
             reader = new BufferedReader(new FileReader(nameFile));
 
-            orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {
-            }.getType()));
+            orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {}.getType()));
 
 
         } catch (IOException e) {
