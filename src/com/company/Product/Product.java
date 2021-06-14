@@ -2,7 +2,7 @@ package com.company.Product;
 
 import com.company.Utils.Utils;
 
-public class Product {
+public abstract class Product {
     private String id;
     private String name;
     private float sellPrice = 0;

@@ -1,5 +1,6 @@
 package com.company.Stock;
 
+import com.company.Accounting.Expenses;
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 import com.company.Product.Beverage;
@@ -53,7 +54,9 @@ public class StockController {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
-            stock.addNewStock(new RawMaterial(name, price), quantity);
+            RawMaterial rawMaterial = new RawMaterial(name, price);
+            stock.addNewStock(rawMaterial, quantity);
+            new Expenses(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
             System.out.println("El nombre ya existe! -> continuar (cualquiera)");
@@ -73,6 +76,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.addToExistentStock(rawMaterial, quantity);
+            new Expenses(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
@@ -216,8 +220,10 @@ public class StockController {
         Utils.cls();
         System.out.println("«Ingrese la cantidad: »");
         int quantity = reader.nextInt();
-        stock.addNewStock(new Beverage(name, sellPrice, costPrice, beverageBrand,
-                sizeInL, beverageType), quantity);
+        Beverage beverage = new Beverage(name, sellPrice, costPrice, beverageBrand,
+                sizeInL, beverageType);
+        stock.addNewStock(beverage, quantity);
+        new Expenses(beverage, quantity);
         stock.saveBeveragesToFile("Beverages.json");
     }
 
@@ -233,6 +239,7 @@ public class StockController {
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
             stock.addToExistentStock(beverage, quantity);
+            new Expenses(beverage, quantity);
             stock.saveBeveragesToFile("Beverages.json");
         } else {
             System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");

@@ -10,12 +10,8 @@ import java.util.Scanner;
 
 public class StartingDay {
 
-
     private String dateInFile;
     private String filename;
-
-
-
 
     public StartingDay(){
 
@@ -24,8 +20,6 @@ public class StartingDay {
 
         checkingNewday();
     }
-
-
 
     //region getter setter
 
@@ -96,9 +90,6 @@ public class StartingDay {
                     balance += builder;
 
                     Accounting.monthlyBalanceFileWriting(balance);  //sending it into a file
-
-
-
 
                 }
 

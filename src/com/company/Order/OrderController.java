@@ -100,7 +100,7 @@ public class OrderController {
 
     //region MENU
 
-    public void menuOrders() throws IOException {
+    public void menuOrders() {
         //descargo todos los pedidos que tengo para trabajarlo localmente
         ArrayList<Order> orderList = new ArrayList<>();
         File orderFile = new File ("Orders.json");
@@ -135,7 +135,7 @@ public class OrderController {
                     showOrders(orderList);
 
                     System.out.println("Seleccione una tecla para finalizar");
-                    System.in.read();
+                    reader.nextLine();
                     break;
                 case 3:
                     System.out.println("Buscador por id");
@@ -145,7 +145,7 @@ public class OrderController {
                     showOneOrder(order);
 
                     System.out.println("Seleccione una tecla para finalizar");
-                    System.in.read();
+                    reader.nextLine();
                     break;
 
                 case 9:
@@ -166,7 +166,7 @@ public class OrderController {
     //region SELECTORS
 
     //pasar a modo menu
-    public ArrayList<Product> selectProduct() throws IOException {
+    public ArrayList<Product> selectProduct()  {
 
         ArrayList<Product> newOrder = new ArrayList<>();
 
@@ -197,7 +197,6 @@ public class OrderController {
                 case 2:
                     System.out.println("Menu Empanadas");
                     selectEmpanadas(newOrder, stockController);
-//                    System.in.read();
                     break;
                 case 3:
                     stockController.sellBeverage(newOrder);
@@ -394,7 +393,7 @@ public class OrderController {
     }
 
     //pasar a modo menu
-    public void selectPizza(ArrayList<Product> newOrder, StockController stockController) throws IOException {
+    public void selectPizza(ArrayList<Product> newOrder, StockController stockController) {
 
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
         Food newFood = new Food();

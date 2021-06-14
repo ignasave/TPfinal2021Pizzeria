@@ -107,13 +107,6 @@ public class AccountHandler {
 
 
 
-
-
-
-
-
-
-
     public  static String[] filenameFileRead(String filename, String[]fileNameArray){
         //reads file  filenames.json where all expenses and tickets filenames are saved
 

@@ -1,5 +1,7 @@
 package com.company.Shop;
 
+import com.company.Accounting.AccountingController;
+import com.company.Accounting.StartingDay;
 import com.company.Order.Order;
 import com.company.Order.OrderController;
 import com.company.Stock.Stock;
@@ -21,6 +23,7 @@ public class Shop {
         stockController.getStock().readMaterialsFromFile("RawMaterials.json");
         stockController.getStock().readBeveragesFromFile("Beverages.json");
         orderController = new OrderController();
+        StartingDay startingDay = new StartingDay();
     }
     //endregion
 
@@ -48,8 +51,8 @@ public class Shop {
                 case 2:
                     orderController.menuOrders();
                     break;
-                case 3:
-
+                case 4:
+                    AccountingController.accountingMenu();
                     break;
                 case 9:
                     out = true;

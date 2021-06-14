@@ -3,6 +3,7 @@ package com.company.Accounting;
 import com.company.Product.Beverage;
 import com.company.RawMaterial.RawMaterial;
 import com.company.Person.Employee;
+import com.company.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Expenses extends Accounting {
 
@@ -127,7 +129,7 @@ public class Expenses extends Accounting {
         }
 
 
-        Accounting.expensesToPayOrAddingInCurrentFile(expense,1);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
+        Accounting.expensesToPayOrAddingInCurrentAccountFile(expense,1);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
 
     }
 
@@ -194,7 +196,8 @@ public class Expenses extends Accounting {
 
         double total = 0;
         double aux = 0;
-
+        Utils.cls();
+        Scanner reader = new Scanner(System.in);
         if(option == 0){
             System.out.println("\n\n\t\tGASTOS EN GRAL");
             System.out.println("-----------------------------------------------------------------");
@@ -221,7 +224,8 @@ public class Expenses extends Accounting {
         }else{
             printEmployeeExpenses();
         }
-
+        System.out.println("Cualquiera para continuar");
+        reader.nextLine();
 
     }
 
@@ -321,27 +325,31 @@ public class Expenses extends Accounting {
         //filename is in the parameter because of the historic expenses,
         ///option: 0 prints all expenses. 1 print only beverages. 2 only raw material. 3: employees
 
-
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
-
-        try{
-
-            reader = new BufferedReader(new FileReader(new File(filename)));
-            expensesArray = gson.fromJson(reader,new TypeToken<List<Expenses>>(){}.getType());
-
-            printExpenses(option);     ///print content of  expenses
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }finally {
+        File file = new File(filename);
+        if(file.exists()){
             try{
-                if(reader != null){
-                    reader.close();
-                }
-            }catch(IOException e){
+                reader = new BufferedReader(new FileReader(file));
+                expensesArray = gson.fromJson(reader,new TypeToken<List<Expenses>>(){}.getType());
+                printExpenses(option);     ///print content of  expenses
+            } catch(IOException e) {
                 e.printStackTrace();
+            } finally {
+                try{
+                    if(reader != null){
+                        reader.close();
+                    }
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            Utils.cls();
+            System.out.println("No hay ningun gasto ingresado");
+            Scanner sReader = new Scanner(System.in);
+            System.out.println("Cualquiera para continuar");
+            sReader.nextLine();
         }
     }
 

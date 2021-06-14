@@ -3,6 +3,7 @@ package com.company.Accounting;
 import com.company.Product.Product;
 import com.company.Order.Delivery;
 import com.company.Order.Order;
+import com.company.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 
 public class Incomes extends Accounting {
 
@@ -100,16 +102,17 @@ public class Incomes extends Accounting {
 
 
     public static  void printTickets() {
-
+        Utils.cls();
+        Scanner reader = new Scanner(System.in);
         System.out.println("\n\n\t\tTickets del mes");
         System.out.println("-----------------------------------------------------------------");
         for(Incomes inc : incomesArray){
             if(inc != null){
-
                 printIncomeOneTicket(inc);
             }
-
         }
+        System.out.println("Cualquiera para continuar");
+        reader.nextLine();
     }
 
 
@@ -144,25 +147,31 @@ public class Incomes extends Accounting {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
+        File file = new File(filename);
+        if(file.exists()) {
+            try {
+                reader = new BufferedReader(new FileReader(file));
+                incomesArray = gson.fromJson(reader, new TypeToken<List<Incomes>>() {
+                }.getType());
+                printTickets();     ///print content of  incomes
 
-        try{
-
-            reader = new BufferedReader(new FileReader(new File(filename)));
-            incomesArray = gson.fromJson(reader,new TypeToken<List<Incomes>>(){}.getType());
-
-
-            printTickets();     ///print content of  incomes
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }finally {
-            try{
-                if(reader != null){
-                    reader.close();
-                }
-            }catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            Utils.cls();
+            System.out.println("No hay ningun ticket ingresado");
+            Scanner sReader = new Scanner(System.in);
+            System.out.println("Cualquiera para continuar");
+            sReader.nextLine();
         }
     }
 
