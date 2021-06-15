@@ -59,59 +59,90 @@ public class Stock {
     }
 
     public void addToExistentStock(RawMaterial rawMaterial, int quantity) {
-        if (rawMaterials.containsKey(rawMaterial)) {
-            rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
-        } else {
-            // ERROR
+        try{
+            if (rawMaterials.containsKey(rawMaterial)) {
+                rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
+            } else {
+                throw new SettingStockError("blabla");
+            }
+        }catch(SettingStockError e){    ///catching error with an exception created by us
+            System.out.println(e.getMessage());
+
         }
+
     }
 
     public void addToExistentStock(Beverage beverage, int quantity) {
-        if (beverages.containsKey(beverage)) {
-            beverages.put(beverage, beverages.get(beverage) + quantity);
-        } else {
-            // ERROR
+        try{
+            if (beverages.containsKey(beverage)) {
+                beverages.put(beverage, beverages.get(beverage) + quantity);
+            } else {
+                throw new SettingStockError("blabla");
+            }
+        }catch(SettingStockError e){
+            System.out.println(e.getMessage());
         }
+
     }
 
     public void addNewStock(RawMaterial rawMaterial, int quantity) {
-        if (!rawMaterials.containsKey(rawMaterial)) {
-            rawMaterials.put(rawMaterial, quantity);
-        } else {
-            // ERROR
+        try{
+            if (!rawMaterials.containsKey(rawMaterial)) {
+                rawMaterials.put(rawMaterial, quantity);
+            } else {
+                throw new SettingStockError("blablaa");
+            }
+        }catch(SettingStockError e){
+            System.out.println(e.getMessage());
         }
+
     }
 
     public void addNewStock(Beverage beverage, int quantity) {
-        if (!beverages.containsKey(beverage)) {
-            beverages.put(beverage, quantity);
-        } else {
-            // ERROR
+        try{
+            if (!beverages.containsKey(beverage)) {
+                beverages.put(beverage, quantity);
+            } else {
+                throw new SettingStockError("blabla");
+            }
+        }catch(SettingStockError e){
+            System.out.println(e.getMessage());
         }
+
     }
 
     public void removeFromExistentStock(RawMaterial rawMaterial, int quantity) {
-        if (rawMaterials.containsKey(rawMaterial)) {
-            int materialQuantity = rawMaterials.get(rawMaterial);
-            int res = materialQuantity - quantity;
-            if (res < 0)
-                res = 0;
-            rawMaterials.put(rawMaterial, res);
-        } else {
-            // ERROR
+        try{
+            if (rawMaterials.containsKey(rawMaterial)) {
+                int materialQuantity = rawMaterials.get(rawMaterial);
+                int res = materialQuantity - quantity;
+                if (res < 0)
+                    res = 0;
+                rawMaterials.put(rawMaterial, res);
+            } else {
+                throw new SettingStockError("blabla");
+            }
+        }catch(SettingStockError e){
+            System.out.println(e.getMessage());
         }
+
     }
 
     public void removeFromExistentStock(Beverage beverage, int quantity) {
-        if (beverages.containsKey(beverage)) {
-            int materialQuantity = beverages.get(beverage);
-            int res = materialQuantity - quantity;
-            if (res < 0)
-                res = 0;
-            beverages.put(beverage, res);
-        } else {
-            // ERROR
+        try{
+            if (beverages.containsKey(beverage)) {
+                int materialQuantity = beverages.get(beverage);
+                int res = materialQuantity - quantity;
+                if (res < 0)
+                    res = 0;
+                beverages.put(beverage, res);
+            } else {
+                throw new SettingStockError("blabla");
+            }
+        }catch(SettingStockError e){
+            System.out.println(e.getMessage());
         }
+
     }
 
     public void saveMaterialsToFile(String nameFile) {
