@@ -1,1 +1,24 @@
-[]
+[
+  {
+    "products": [
+      "Coca 1l"
+    ],
+    "finalPrice": 120.0,
+    "productPrice": 100.0,
+    "totalPrice": 120.0,
+    "id": "549D1E0",
+    "dateTime": {
+      "date": {
+        "year": 2021,
+        "month": 6,
+        "day": 15
+      },
+      "time": {
+        "hour": 12,
+        "minute": 46,
+        "second": 39,
+        "nano": 869296900
+      }
+    }
+  }
+]

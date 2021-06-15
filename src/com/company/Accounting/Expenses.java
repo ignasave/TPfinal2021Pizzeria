@@ -126,13 +126,13 @@ public class Expenses extends Accounting {
 
     public static double printExpensesOneEmployee(Expenses xp) {
 
-        System.out.print("Comercio:          " + xp.COMPANYNAME);
-        System.out.println(". Cuit: " + xp.CUITNUMBER);
+        System.out.println("Comercio   : " + xp.COMPANYNAME);
+        System.out.println("Cuit       : " + xp.CUITNUMBER);
         System.out.println("ID empleado: " + xp.employee.getId());
-        System.out.println("Nombre: " + xp.employee.getName());
-        System.out.println("Apellido: " + xp.employee.getLastname());
-        System.out.println("DNI: " + xp.employee.getDni());
-        System.out.println("Salario: " + xp.employee.getWage());
+        System.out.println("Nombre     : " + xp.employee.getName());
+        System.out.println("Apellido   : " + xp.employee.getLastname());
+        System.out.println("DNI        : " + xp.employee.getDni());
+        System.out.println("Salario    : " + xp.employee.getWage());
         System.out.println("-----------------------------------------------------");
 
         return xp.employee.getWage();
@@ -142,17 +142,17 @@ public class Expenses extends Accounting {
     public static double oneBeverageExpense(Expenses xp) {
         double total = 0;
 
-        System.out.print("Comercio:          " + xp.COMPANYNAME);
-        System.out.println(". Cuit: " + xp.CUITNUMBER);
-        System.out.println("ID producto:          " + xp.beverage.getId());
-        System.out.println("Fecha:             " + xp.date);
-        System.out.println("Nombre:          " + xp.beverage.getName());
-        System.out.println("Marca:          " + xp.beverage.getBrand());
-        System.out.println("Tamaño:          " + xp.beverage.getSizeInLt());
+        System.out.println("Comercio         : " + xp.COMPANYNAME);
+        System.out.println("Cuit             : " + xp.CUITNUMBER);
+        System.out.println("ID producto      : " + xp.beverage.getId());
+        System.out.println("Fecha            : " + xp.date);
+        System.out.println("Nombre           : " + xp.beverage.getName());
+        System.out.println("Marca            : " + xp.beverage.getBrand());
+        System.out.println("Tamaño           : " + xp.beverage.getSizeInLt());
         System.out.println("Precio (x unidad): " + xp.beverage.getCostPrice());
-        System.out.println("Cantidad:          " + xp.quantity);
+        System.out.println("Cantidad         : " + xp.quantity);
 
-        System.out.println("                             Total: " + xp.beverage.getCostPrice() * xp.quantity);
+        System.out.println("Total            : " + xp.beverage.getCostPrice() * xp.quantity);
         System.out.println("-----------------------------------------------------------------");
 
         total = xp.beverage.getCostPrice() * xp.quantity;
@@ -163,14 +163,14 @@ public class Expenses extends Accounting {
     public static double oneRawMaterialExpense(Expenses xp) {
         double total = 0;
 
-        System.out.print("Comercio        : " + xp.COMPANYNAME);
-        System.out.println(". Cuit: " + xp.CUITNUMBER);
+        System.out.println("Comercio        : " + xp.COMPANYNAME);
+        System.out.println("Cuit            : " + xp.CUITNUMBER);
         System.out.println("Fecha           : " + xp.date);
-        System.out.println("Nombre        : " + xp.rawMat.getName());
+        System.out.println("Nombre          : " + xp.rawMat.getName());
         System.out.println("Precio (x Kg)   : " + xp.rawMat.getPrice());
         System.out.println("Cantidad (en Kg): " + xp.quantity);
 
-        System.out.println("                        Total: " + xp.rawMat.getPrice() * xp.quantity);
+        System.out.println("Total           : " + xp.rawMat.getPrice() * xp.quantity);
         System.out.println("-----------------------------------------------------------------");
 
         total = xp.rawMat.getPrice() * xp.quantity;

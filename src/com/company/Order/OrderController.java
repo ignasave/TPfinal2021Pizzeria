@@ -17,6 +17,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +30,17 @@ public class OrderController {
     // region SHOW
 
     public void showOneOrder(Order order) {
-        System.out.println("\n--------------------------------------\n");
-        System.out.println(order.getFinalPrice());
-        System.out.println(order.getTotalPrice());
-        System.out.println(order.getProductPrice());
-        System.out.println(order.getId());
-        System.out.println(order.getDateTime());
+
+        System.out.println("--------------------------------------");
+        System.out.println("ID:              " + order.getId());
+        System.out.println("Precio final:    " + order.getFinalPrice());
+        System.out.println("Precio total:    " + order.getTotalPrice());
+        System.out.println("Precio de costo: " + order.getProductPrice());
+        System.out.println("Fecha:           " + order.getDateTime());
+        System.out.println("Productos ----------------------------");
+
         order.getProducts().forEach((v) -> System.out.println(v));
-        System.out.println("\n--------------------------------------\n");
+        System.out.println("--------------------------------------");
 
     }
 
@@ -72,8 +77,11 @@ public class OrderController {
             for (int i = 0; i < recipe.size(); i++) {
                 rawMaterialsList.add(stockController.getStock().searchMaterialByName(recipe.get(i)));
             }
-        } else
+        } else{
+            Utils.cls();
             System.out.println("Materias primas no disponibles");
+            Utils.pressToContinue();
+        }
         return flag;
     }
 
@@ -114,18 +122,16 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
-
                     selectTypeOrder(employeeController, orderList);
-
                     saveOrdersDay("Orders.json");
                     break;
                 case 2:
-                    System.out.println("Lista de pedidos");
+                    Utils.cls();
                     showOrders(orderList);
-                    System.out.println("Seleccione una tecla para finalizar");
-                    reader.nextLine();
+                    Utils.pressToContinue();
                     break;
                 case 3:
+                    Utils.cls();
                     showOrders(orderList);
                     System.out.println("Seleccionar ID a buscar: ");
                     Scanner sReader = new Scanner(System.in);
@@ -136,10 +142,7 @@ public class OrderController {
                     } else {
                         System.out.println("El ID ingresado es incorrecto");
                     }
-                    Scanner tReader = new Scanner(System.in);
-                    System.out.println("Seleccione una tecla para finalizar");
-                    tReader.nextLine();
-                    System.out.println();
+                    Utils.pressToContinue();
                     saveOrdersDay("Orders.json");
                     break;
 
@@ -389,8 +392,6 @@ public class OrderController {
         float price = 0;
         for (RawMaterial rawMaterial : rawMaterialsList) {
             price += rawMaterial.getPrice();
-            System.out.println("---------------------------");
-            System.out.println("materia prima: " + rawMaterial.getPrice());
         }
         return price;
     }

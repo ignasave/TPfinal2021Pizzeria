@@ -50,6 +50,7 @@ public class Shop {
                     orderController.menuOrders(employeeController);
                     break;
                 case 3:
+                    Utils.cls();
                     employeeController.readEmployeeFile("Employee.json");
                     employeeController.showEmployees();
                     Utils.pressToContinue();

@@ -85,7 +85,7 @@ public class EmployeeController {
 
     // region HELPERS
     public void showOneEmployee(Employee employee) {
-        System.out.println("---------------------------------------\n");
+        System.out.println("---------------------------------------");
         System.out.println("  Nombre: " + employee.getName());
         System.out.println("Apellido: " + employee.getLastname());
         System.out.println("     Dni: " + employee.getDni());
@@ -99,7 +99,7 @@ public class EmployeeController {
             System.out.println("Empleado Interno");
         else
             System.out.println("Delivery");
-        System.out.println("\n---------------------------------------\n");
+        System.out.println("---------------------------------------");
     }
 
     public void showEmployees() {

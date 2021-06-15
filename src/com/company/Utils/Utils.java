@@ -18,6 +18,5 @@ public class Utils {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Cualquiera para continuar");
         scanner.nextLine();
-        scanner.close();
     }
 }

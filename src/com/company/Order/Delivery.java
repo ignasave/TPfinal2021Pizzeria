@@ -1,7 +1,5 @@
 package com.company.Order;
 
-import com.company.Product.Product;
-import com.company.Person.Client;
 import com.company.Person.Employee;
 
 import java.time.LocalDateTime;
