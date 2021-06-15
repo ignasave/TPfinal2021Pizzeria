@@ -26,6 +26,7 @@ import java.util.Scanner;
 
 public class OrderController {
     private ArrayList<Order> orderList = new ArrayList<>();
+    private Cart<Product> productsCart = new Cart<>(30);
 
     // region SHOW
 
@@ -159,7 +160,6 @@ public class OrderController {
 
     public Order selectTypeOrder(EmployeeController employeeController, ArrayList<Order> orderList) {
 
-        ArrayList<Product> products = new ArrayList<>();
         Order order = new Order();
 
         Scanner reader = new Scanner(System.in);
@@ -175,24 +175,24 @@ public class OrderController {
             option = reader.nextInt();
             switch (option) {
                 case 1:
-                    products.clear();
+                    productsCart.getProducts().clear();
                     System.out.println("Take away");
 
-                    products = selectProduct();
-                    order = createOrder(products);
+                    selectProduct();
+                    order = createOrder(this.productsCart.getProducts());
                     orderList.add(order);
 
                     break;
                 case 2:
-                    products.clear();
+                    productsCart.getProducts().clear();
                     System.out.println("Delivery\n");
                     System.out.println("Escriba la dirección de destino: ");
                     String address = reader.nextLine();
 
-                    products = selectProduct();
+                    selectProduct();
 
                     Employee employee = employeeController.getEmployeeDelivery();
-                    storeOrder(createOrderDelivery(products, address, employee), orderList);
+                    storeOrder(createOrderDelivery(this.productsCart.getProducts(), address, employee), orderList);
                     break;
 
                 case 9:
@@ -209,9 +209,7 @@ public class OrderController {
 
     // region SELECTORS
 
-    public ArrayList<Product> selectProduct() {
-
-        ArrayList<Product> newOrder = new ArrayList<>();
+    public void selectProduct() {
 
         StockController stockController = new StockController();
 
@@ -233,15 +231,15 @@ public class OrderController {
             switch (option) {
                 case 1:
                     System.out.println("Menú Pizzas");
-                    selectPizza(newOrder, stockController);
+                    selectPizza(stockController);
 
                     break;
                 case 2:
                     System.out.println("Menu Empanadas");
-                    selectEmpanadas(newOrder, stockController);
+                    selectEmpanadas(stockController);
                     break;
                 case 3:
-                    stockController.sellBeverage(newOrder);
+                    stockController.sellBeverage(this.productsCart.getProducts());
                     break;
                 case 9:
                     out = true;
@@ -251,11 +249,10 @@ public class OrderController {
             }
 
         }
-        return newOrder;
 
     }
 
-    public void selectEmpanadas(ArrayList<Product> newOrder, StockController stockController) {
+    public void selectEmpanadas(StockController stockController) {
 
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
         ArrayList<String> recipe = new ArrayList<>();
@@ -279,28 +276,28 @@ public class OrderController {
                     recipe.add("Choclo");
                     recipe.add("Queso");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Empanada", "Humita", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Empanada", "Humita", stockController);
                     }
                     break;
                 case 2:
                     recipe.add("Jamón");
                     recipe.add("Queso");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Empanada", "JYQ", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Empanada", "JYQ", stockController);
                     }
                     break;
                 case 3:
                     recipe.add("Carne");
                     recipe.add("Cebolla");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Empanada", "Carne", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Empanada", "Carne", stockController);
                     }
                     break;
                 case 4:
                     recipe.add("Verdura");
                     recipe.add("Queso");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Empanada", "Verdura", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Empanada", "Verdura", stockController);
                     }
                     break;
                 case 9:
@@ -313,7 +310,7 @@ public class OrderController {
         }
     }
 
-    public void selectPizza(ArrayList<Product> newOrder, StockController stockController) {
+    public void selectPizza(StockController stockController) {
 
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
 
@@ -343,7 +340,7 @@ public class OrderController {
                 case 1:
                     recipe.add("Aceitunas");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Pizza", "Muzzarella", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Pizza", "Muzzarella", stockController);
                     }
                     break;
                 case 2:
@@ -351,13 +348,13 @@ public class OrderController {
                     recipe.add("Aceitunas");
 
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Pizza", "Calabresa", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Pizza", "Calabresa", stockController);
                     }
                     break;
                 case 3:
                     recipe.add("Cebolla");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Pizza", "Fugazzetta", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Pizza", "Fugazzetta", stockController);
                     }
                     break;
                 case 4:
@@ -365,14 +362,14 @@ public class OrderController {
                     recipe.add("Jamon Crudo");
                     recipe.add("Aceituna");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Pizza", "Rucula", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Pizza", "Rucula", stockController);
                     }
                     break;
                 case 5:
                     recipe.add("Tomate");
                     recipe.add("Aceituna");
                     if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
-                        add2Order(rawMaterialsList, newOrder, "Pizza", "Napolitana", stockController);
+                        add2Order(rawMaterialsList, this.productsCart.getProducts(), "Pizza", "Napolitana", stockController);
                     }
                     break;
                 case 9:

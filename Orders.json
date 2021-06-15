@@ -20,5 +20,29 @@
         "nano": 869296900
       }
     }
+  },
+  {
+    "products": [
+      "PizzaCalabresa",
+      "PizzaFugazzetta",
+      "Coca 1l"
+    ],
+    "finalPrice": 1940.0,
+    "productPrice": 1500.0,
+    "totalPrice": 1940.0,
+    "id": "0D6A2BE",
+    "dateTime": {
+      "date": {
+        "year": 2021,
+        "month": 6,
+        "day": 15
+      },
+      "time": {
+        "hour": 18,
+        "minute": 56,
+        "second": 54,
+        "nano": 807081800
+      }
+    }
   }
 ]
