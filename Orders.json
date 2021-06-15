@@ -44,5 +44,47 @@
         "nano": 807081800
       }
     }
+  },
+  {
+    "employee": {
+      "wage": 0.0,
+      "active": true,
+      "dni": 0,
+      "extern": false
+    },
+    "out": {
+      "date": {
+        "year": 2021,
+        "month": 6,
+        "day": 15
+      },
+      "time": {
+        "hour": 19,
+        "minute": 45,
+        "second": 42,
+        "nano": 666371500
+      }
+    },
+    "address": "Cordoba 3158",
+    "products": [
+      "PizzaMuzzarella"
+    ],
+    "finalPrice": 520.0,
+    "productPrice": 400.0,
+    "totalPrice": 570.0,
+    "id": "A2645AA",
+    "dateTime": {
+      "date": {
+        "year": 2021,
+        "month": 6,
+        "day": 15
+      },
+      "time": {
+        "hour": 19,
+        "minute": 15,
+        "second": 42,
+        "nano": 666371500
+      }
+    }
   }
 ]

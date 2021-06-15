@@ -63,7 +63,7 @@ public class Stock {
             if (rawMaterials.containsKey(rawMaterial)) {
                 rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
             } else {
-                throw new SettingStockError("blabla");
+                throw new SettingStockError("La Materia Prima no existe en el stock");
             }
         }catch(SettingStockError e){    ///catching error with an exception created by us
             System.out.println(e.getMessage());
@@ -77,7 +77,7 @@ public class Stock {
             if (beverages.containsKey(beverage)) {
                 beverages.put(beverage, beverages.get(beverage) + quantity);
             } else {
-                throw new SettingStockError("blabla");
+                throw new SettingStockError("La Bebida no existe en el stock");
             }
         }catch(SettingStockError e){
             System.out.println(e.getMessage());
@@ -90,7 +90,7 @@ public class Stock {
             if (!rawMaterials.containsKey(rawMaterial)) {
                 rawMaterials.put(rawMaterial, quantity);
             } else {
-                throw new SettingStockError("blablaa");
+                throw new SettingStockError("La Materia Prima ya existe en el stock");
             }
         }catch(SettingStockError e){
             System.out.println(e.getMessage());
@@ -103,7 +103,7 @@ public class Stock {
             if (!beverages.containsKey(beverage)) {
                 beverages.put(beverage, quantity);
             } else {
-                throw new SettingStockError("blabla");
+                throw new SettingStockError("La Bebida ya existe en el stock");
             }
         }catch(SettingStockError e){
             System.out.println(e.getMessage());
@@ -120,7 +120,7 @@ public class Stock {
                     res = 0;
                 rawMaterials.put(rawMaterial, res);
             } else {
-                throw new SettingStockError("blabla");
+                throw new SettingStockError("La Materia Prima no existe en el stock");
             }
         }catch(SettingStockError e){
             System.out.println(e.getMessage());
@@ -137,7 +137,7 @@ public class Stock {
                     res = 0;
                 beverages.put(beverage, res);
             } else {
-                throw new SettingStockError("blabla");
+                throw new SettingStockError("La Bebida no existe en el stock");
             }
         }catch(SettingStockError e){
             System.out.println(e.getMessage());

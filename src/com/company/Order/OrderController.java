@@ -176,25 +176,20 @@ public class OrderController {
             switch (option) {
                 case 1:
                     productsCart.getProducts().clear();
-                    System.out.println("Take away");
-
                     selectProduct();
                     order = createOrder(this.productsCart.getProducts());
                     orderList.add(order);
-
                     break;
                 case 2:
                     productsCart.getProducts().clear();
-                    System.out.println("Delivery\n");
+                    Utils.cls();
                     System.out.println("Escriba la dirección de destino: ");
-                    String address = reader.nextLine();
-
+                    Scanner sreader = new Scanner(System.in);
+                    String address = sreader.nextLine();
                     selectProduct();
-
                     Employee employee = employeeController.getEmployeeDelivery();
                     storeOrder(createOrderDelivery(this.productsCart.getProducts(), address, employee), orderList);
                     break;
-
                 case 9:
                     out = true;
                     break;

@@ -1,6 +1,8 @@
 package com.company.BeverageType;
 
-public enum BeverageType {
+import com.company.BeverageProp.BeverageProp;
+
+public enum BeverageType implements BeverageProp {
     WATER("Agua"),
     SODA("Gaseosa"),
     ALCOHOLIC("Con Alcohol"),
@@ -13,6 +15,7 @@ public enum BeverageType {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }

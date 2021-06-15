@@ -1,6 +1,8 @@
 package com.company.BeverageBrand;
 
-public enum BeverageBrand {
+import com.company.BeverageProp.BeverageProp;
+
+public enum BeverageBrand implements BeverageProp {
     COCACOLA("CocaCola"),
     QUILMES("Quilmes"),
     MANAOS("Manaos"),
@@ -14,6 +16,7 @@ public enum BeverageBrand {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
