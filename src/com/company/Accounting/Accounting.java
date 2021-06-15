@@ -15,15 +15,12 @@ import java.util.Scanner;
 
 public class Accounting {
 
-
     final String COMPANYNAME = "Pizzeria el programador";
     final String CUITNUMBER = "30-23985345-3";
-
 
     protected String date;
 
     private static double cash;
-
 
     private static double[] currentAccount = new double[100];
     private static double[] billsToPay = new double[100];
@@ -32,21 +29,19 @@ public class Accounting {
 
     private static String[] monthlyBalance = new String[50];
 
-
-    //region Construct
+    // region CONSTRUCTOR
 
     public Accounting() {
         this.date = LocalDatetoString();
     }
 
-    //endregion
+    // endregion
 
-
-    //region Getter Y Setter
+    // region GETTER & SETTER
 
     public static double getCash() {
         return gettingCash();
-    }  // reads cash.json file and returns
+    } // reads cash.json file and returns
 
     public static void setCash(double cash) {
         settingCash(cash);
@@ -68,7 +63,6 @@ public class Accounting {
     public void setCurrentAccount(double[] currentAccount) {
         Accounting.currentAccount = currentAccount;
     }
-
 
     public String getDate() {
         return date;
@@ -94,8 +88,7 @@ public class Accounting {
         Accounting.fileNameArray = fileNameArray;
     }
 
-    //endregion
-
+    // endregion
 
     public String LocalDatetoString() {
         LocalDateTime date = LocalDateTime.now();
@@ -105,9 +98,8 @@ public class Accounting {
         return aux;
     }
 
-
     public static double gettingCash() {
-        //reads file  cash.json
+        // reads file cash.json
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
@@ -137,7 +129,7 @@ public class Accounting {
     }
 
     public static void settingCash(double amount) {
-        //rewrite file  cash.json
+        // rewrite file cash.json
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedWriter fSalida = null;
@@ -164,10 +156,9 @@ public class Accounting {
 
     }
 
-
     public static void amountToBillsToPayOrCurrentAccount(double monto, int option) {
-        //adds amount in billsToPay array or in currentAccount array
-        //option1=billsToPay   option2 = currentAccount
+        // adds amount in billsToPay array or in currentAccount array
+        // option1=billsToPay option2 = currentAccount
 
         int i = 0;
 
@@ -192,13 +183,11 @@ public class Accounting {
 
     }
 
-
     public static void printsBillsToPayOrCurrentAccount(int option) {
 
-        //option 1 = billsToPay .. option 2 = currentAccount
+        // option 1 = billsToPay .. option 2 = currentAccount
 
         double total = 0;
-        Scanner reader = new Scanner(System.in);
         Utils.cls();
         if (option == 1) {
             System.out.println("Cuentas a pagar hasta la fecha\n-------------------------------");
@@ -224,36 +213,18 @@ public class Accounting {
             System.out.println("-------------------------------\n" + "\tTotal: \t" + total + "$\n");
         }
 
-        System.out.println("Cualquiera para continuar");
-        reader.nextLine();
+        Utils.pressToContinue();
 
     }
-
-
-
-/*
-    public void pedidotoCaja(double monto){
-        cash += monto;
-    }
-
-    public String LocalDatetoString(){
-        LocalDateTime date = LocalDateTime.now();
-        String aux = "";
-
-        aux += date;
-        return aux;
-    }
-*/
 
     public static void printCash() {
         System.out.println("Total en caja: " + getCash());
     }
 
-
     public static void expensesToPayOrAddingInCurrentAccountFileToArray(String filename, int option) {
-        //lee el archivo  bills_to_pay.json  o y pasa su contenido a expensesArray para no perder
-        // los datos ya que  despues el arreglo siempre sobreescribe el archivo
-
+        // lee el archivo bills_to_pay.json o y pasa su contenido a expensesArray para
+        // no perder
+        // los datos ya que despues el arreglo siempre sobreescribe el archivo
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
@@ -267,7 +238,6 @@ public class Accounting {
             } else {
                 currentAccount = gson.fromJson(reader, currentAccount.getClass());
             }
-
 
         } catch (FileNotFoundException e) {
             System.out.println("Archivo no existe pero se creara: " + filename);
@@ -284,9 +254,9 @@ public class Accounting {
         }
     }
 
-
     public static void expensesToPayOrAddingInCurrentAccountFile(double amount, int option) {
-        //sobreescribe archivo con el arreglo billsToPay o currentAccount (donde estan todos los gastos (double) o los ingresos)
+        // sobreescribe archivo con el arreglo billsToPay o currentAccount (donde estan
+        // todos los gastos (double) o los ingresos)
 
         String filename;
 
@@ -295,7 +265,6 @@ public class Accounting {
         } else {
             filename = "current-account.json";
         }
-
 
         expensesToPayOrAddingInCurrentAccountFileToArray(filename, option);
         amountToBillsToPayOrCurrentAccount(amount, option);
@@ -310,10 +279,8 @@ public class Accounting {
 
             if (option == 1) {
                 json = gson.toJson(billsToPay, billsToPay.getClass());
-                //System.out.println( "soy el string jason \n " + json);
             } else {
                 json = gson.toJson(currentAccount, currentAccount.getClass());
-                //System.out.println( "soy el string jason \n " + json);
             }
 
             fSalida.write(json);
@@ -334,10 +301,9 @@ public class Accounting {
 
     }
 
-
     public static void printFileBillsToPayOrCurrentAccount(int option) {
-        //filename is in the parameter because of the historic expenses,
-        ///option: 0 prints all expenses. 1 print only beverages. 2 only raw material
+        // filename is in the parameter because of the historic expenses,
+        /// option: 0 prints all expenses. 1 print only beverages. 2 only raw material
 
         String filename;
 
@@ -359,8 +325,7 @@ public class Accounting {
                 currentAccount = gson.fromJson(reader, currentAccount.getClass());
             }
 
-
-            printsBillsToPayOrCurrentAccount(option);    ///print content of  expenses
+            printsBillsToPayOrCurrentAccount(option); /// print content of expenses
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -375,8 +340,8 @@ public class Accounting {
         }
     }
 
-
-    public static double totalBillsToPayOrCurrentAccount(int option) { // 1 returns total billsToPay and delete. 2 currentAccount
+    public static double totalBillsToPayOrCurrentAccount(int option) { // 1 returns total billsToPay and delete. 2
+                                                                       // currentAccount
 
         double total = 0;
 
@@ -402,7 +367,6 @@ public class Accounting {
 
             total = returningTotalAndDeletingBillsToPayOrCurrentAccount(option);
 
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -427,7 +391,8 @@ public class Accounting {
             for (double btp : billsToPay) {
                 if (btp != 0) {
                     total += btp;
-                    btp = 0;                  //una vez que ya agregue al total el gasto, asigno cero(que es como si lo borrara) xq esta funcion solo se llama al finalizar el mes
+                    btp = 0; // una vez que ya agregue al total el gasto, asigno cero(que es como si lo
+                             // borrara) xq esta funcion solo se llama al finalizar el mes
                 }
             }
 
@@ -436,7 +401,8 @@ public class Accounting {
             for (double ca : currentAccount) {
                 if (ca != 0) {
                     total += ca;
-                    ca = 0;                 //una vez que ya agregue al total el cierre de caja, asigno cero(que es como si lo borrara)xq esta funcion solo se llama al finalizar el mes
+                    ca = 0; // una vez que ya agregue al total el cierre de caja, asigno cero(que es como si
+                            // lo borrara)xq esta funcion solo se llama al finalizar el mes
 
                 }
             }
@@ -446,9 +412,8 @@ public class Accounting {
 
     }
 
-
     public static void monthlyBalanceFileRead(String filename) {
-        //reads file  monthlyBalance.json
+        // reads file monthlyBalance.json
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
@@ -472,7 +437,6 @@ public class Accounting {
         }
 
     }
-
 
     public static void monthlyBalanceFileWriting(String data) {
 
@@ -510,11 +474,9 @@ public class Accounting {
         }
     }
 
-
     public static void printMonthlyBalance(String filename) {
-        //reads file  monthlyBalance.json
+        // reads file monthlyBalance.json
         Utils.cls();
-        Scanner sReader = new Scanner(System.in);
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         File file = new File(filename);
@@ -538,10 +500,7 @@ public class Accounting {
         } else {
             System.out.println("No hay balance");
         }
-        System.out.println("Pulse cualquiera para continuar");
-        sReader.nextLine();
+        Utils.pressToContinue();
     }
 
-
 }
-

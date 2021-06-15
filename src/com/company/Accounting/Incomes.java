@@ -20,10 +20,8 @@ public class Incomes extends Accounting {
     private Order order;
     private static List<Incomes> incomesArray = new ArrayList<>();
 
-
-
-    //region Construct
-    public Incomes(){
+    // region CONSTRUCTOR
+    public Incomes() {
         super();
     }
 
@@ -35,9 +33,9 @@ public class Incomes extends Accounting {
 
     }
 
-    //endregion
+    // endregion
 
-    //region getter y setter
+    // region GETTER & SETTER
 
     public Order getOrder() {
         return order;
@@ -55,102 +53,84 @@ public class Incomes extends Accounting {
         Incomes.incomesArray = incomesArray;
     }
 
+    // endregion
 
-    //endregion
+    public void totalToCash() {
+        // adds in cash the total income from the order
 
-
-
-
-
-    public void  totalToCash(){
-        //adds in cash the total income from the order
-
-        Accounting.setCash( getCash() + order.getFinalPrice());
+        Accounting.setCash(getCash() + order.getFinalPrice());
     }
 
-
-
-    public static void printIncomeOneTicket(Incomes inc){
+    public static void printIncomeOneTicket(Incomes inc) {
 
         double total = 0;
 
         System.out.print("Comercio:          " + inc.COMPANYNAME);
-        System.out.println( ". Cuit: " + inc .CUITNUMBER);
+        System.out.println(". Cuit: " + inc.CUITNUMBER);
         System.out.println("Fecha: " + inc.date);
-        System.out.println( "ID orden: " + inc.order);
+        System.out.println("ID orden: " + inc.order);
 
         System.out.println("\n pedidos solicitados: ");
 
-        for(String mylist : inc.order.getProducts()){
-            if (inc!= null){
+        for (String mylist : inc.order.getProducts()) {
+            if (inc != null) {
                 System.out.println(mylist);
             }
         }
 
-        if(inc.order.getFinalPrice() != inc.order.getTotalPrice()){
+        if (inc.order.getFinalPrice() != inc.order.getTotalPrice()) {
             System.out.println("Costo delivery: " + (inc.order.getTotalPrice() - inc.order.getFinalPrice()));
         }
 
-        System.out.println("Total a pagar = $" +  inc.order.getFinalPrice());
+        System.out.println("Total a pagar = $" + inc.order.getFinalPrice());
         System.out.println("-----------------------------------------------------");
-
 
     }
 
-
-    public static  void printTickets() {
+    public static void printTickets() {
         Utils.cls();
-        Scanner reader = new Scanner(System.in);
         System.out.println("\n\n\t\tTickets del mes");
         System.out.println("-----------------------------------------------------------------");
-        for(Incomes inc : incomesArray){
-            if(inc != null){
+        for (Incomes inc : incomesArray) {
+            if (inc != null) {
                 printIncomeOneTicket(inc);
             }
         }
-        System.out.println("Cualquiera para continuar");
-        reader.nextLine();
+        Utils.pressToContinue();
     }
 
-
-    public static String creatingFileName(){
-        //creates the file name concatenating tickets with localdate except day
+    public static String creatingFileName() {
+        // creates the file name concatenating tickets with localdate except day
 
         return AccountHandler.createFileName("tickets-");
     }
 
+    public void ticketsFile(Incomes income) {
 
-    public  void  ticketsFile(Incomes income){
-
-        //creates filename and puts it in a file(filename.json).
-        //adds ticket(income) in  incomesArray
+        // creates filename and puts it in a file(filename.json).
+        // adds ticket(income) in incomesArray
 
         String filename = creatingFileName();
 
-        AccountHandler.filenameToFilenameArray(filename,fileNameArray);
+        AccountHandler.filenameToFilenameArray(filename, fileNameArray);
 
-        incomesArray = AccountHandler.writingListFile(incomesArray,filename,income); //generic method
-
+        incomesArray = AccountHandler.writingListFile(incomesArray, filename, income); // generic method
 
     }
 
-
-
-
-    public static void printFileTickets(String filename){
-        //prints tickets in the tickets-......json file
-        //filename is in the parameter because of the historic expenses,
-
+    public static void printFileTickets(String filename) {
+        // prints tickets in the tickets-......json file
+        // filename is in the parameter because of the historic expenses,
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         File file = new File(filename);
-        if(file.exists()) {
+        if (file.exists()) {
             try {
                 reader = new BufferedReader(new FileReader(file));
                 incomesArray = gson.fromJson(reader, new TypeToken<List<Incomes>>() {
                 }.getType());
-                printTickets();     ///print content of  incomes
+                printTickets(); /// print content of incomes
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -166,19 +146,15 @@ public class Incomes extends Accounting {
         } else {
             Utils.cls();
             System.out.println("No hay ningun ticket ingresado");
-            Scanner sReader = new Scanner(System.in);
-            System.out.println("Cualquiera para continuar");
-            sReader.nextLine();
+            Utils.pressToContinue();
         }
     }
 
-    public static void printFileWithExpensesAndTicketNames(){
-        //print files names in the file filenames.json
+    public static void printFileWithExpensesAndTicketNames() {
+        // print files names in the file filenames.json
 
-        AccountHandler.printFilenameFile(fileNameArray,"tic");
+        AccountHandler.printFilenameFile(fileNameArray, "tic");
 
     }
 
-
 }
-

@@ -8,7 +8,7 @@ public class Beverage extends Product {
     private float sizeInLt;
     private BeverageType type;
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public Beverage() {
         super();
     }
@@ -20,16 +20,17 @@ public class Beverage extends Product {
         this.type = type;
     }
 
-    public Beverage(String name, float sellPrice, float costPrice, BeverageBrand brand, float sizeInLt, BeverageType type) {
+    public Beverage(String name, float sellPrice, float costPrice, BeverageBrand brand, float sizeInLt,
+            BeverageType type) {
         super(name, sellPrice, costPrice);
         this.brand = brand;
         this.sizeInLt = sizeInLt;
         this.type = type;
     }
 
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public BeverageBrand getBrand() {
         return brand;
     }
@@ -53,21 +54,17 @@ public class Beverage extends Product {
     public void setType(BeverageType type) {
         this.type = type;
     }
-    //endregion
+    // endregion
 
     @Override
     public String show() {
-        return super.show() + " | Marca: " + brand.getName() + " | Tamaño en L: " + sizeInLt + " | Tipo de bebida: " + type.getName();
+        return super.show() + " | Marca: " + brand.getName() + " | Tamaño en L: " + sizeInLt + " | Tipo de bebida: "
+                + type.getName();
     }
 
     @Override
     public String toString() {
-        return "Beverage{" +
-                super.toString() +
-                "brand=" + brand +
-                ", sizeInLt=" + sizeInLt +
-                ", type=" + type +
-                '}';
+        return "Beverage{" + super.toString() + "brand=" + brand + ", sizeInLt=" + sizeInLt + ", type=" + type + '}';
     }
 
     @Override
@@ -79,8 +76,7 @@ public class Beverage extends Product {
             return false;
 
         Beverage beverage = (Beverage) o;
-        boolean answer = super.equals(o)
-                && this.brand == beverage.getBrand()
+        boolean answer = super.equals(o) && this.brand == beverage.getBrand()
                 && this.sizeInLt == beverage.getSizeInLt();
 
         return answer;

@@ -23,20 +23,19 @@ public class Expenses extends Accounting {
 
     private int quantity;
 
-    private  static List<Expenses> expensesArray = new ArrayList<>();
+    private static List<Expenses> expensesArray = new ArrayList<>();
 
-
-    //region CONSTRUCT
+    // region CONSTRUCTOR
 
     public Expenses() {
         super();
     }
 
-    public Expenses(Beverage beb,int quantity ) {
+    public Expenses(Beverage beb, int quantity) {
         super();
         this.beverage = beb;
         this.quantity = quantity;
-        expenseToBillsToPay(this);  //manda al arreglo bills to pay el monto del gasto
+        expenseToBillsToPay(this); // manda al arreglo bills to pay el monto del gasto
         expensesFile(this);
     }
 
@@ -55,11 +54,9 @@ public class Expenses extends Accounting {
         expensesFile(this);
     }
 
-    //endregion
+    // endregion
 
-
-
-    //region getter y setter
+    // region GETTER & SETTER
 
     public Beverage getBeverage() {
         return beverage;
@@ -101,43 +98,36 @@ public class Expenses extends Accounting {
         Expenses.expensesArray = expensesArray;
     }
 
+    // endregion
 
-    ///endregion
-
-
-
-    public static String creatingFileName(){
-        //creates the file name concatenating expenses- with localdate except day
+    public static String creatingFileName() {
+        // creates the file name concatenating expenses- with localdate except day
         return AccountHandler.createFileName("expenses-");
     }
 
-
-
-
-
-    public void expenseToBillsToPay(Expenses exp){
-        //finds out  about wich objet is the expense (exp) and send the
+    public void expenseToBillsToPay(Expenses exp) {
+        // finds out about wich objet is the expense (exp) and send the
         // total expense to billsToPay array, in Accounting class
 
         double expense = 0;
-        if(exp.beverage != null){
+        if (exp.beverage != null) {
             expense = exp.quantity * exp.beverage.getCostPrice();
-        }else if (exp.rawMat != null){
+        } else if (exp.rawMat != null) {
             expense = exp.rawMat.getPrice() * exp.quantity;
-        }else{
+        } else {
             expense = exp.employee.getWage();
         }
 
-
-        Accounting.expensesToPayOrAddingInCurrentAccountFile(expense,1);    //le paso al metodo de la clase Accounts el total para que lo agregue al archivo del arreglo billsToPay(double)
+        Accounting.expensesToPayOrAddingInCurrentAccountFile(expense, 1); // le paso al metodo de la clase Accounts el
+                                                                          // total para que lo agregue al archivo del
+                                                                          // arreglo billsToPay(double)
 
     }
 
-
-    public static double printExpensesOneEmployee(Expenses xp){
+    public static double printExpensesOneEmployee(Expenses xp) {
 
         System.out.print("Comercio:          " + xp.COMPANYNAME);
-        System.out.println( ". Cuit: " + xp .CUITNUMBER);
+        System.out.println(". Cuit: " + xp.CUITNUMBER);
         System.out.println("ID empleado: " + xp.employee.getId());
         System.out.println("Nombre: " + xp.employee.getName());
         System.out.println("Apellido: " + xp.employee.getLastname());
@@ -149,11 +139,11 @@ public class Expenses extends Accounting {
 
     }
 
-    public static  double oneBeverageExpense(Expenses xp){
+    public static double oneBeverageExpense(Expenses xp) {
         double total = 0;
 
         System.out.print("Comercio:          " + xp.COMPANYNAME);
-        System.out.println( ". Cuit: " + xp .CUITNUMBER);
+        System.out.println(". Cuit: " + xp.CUITNUMBER);
         System.out.println("ID producto:          " + xp.beverage.getId());
         System.out.println("Fecha:             " + xp.date);
         System.out.println("Nombre:          " + xp.beverage.getName());
@@ -170,12 +160,11 @@ public class Expenses extends Accounting {
         return total;
     }
 
-
-    public static double oneRawMaterialExpense(Expenses xp){
+    public static double oneRawMaterialExpense(Expenses xp) {
         double total = 0;
 
         System.out.print("Comercio        : " + xp.COMPANYNAME);
-        System.out.println( ". Cuit: " + xp .CUITNUMBER);
+        System.out.println(". Cuit: " + xp.CUITNUMBER);
         System.out.println("Fecha           : " + xp.date);
         System.out.println("Nombre        : " + xp.rawMat.getName());
         System.out.println("Precio (x Kg)   : " + xp.rawMat.getPrice());
@@ -189,27 +178,23 @@ public class Expenses extends Accounting {
         return total;
     }
 
-
-
-    public static void printExpenses( int option){
-        ///option 0 = all expenses. 1: just beverages. 2: just rawMaterial. 3: just employee
+    public static void printExpenses(int option) {
+        /// option 0 = all expenses. 1: just beverages. 2: just rawMaterial. 3: just
+        /// employee
 
         double total = 0;
         double aux = 0;
         Utils.cls();
-        Scanner reader = new Scanner(System.in);
-        if(option == 0){
+        if (option == 0) {
             System.out.println("\n\n\t\tGASTOS EN GRAL");
             System.out.println("-----------------------------------------------------------------");
-            for(Expenses xp : expensesArray){
-                if(xp != null){
-                    if(xp.beverage != null){
-
+            for (Expenses xp : expensesArray) {
+                if (xp != null) {
+                    if (xp.beverage != null) {
                         aux = oneBeverageExpense(xp);
-
-                    }else if (xp.rawMat != null) {
+                    } else if (xp.rawMat != null) {
                         aux = oneRawMaterialExpense(xp);
-                    }else
+                    } else
                         aux = printExpensesOneEmployee(xp);
 
                 }
@@ -217,18 +202,16 @@ public class Expenses extends Accounting {
             }
             System.out.println("Total hasta la fecha: " + total);
 
-        }else if(option == 1){
+        } else if (option == 1) {
             printBeverageExpenses();
-        }else if (option == 2){
+        } else if (option == 2) {
             printRawMaterialExpenses();
-        }else{
+        } else {
             printEmployeeExpenses();
         }
-        System.out.println("Cualquiera para continuar");
-        reader.nextLine();
+        Utils.pressToContinue();
 
     }
-
 
     public static void printEmployeeExpenses() {
 
@@ -237,8 +220,8 @@ public class Expenses extends Accounting {
 
         System.out.println("\n\n\t\tGASTOS EN EMPLEADOS");
         System.out.println("-----------------------------------------------------------------");
-        for(Expenses xp : expensesArray){
-            if(xp.employee != null){
+        for (Expenses xp : expensesArray) {
+            if (xp.employee != null) {
 
                 aux = printExpensesOneEmployee(xp);
                 total += aux;
@@ -249,7 +232,6 @@ public class Expenses extends Accounting {
 
     }
 
-
     public static void printRawMaterialExpenses() {
 
         double total = 0;
@@ -257,8 +239,8 @@ public class Expenses extends Accounting {
 
         System.out.println("\n\n\t\tGASTOS EN MATERIAS PRIMAS");
         System.out.println("-----------------------------------------------------------------");
-        for(Expenses xp : expensesArray){
-            if(xp.rawMat != null){
+        for (Expenses xp : expensesArray) {
+            if (xp.rawMat != null) {
 
                 aux = oneRawMaterialExpense(xp);
                 total += aux;
@@ -269,7 +251,6 @@ public class Expenses extends Accounting {
 
     }
 
-
     public static void printBeverageExpenses() {
 
         double total = 0;
@@ -277,7 +258,7 @@ public class Expenses extends Accounting {
 
         System.out.println("GASTOS EN BEBIDAS");
         System.out.println("-----------------------------------------------------------------");
-        for(Expenses xp : expensesArray) {
+        for (Expenses xp : expensesArray) {
             if (xp.beverage != null) {
                 aux = oneBeverageExpense(xp);
                 total = total + aux;
@@ -288,79 +269,64 @@ public class Expenses extends Accounting {
 
     }
 
-
     @Override
     public String toString() {
-        return "Expenses2{" +
-                "COMPANYNAME='" + COMPANYNAME + '\'' +
-                ", CUITNUMBER='" + CUITNUMBER + '\'' +
-                ", date='" + date + '\'' +
-                ", beverage=" + beverage +
-                ", rawMat=" + rawMat +
-                ", employee=" + employee +
-                ", quantity=" + quantity +
-                '}';
+        return "Expenses2{" + "COMPANYNAME='" + COMPANYNAME + '\'' + ", CUITNUMBER='" + CUITNUMBER + '\'' + ", date='"
+                + date + '\'' + ", beverage=" + beverage + ", rawMat=" + rawMat + ", employee=" + employee
+                + ", quantity=" + quantity + '}';
     }
 
-
-
-    public  void expensesFile(Expenses expense){
-        //creates filename and puts it in a file(filename.json).
-        //adds expense in expensesArray
+    public void expensesFile(Expenses expense) {
+        // creates filename and puts it in a file(filename.json).
+        // adds expense in expensesArray
 
         String filename = creatingFileName();
 
-        AccountHandler.filenameToFilenameArray(filename,fileNameArray); // adds filename into filenameArray (if doesnt exist)
+        AccountHandler.filenameToFilenameArray(filename, fileNameArray); // adds filename into filenameArray (if doesnt
+                                                                         // exist)
 
-        expensesArray = AccountHandler.writingListFile(expensesArray,filename,expense);  //generic method
-
+        expensesArray = AccountHandler.writingListFile(expensesArray, filename, expense); // generic method
 
     }
 
-
-
-
-
-    public static void printFileExpenses(String filename, int option){
-        //filename is in the parameter because of the historic expenses,
-        ///option: 0 prints all expenses. 1 print only beverages. 2 only raw material. 3: employees
+    public static void printFileExpenses(String filename, int option) {
+        // filename is in the parameter because of the historic expenses,
+        /// option: 0 prints all expenses. 1 print only beverages. 2 only raw material.
+        // 3: employees
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         File file = new File(filename);
-        if(file.exists()){
-            try{
+        if (file.exists()) {
+            try {
                 reader = new BufferedReader(new FileReader(file));
-                expensesArray = gson.fromJson(reader,new TypeToken<List<Expenses>>(){}.getType());
-                printExpenses(option);     ///print content of  expenses
-            } catch(IOException e) {
+                expensesArray = gson.fromJson(reader, new TypeToken<List<Expenses>>() {
+                }.getType());
+                printExpenses(option); /// print content of expenses
+            } catch (IOException e) {
                 e.printStackTrace();
             } finally {
-                try{
-                    if(reader != null){
+                try {
+                    if (reader != null) {
                         reader.close();
                     }
-                } catch(IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         } else {
             Utils.cls();
             System.out.println("No hay ningun gasto ingresado");
-            Scanner sReader = new Scanner(System.in);
-            System.out.println("Cualquiera para continuar");
-            sReader.nextLine();
+            Utils.pressToContinue();
         }
     }
 
+    public static void printFileWithExpensesAndTicketNames() {
+        // prints the filenames.json string array (contains all the files names for
+        // expenses and for incomes(tickets))
 
-    public static void printFileWithExpensesAndTicketNames(){
-        //prints the filenames.json string array (contains all the files names for expenses and for incomes(tickets))
-
-        AccountHandler.printFilenameFile(fileNameArray,"exp");
+        AccountHandler.printFilenameFile(fileNameArray, "exp");
 
     }
 
-
 }
-

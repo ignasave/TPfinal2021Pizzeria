@@ -5,7 +5,7 @@ public abstract class Person {
     private String name;
     private String lastname;
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public Person() {
     }
 
@@ -13,9 +13,9 @@ public abstract class Person {
         this.name = name;
         this.lastname = lastname;
     }
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public String getName() {
         return name;
     }
@@ -31,13 +31,12 @@ public abstract class Person {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    //endregion
+    // endregion
 
-    //region HELPERS
+    // region HELPERS
     @Override
     public String toString() {
-        return "Name: " + getName() +
-                "\nLastName: " + getLastname();
+        return "Name: " + getName() + "\nLastName: " + getLastname();
     }
 
     @Override
@@ -49,8 +48,7 @@ public abstract class Person {
             return false;
 
         Person person = (Person) o;
-        boolean answer = this.lastname == person.lastname
-                && this.name == person.name;
+        boolean answer = this.lastname == person.lastname && this.name == person.name;
 
         return answer;
     }
@@ -61,5 +59,5 @@ public abstract class Person {
         answer += 31 * this.lastname.hashCode();
         return answer;
     }
-    //endregion
+    // endregion
 }

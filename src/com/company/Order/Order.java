@@ -1,13 +1,9 @@
 package com.company.Order;
 
-import com.company.Product.Product;
-import com.company.Person.Client;
 import com.company.Utils.Utils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Locale;
-import java.util.UUID;
 
 public class Order {
     private ArrayList<String> products;
@@ -21,7 +17,8 @@ public class Order {
     public Order() {
     }
 
-    public Order( ArrayList<String> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+    public Order(ArrayList<String> products, float finalPrice, float productPrice, float totalPrice,
+            LocalDateTime dateTime) {
 
         this.products = products;
         this.finalPrice = finalPrice;
@@ -34,8 +31,6 @@ public class Order {
     // endregion
 
     // region GETTER & SETTER
-
-
 
     public ArrayList<String> getProducts() {
         return products;
@@ -85,9 +80,6 @@ public class Order {
         this.dateTime = dateTime;
     }
 
-
-
-
     // endregion
 
     // region HELPERS
@@ -96,14 +88,10 @@ public class Order {
     }
 
     public String toString() {
-        return "New order : \n" +
-                "--------------------------\n" +
-                //showProducts() +
-                "\nFinal Price: " + getFinalPrice() +
-                "\nProduct Price: " + getProductPrice() +
-                "\nTotal Price: " + getTotalPrice() +
-                "\nID: " + getId() +
-                "\nTime: " + getDateTime();
+        return "New order : \n" + "--------------------------\n" +
+        // showProducts() +
+                "\nFinal Price: " + getFinalPrice() + "\nProduct Price: " + getProductPrice() + "\nTotal Price: "
+                + getTotalPrice() + "\nID: " + getId() + "\nTime: " + getDateTime();
 
     }
     // endregion

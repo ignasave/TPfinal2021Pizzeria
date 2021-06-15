@@ -7,7 +7,6 @@ import com.company.Product.Beverage;
 import com.company.Product.Food;
 import com.company.Product.Product;
 import com.company.RawMaterial.RawMaterial;
-import com.company.Person.Client;
 import com.company.Person.Employee;
 import com.company.Stock.Stock;
 import com.company.Stock.StockController;
@@ -25,6 +24,8 @@ import java.util.Scanner;
 
 public class OrderController {
     private ArrayList<Order> orderList = new ArrayList<>();
+
+    // region SHOW
 
     public void showOneOrder(Order order) {
         System.out.println("\n--------------------------------------\n");
@@ -44,14 +45,14 @@ public class OrderController {
         });
     }
 
+    // endregion
+
     public Food createFood(ArrayList<RawMaterial> materials, String name, String type, float price) {
-        Food newFood = new Food(name + type, price + 150, price, name,
-                type, materials);
+        Food newFood = new Food(name + type, calculateOverPrice(price), price, name, type, materials);
         return newFood;
     }
 
-    //region LIST RAWMATERIALS
-    //Genera una array de materia prima harcodeada (borrar luego)
+    // region RAW MATERIAL LIST
 
     public boolean checkRawMaterialList(ArrayList<String> recipe, StockController stockController) {
         boolean flag = false;
@@ -65,7 +66,7 @@ public class OrderController {
     }
 
     public boolean createListRawMaterial(ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe,
-                                         StockController stockController) {
+            StockController stockController) {
         boolean flag = checkRawMaterialList(recipe, stockController);
         if (flag) {
             for (int i = 0; i < recipe.size(); i++) {
@@ -76,8 +77,8 @@ public class OrderController {
         return flag;
     }
 
-    public void add2Order(ArrayList<RawMaterial> rawMaterialsList, ArrayList<Product> newOrder,
-                          String name, String type, StockController stockController) {
+    public void add2Order(ArrayList<RawMaterial> rawMaterialsList, ArrayList<Product> newOrder, String name,
+            String type, StockController stockController) {
 
         if (stockController.checkRawMaterial(rawMaterialsList)) {
             float price = calculateRawMaterialPrice(rawMaterialsList);
@@ -86,19 +87,13 @@ public class OrderController {
         }
     }
 
-    //endregion
+    // endregion
 
-    //region MENU
-
+    // region MENU
 
     public void menuOrders(EmployeeController employeeController) {
-        //descargo todos los pedidos que tengo para trabajarlo localmente
-
-        ArrayList<Employee> employeeList = new ArrayList<>();
-
 
         File orderFile = new File("Orders.json");
-
 
         if (!orderFile.exists())
             System.out.println("El archivo no existe, va a ser creado a continuación");
@@ -136,7 +131,7 @@ public class OrderController {
                     Scanner sReader = new Scanner(System.in);
                     String idx = sReader.nextLine();
                     Order order = searchOrderByID(orderList, idx);
-                    if(order != null){
+                    if (order != null) {
                         deleteOrder(idx);
                     } else {
                         System.out.println("El ID ingresado es incorrecto");
@@ -160,7 +155,7 @@ public class OrderController {
     }
 
     public Order selectTypeOrder(EmployeeController employeeController, ArrayList<Order> orderList) {
-        //descargo todos los pedidos que tengo para trabajarlo localmente
+
         ArrayList<Product> products = new ArrayList<>();
         Order order = new Order();
 
@@ -197,7 +192,6 @@ public class OrderController {
                     storeOrder(createOrderDelivery(products, address, employee), orderList);
                     break;
 
-
                 case 9:
                     out = true;
                     break;
@@ -208,12 +202,10 @@ public class OrderController {
         return order;
     }
 
-    //endregion
+    // endregion
 
+    // region SELECTORS
 
-    //region SELECTORS
-
-    //pasar a modo menu
     public ArrayList<Product> selectProduct() {
 
         ArrayList<Product> newOrder = new ArrayList<>();
@@ -223,10 +215,9 @@ public class OrderController {
         stockController.getStock().readBeveragesFromFile(Stock.beverageFile);
         stockController.getStock().readMaterialsFromFile(Stock.rawMaterialFile);
 
-
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option;
         while (!out) {
             Utils.cls();
 
@@ -261,17 +252,14 @@ public class OrderController {
 
     }
 
-    //pasar a modo menu
     public void selectEmpanadas(ArrayList<Product> newOrder, StockController stockController) {
 
-
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
-        Food newFood = new Food();
         ArrayList<String> recipe = new ArrayList<>();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option;
         while (!out) {
             Utils.cls();
             recipe.clear();
@@ -287,28 +275,28 @@ public class OrderController {
                 case 1:
                     recipe.add("Choclo");
                     recipe.add("Queso");
-                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
                         add2Order(rawMaterialsList, newOrder, "Empanada", "Humita", stockController);
                     }
                     break;
                 case 2:
                     recipe.add("Jamón");
                     recipe.add("Queso");
-                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
                         add2Order(rawMaterialsList, newOrder, "Empanada", "JYQ", stockController);
                     }
                     break;
                 case 3:
                     recipe.add("Carne");
                     recipe.add("Cebolla");
-                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
                         add2Order(rawMaterialsList, newOrder, "Empanada", "Carne", stockController);
                     }
                     break;
                 case 4:
                     recipe.add("Verdura");
                     recipe.add("Queso");
-                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
                         add2Order(rawMaterialsList, newOrder, "Empanada", "Verdura", stockController);
                     }
                     break;
@@ -322,19 +310,15 @@ public class OrderController {
         }
     }
 
-    //pasar a modo menu
     public void selectPizza(ArrayList<Product> newOrder, StockController stockController) {
 
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
-        Food newFood = new Food();
-
 
         ArrayList<String> recipe = new ArrayList<>();
 
-
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option;
         while (!out) {
             Utils.cls();
 
@@ -398,9 +382,9 @@ public class OrderController {
 
     }
 
-    //endregion
+    // endregion
 
-    //region PRICE CALCULATE
+    // region PRICE CALCULATE
     public float calculateRawMaterialPrice(ArrayList<RawMaterial> rawMaterialsList) {
         float price = 0;
         for (RawMaterial rawMaterial : rawMaterialsList) {
@@ -427,10 +411,13 @@ public class OrderController {
         return productPrice;
     }
 
-    //endregion
+    private float calculateOverPrice(float price) {
+        return (float) (price + (price * 0.3));
+    }
 
+    // endregion
 
-    //region ORDER
+    // region ORDER
     public void products2String(ArrayList<Product> products, ArrayList<String> productsName) {
         products.forEach((v) -> {
             productsName.add(v.getName());
@@ -446,14 +433,12 @@ public class OrderController {
         ArrayList<String> productsName = new ArrayList<>();
         products2String(products, productsName);
 
-        Order newOrder = new Order(productsName, finalPrice, productPrice,
-                finalPrice, time);
+        Order newOrder = new Order(productsName, finalPrice, productPrice, finalPrice, time);
 
         return newOrder;
     }
 
-    public Delivery createOrderDelivery(ArrayList<Product> products, String address, Employee
-            employee) {
+    public Delivery createOrderDelivery(ArrayList<Product> products, String address, Employee employee) {
 
         LocalDateTime time = LocalDateTime.now();
         LocalDateTime timeOut = time.plusMinutes(30);
@@ -464,27 +449,23 @@ public class OrderController {
         ArrayList<String> productsName = new ArrayList<>();
         products2String(products, productsName);
 
-        Delivery newDelivery = new Delivery(productsName, finalPrice, productPrice,
-                totalPrice, time, employee, timeOut, address);
+        Delivery newDelivery = new Delivery(productsName, finalPrice, productPrice, totalPrice, time, employee, timeOut,
+                address);
 
         return newDelivery;
     }
 
-    //endregion
+    // endregion
 
-    //region ORDERS STORE
+    // region FILES
 
-    //guardo todas las ordenes de forma local del día para poder trabajarlas y modificarlas de ser necesario
     public void storeOrder(Order newOrder, ArrayList<Order> orderList) {
         orderList.add(newOrder);
     }
 
-
     public void saveOrdersDay(String nameFile) {
-        /// el gson ahora tiene formato mas facil de leer
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        /** guardando un archivo con informacion json */
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         BufferedWriter fOut = null;
 
@@ -533,25 +514,25 @@ public class OrderController {
         }
     }
 
-    //endregion
+    // endregion
 
+    // region SEARCH & DELETE
     public Order searchOrderByID(ArrayList<Order> orderList, String id) {
         Order resultOrder = null;
-        for (Order order: orderList) {
-            if(order.getId().equals(id)) resultOrder = order;
+        for (Order order : orderList) {
+            if (order.getId().equals(id))
+                resultOrder = order;
         }
         return resultOrder;
     }
-    
+
     public void deleteOrder(String id) {
-        for(int i = 0; i < orderList.size(); i++){
-            if(orderList.get(i).getId().equals(id) ){
+        for (int i = 0; i < orderList.size(); i++) {
+            if (orderList.get(i).getId().equals(id)) {
                 orderList.remove(i);
                 break;
             }
         }
     }
-
-    //------------------------------------------------------------------------
-
+    // endregion
 }

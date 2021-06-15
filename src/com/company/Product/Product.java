@@ -8,7 +8,7 @@ public abstract class Product {
     private float sellPrice = 0;
     private float costPrice = 0;
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public Product() {
         this.id = Utils.generateUniqueID();
     }
@@ -19,9 +19,9 @@ public abstract class Product {
         this.sellPrice = sellPrice;
         this.costPrice = costPrice;
     }
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public String getId() {
         return id;
     }
@@ -53,24 +53,20 @@ public abstract class Product {
     public void setCostPrice(float costPrice) {
         this.costPrice = costPrice;
     }
-    //endregion
+    // endregion
 
-    //region HELPERS
+    // region HELPERS
 
     public String show() {
-        return "ID: " + getId() + " | Nombre: " + getName() + " | Precio de venta: " + getSellPrice() + " | Precio de costo: " + getCostPrice();
+        return "ID: " + getId() + " | Nombre: " + getName() + " | Precio de venta: " + getSellPrice()
+                + " | Precio de costo: " + getCostPrice();
     }
 
     @Override
     public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sellPrice=" + sellPrice +
-                ", costPrice=" + costPrice +
-                '}';
+        return "Product{" + "id=" + id + ", name='" + name + '\'' + ", sellPrice=" + sellPrice + ", costPrice="
+                + costPrice + '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -85,5 +81,5 @@ public abstract class Product {
 
         return answer;
     }
-    //endregion
+    // endregion
 }

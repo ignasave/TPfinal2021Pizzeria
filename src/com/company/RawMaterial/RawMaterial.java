@@ -5,7 +5,7 @@ public class RawMaterial {
     private String name;
     private float price;
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public RawMaterial() {
     }
 
@@ -13,9 +13,9 @@ public class RawMaterial {
         this.name = name;
         this.price = price;
     }
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public String getName() {
         return name;
     }
@@ -31,7 +31,7 @@ public class RawMaterial {
     public void setPrice(float price) {
         this.price = price;
     }
-    //endregion
+    // endregion
 
     public String show() {
         return "Nombre: " + name + " | Precio de costo: " + price;
@@ -39,10 +39,6 @@ public class RawMaterial {
 
     @Override
     public String toString() {
-        return "RawMaterial{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                '}';
+        return "RawMaterial{" + "name='" + name + '\'' + ", price=" + price + '}';
     }
 }
-

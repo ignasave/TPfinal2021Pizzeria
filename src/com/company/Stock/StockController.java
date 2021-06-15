@@ -9,27 +9,25 @@ import com.company.RawMaterial.RawMaterial;
 import com.company.Utils.Utils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class StockController {
     private Stock stock;
 
     public StockController() {/*
-        RawMaterial harina = new RawMaterial("Harina", 50);
-        RawMaterial queso = new RawMaterial("Queso", 100);
-
-        Map<RawMaterial, Integer> rawMaterials = new HashMap<>();
-        rawMaterials.put(harina, 0);
-        rawMaterials.put(queso, 1);
-
-        Map<Beverage, Integer> beverages = new HashMap<Beverage, Integer>();
-        Beverage coca = new Beverage(BeverageBrand.COCACOLA, 1, BeverageType.SODA);
-
-        beverages.put(coca, 0);
-
-        this.stock = new Stock(rawMaterials, beverages);*/
+                               * RawMaterial harina = new RawMaterial("Harina", 50); RawMaterial queso = new
+                               * RawMaterial("Queso", 100);
+                               * 
+                               * Map<RawMaterial, Integer> rawMaterials = new HashMap<>();
+                               * rawMaterials.put(harina, 0); rawMaterials.put(queso, 1);
+                               * 
+                               * Map<Beverage, Integer> beverages = new HashMap<Beverage, Integer>(); Beverage
+                               * coca = new Beverage(BeverageBrand.COCACOLA, 1, BeverageType.SODA);
+                               * 
+                               * beverages.put(coca, 0);
+                               * 
+                               * this.stock = new Stock(rawMaterials, beverages);
+                               */
         this.stock = new Stock();
     }
 
@@ -41,7 +39,7 @@ public class StockController {
         this.stock = stock;
     }
 
-    //RAW MATTER
+    // RAW MATTER
     private void buyNewRawMatter() {
         Scanner reader = new Scanner(System.in);
         Utils.cls();
@@ -59,8 +57,8 @@ public class StockController {
             new Expenses(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
-            System.out.println("El nombre ya existe! -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("El nombre ya existe!");
+            Utils.pressToContinue();
         }
     }
 
@@ -79,8 +77,8 @@ public class StockController {
             new Expenses(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
-            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("Input incorrecto!");
+            Utils.pressToContinue();
         }
 
     }
@@ -99,15 +97,15 @@ public class StockController {
             stock.removeFromExistentStock(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
-            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("Input incorrecto!");
+            Utils.pressToContinue();
         }
     }
 
     private void rawMatterMenu() {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option; 
         while (!out) {
             Utils.cls();
             System.out.println("«1. Comprar Materia Prima Nueva»");
@@ -136,7 +134,7 @@ public class StockController {
         }
     }
 
-    //BEVERAGES
+    // BEVERAGES
     private void buyNewBeverage() {
         Scanner reader = new Scanner(System.in);
 
@@ -154,7 +152,7 @@ public class StockController {
 
         Utils.cls();
         BeverageBrand beverageBrand = null;
-        int option; //Guardaremos la opcion del usuario
+        int option; 
         while (beverageBrand == null) {
             Utils.cls();
             System.out.println("«1." + BeverageBrand.COCACOLA.getName() + "»");
@@ -191,7 +189,7 @@ public class StockController {
 
         Utils.cls();
         BeverageType beverageType = null;
-        int option2; //Guardaremos la opcion del usuario
+        int option2; 
         while (beverageType == null) {
             Utils.cls();
             System.out.println("«1." + BeverageType.WATER.getName() + "»");
@@ -220,8 +218,7 @@ public class StockController {
         Utils.cls();
         System.out.println("«Ingrese la cantidad: »");
         int quantity = reader.nextInt();
-        Beverage beverage = new Beverage(name, sellPrice, costPrice, beverageBrand,
-                sizeInL, beverageType);
+        Beverage beverage = new Beverage(name, sellPrice, costPrice, beverageBrand, sizeInL, beverageType);
         stock.addNewStock(beverage, quantity);
         new Expenses(beverage, quantity);
         stock.saveBeveragesToFile("Beverages.json");
@@ -242,8 +239,8 @@ public class StockController {
             new Expenses(beverage, quantity);
             stock.saveBeveragesToFile("Beverages.json");
         } else {
-            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("Input incorrecto!");
+            Utils.pressToContinue();
         }
     }
 
@@ -258,28 +255,27 @@ public class StockController {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
             int quantity = reader.nextInt();
-            stock.removeFromExistentStock(beverage,quantity);
+            stock.removeFromExistentStock(beverage, quantity);
             productsList.add(beverage);
         } else {
-            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("Input incorrecto!");
+            Utils.pressToContinue();
         }
     }
 
-    public boolean checkRawMaterial (ArrayList <RawMaterial> rawMaterialsList){
+    public boolean checkRawMaterial(ArrayList<RawMaterial> rawMaterialsList) {
         Integer value;
         boolean available = true;
 
         for (RawMaterial rawMaterial : rawMaterialsList) {
             value = this.stock.getRawMaterials().get(rawMaterial);
-            if(value == 0){
+            if (value == 0) {
                 System.out.println(rawMaterial.getName() + " No disponible ");
                 available = false;
             }
         }
         return available;
     }
-
 
     private void removeBeverage() {
         Scanner reader = new Scanner(System.in);
@@ -295,15 +291,15 @@ public class StockController {
             stock.removeFromExistentStock(beverage, quantity);
             stock.saveBeveragesToFile("Beverages.json");
         } else {
-            System.out.println("Fallaste tipeando mi rey -> continuar (cualquiera)");
-            String confirmation = reader.nextLine();
+            System.out.println("Input incorrecto!");
+            Utils.pressToContinue();
         }
     }
 
     private void beveragesMenu() {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option; 
         while (!out) {
             Utils.cls();
             System.out.println("«1. Comprar Bebidas Nueva»");
@@ -332,7 +328,7 @@ public class StockController {
         }
     }
 
-    //STOCK
+    // STOCK
     private void readStock() {
         Scanner reader = new Scanner(System.in);
         Utils.cls();
@@ -341,13 +337,13 @@ public class StockController {
         System.out.println("------- Materia Prima -------");
         stock.showRawMaterials();
         System.out.println("«Atras -> (cualquiera)»");
-        String confirmation = reader.nextLine();
+        Utils.pressToContinue();
     }
 
     public void stockMenu() {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option; 
         while (!out) {
             Utils.cls();
             System.out.println("«1. Materia Prima»");

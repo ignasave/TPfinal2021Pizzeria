@@ -18,7 +18,7 @@ public class Stock {
     public static final String rawMaterialFile = "RawMaterials.json";
     public static final String beverageFile = "Beverages.json";
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public Stock(Map<RawMaterial, Integer> rawMaterials, Map<Beverage, Integer> beverages) {
         this.rawMaterials = rawMaterials;
         this.beverages = beverages;
@@ -26,9 +26,9 @@ public class Stock {
 
     public Stock() {
     }
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public Map<RawMaterial, Integer> getRawMaterials() {
         return rawMaterials;
     }
@@ -44,7 +44,7 @@ public class Stock {
     public void setBeverages(Map<Beverage, Integer> beverages) {
         this.beverages = beverages;
     }
-    //endregion
+    // endregion
 
     public void showBeverages() {
         beverages.forEach((k, v) -> {
@@ -62,7 +62,7 @@ public class Stock {
         if (rawMaterials.containsKey(rawMaterial)) {
             rawMaterials.put(rawMaterial, rawMaterials.get(rawMaterial) + quantity);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -70,7 +70,7 @@ public class Stock {
         if (beverages.containsKey(beverage)) {
             beverages.put(beverage, beverages.get(beverage) + quantity);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -78,7 +78,7 @@ public class Stock {
         if (!rawMaterials.containsKey(rawMaterial)) {
             rawMaterials.put(rawMaterial, quantity);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -86,7 +86,7 @@ public class Stock {
         if (!beverages.containsKey(beverage)) {
             beverages.put(beverage, quantity);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -94,10 +94,11 @@ public class Stock {
         if (rawMaterials.containsKey(rawMaterial)) {
             int materialQuantity = rawMaterials.get(rawMaterial);
             int res = materialQuantity - quantity;
-            if (res < 0) res = 0;
+            if (res < 0)
+                res = 0;
             rawMaterials.put(rawMaterial, res);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -105,10 +106,11 @@ public class Stock {
         if (beverages.containsKey(beverage)) {
             int materialQuantity = beverages.get(beverage);
             int res = materialQuantity - quantity;
-            if (res < 0) res = 0;
+            if (res < 0)
+                res = 0;
             beverages.put(beverage, res);
         } else {
-            //ERROR
+            // ERROR
         }
     }
 
@@ -193,8 +195,7 @@ public class Stock {
             try {
                 bufferedReader = new BufferedReader(new FileReader(file));
                 this.rawMaterials = gson.fromJson(bufferedReader, (new TypeToken<Map<RawMaterial, Integer>>() {
-                        }.getType())
-                );
+                }.getType()));
             } catch (IOException e) {
                 e.printStackTrace();
 

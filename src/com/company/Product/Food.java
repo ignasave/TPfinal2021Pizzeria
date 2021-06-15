@@ -9,7 +9,7 @@ public class Food extends Product {
     private String description;
     private ArrayList<RawMaterial> ingredients;
 
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
 
     public Food() {
     }
@@ -20,16 +20,17 @@ public class Food extends Product {
         this.ingredients = ingredients;
     }
 
-    public Food(String name, float sellPrice, float costPrice, String foodType, String description, ArrayList<RawMaterial> ingredients) {
+    public Food(String name, float sellPrice, float costPrice, String foodType, String description,
+            ArrayList<RawMaterial> ingredients) {
         super(name, sellPrice, costPrice);
         this.foodType = foodType;
         this.description = description;
         this.ingredients = ingredients;
     }
 
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
     public String getFoodType() {
         return foodType;
     }
@@ -62,10 +63,7 @@ public class Food extends Product {
 
     @Override
     public String toString() {
-        return "Food{" +
-                super.toString() +
-                "foodType='" + foodType + '\'' +
-                ", description='" + description;
+        return "Food{" + super.toString() + "foodType='" + foodType + '\'' + ", description='" + description;
     }
 
     @Override
@@ -82,5 +80,3 @@ public class Food extends Product {
         return answer;
     }
 }
-
-

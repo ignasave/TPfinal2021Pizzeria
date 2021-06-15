@@ -13,9 +13,10 @@ import java.util.List;
 public class EmployeeController {
     private ArrayList<Employee> employee = new ArrayList<>();
 
-    public void EmployeeController(){}
+    public void EmployeeController() {
+    }
 
-    //  region GETTER & SETTER
+    // region GETTER & SETTER
     public ArrayList<Employee> getEmployee() {
         return employee;
     }
@@ -23,9 +24,9 @@ public class EmployeeController {
     public void setEmployee(ArrayList<Employee> employee) {
         this.employee = employee;
     }
-// endregion
+    // endregion
 
-    //region FILE
+    // region FILE
     public void saveEmployee(String nameFile) {
         /// el gson ahora tiene formato mas facil de leer
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -66,7 +67,6 @@ public class EmployeeController {
             this.employee = gson.fromJson(reader, (new TypeToken<List<Employee>>() {
             }.getType()));
 
-
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -81,18 +81,17 @@ public class EmployeeController {
         }
     }
 
-    //endregion
+    // endregion
 
-
-    //region HELPERS
-    public void showOneEmployee(Employee employee){
+    // region HELPERS
+    public void showOneEmployee(Employee employee) {
         System.out.println("---------------------------------------\n");
         System.out.println("  Nombre: " + employee.getName());
         System.out.println("Apellido: " + employee.getLastname());
         System.out.println("     Dni: " + employee.getDni());
         System.out.println("      ID: " + employee.getId());
         System.out.println("  Sueldo: " + employee.getWage());
-        if(employee.isActive())
+        if (employee.isActive())
             System.out.println("Activo");
         else
             System.out.println("Inactive");
@@ -103,8 +102,8 @@ public class EmployeeController {
         System.out.println("\n---------------------------------------\n");
     }
 
-    public void showEmployees(){
-        this.employee.forEach((v)->showOneEmployee(v));
+    public void showEmployees() {
+        this.employee.forEach((v) -> showOneEmployee(v));
     }
 
     public Employee getEmployeeDelivery() {
@@ -117,7 +116,6 @@ public class EmployeeController {
 
         return employee;
     }
-    //endregion
+    // endregion
 
 }
-

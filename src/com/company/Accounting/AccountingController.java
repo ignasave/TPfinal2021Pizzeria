@@ -12,7 +12,7 @@ public class AccountingController {
     public static void expensesMenu () {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option;
         while (!out) {
             Utils.cls();
             System.out.println("«1. Totales»");
@@ -39,7 +39,7 @@ public class AccountingController {
     public static void accountingMenu () {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option;
         while (!out) {
             Utils.cls();
             System.out.println("«1. Gastos»");
@@ -60,11 +60,9 @@ public class AccountingController {
                     break;
                 case 3:
                     Utils.cls();
-                    Scanner sReader = new Scanner(System.in);
                     System.out.println("Dinero en caja:");
                     System.out.println(Accounting.getCash());
-                    System.out.println("Cualquiera para continuar");
-                    sReader.nextLine();
+                    Utils.pressToContinue();
                     break;
                 case 4:
                     Accounting.printFileBillsToPayOrCurrentAccount(2);

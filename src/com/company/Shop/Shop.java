@@ -2,15 +2,11 @@ package com.company.Shop;
 
 import com.company.Accounting.AccountingController;
 import com.company.Accounting.StartingDay;
-import com.company.Order.Order;
 import com.company.Order.OrderController;
 import com.company.Person.EmployeeController;
-import com.company.Stock.Stock;
 import com.company.Stock.StockController;
 import com.company.Utils.Utils;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Shop {
@@ -18,26 +14,25 @@ public class Shop {
     private OrderController orderController;
     private EmployeeController employeeController;
 
-
-    //region CONSTRUCTORS
+    // region CONSTRUCTORS
     public Shop() {
         this.stockController = new StockController();
         stockController.getStock().readMaterialsFromFile("RawMaterials.json");
         stockController.getStock().readBeveragesFromFile("Beverages.json");
-        StartingDay startingDay = new StartingDay();
+        new StartingDay();
         this.orderController = new OrderController();
         this.employeeController = new EmployeeController();
     }
-    //endregion
+    // endregion
 
-    //region GETTER & SETTER
+    // region GETTER & SETTER
 
-    //endregion
+    // endregion
 
     public void mainMenu() {
         Scanner reader = new Scanner(System.in);
         boolean out = false;
-        int option; //Guardaremos la opcion del usuario
+        int option; 
         while (!out) {
             Utils.cls();
             System.out.println("«1. Stock»");
@@ -57,9 +52,7 @@ public class Shop {
                 case 3:
                     employeeController.readEmployeeFile("Employee.json");
                     employeeController.showEmployees();
-                    System.out.println("Cualquiera para continuar");
-                    Scanner reader1 = new Scanner(System.in);
-                    reader1.nextLine();
+                    Utils.pressToContinue();
                     break;
                 case 4:
                     AccountingController.accountingMenu();
@@ -73,6 +66,5 @@ public class Shop {
 
         }
     }
-
 
 }
