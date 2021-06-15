@@ -78,13 +78,10 @@ public class Incomes extends Accounting {
         System.out.println( ". Cuit: " + inc .CUITNUMBER);
         System.out.println("Fecha: " + inc.date);
         System.out.println( "ID orden: " + inc.order);
-        System.out.println("Nombre Cliente: " + inc.order.getClient().getName() + "" + inc.order.getClient().getLastname());
-        System.out.println("Direccion: " + inc.order.getClient().getAddress());
-        System.out.println("Telefono: " + inc.order.getClient().getTelNumber());
 
         System.out.println("\n pedidos solicitados: ");
 
-        for(Product mylist : inc.order.getProducts()){
+        for(String mylist : inc.order.getProducts()){
             if (inc!= null){
                 System.out.println(mylist);
             }

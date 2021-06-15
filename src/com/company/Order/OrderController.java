@@ -25,8 +25,15 @@ import java.util.Scanner;
 
 public class OrderController {
     public void showOneOrder(Order order) {
-        order.toString();
-        order.showProducts();
+        System.out.println("\n--------------------------------------\n");
+        System.out.println(order.getFinalPrice());
+        System.out.println(order.getTotalPrice());
+        System.out.println(order.getProductPrice());
+        System.out.println(order.getId());
+        System.out.println(order.getDateTime());
+        order.getProducts().forEach((v)-> System.out.println(v));
+        System.out.println("\n--------------------------------------\n");
+
     }
 
     public void showOrders(ArrayList<Order> orderList) {
@@ -56,13 +63,16 @@ public class OrderController {
         return flag;
     }
 
-    public boolean createListRawMaterial (ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe, StockController stockController) {
+    public boolean createListRawMaterial (ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe,
+                                          StockController stockController) {
        boolean flag = checkRawMaterialList(recipe, stockController);
         if (flag){
             for (int i = 0; i < recipe.size(); i++) {
                 rawMaterialsList.add(stockController.getStock().searchMaterialByName(recipe.get(i)));
             }
         }
+        else
+            System.out.println("Materias primas no disponibles");
        return flag;
     }
 
@@ -112,6 +122,7 @@ public class OrderController {
 
                     selectTypeOrder(employeeController,orderList);
 
+                    saveOrdersDay("Orders.json", orderList);
                     break;
                 case 2:
                     System.out.println("Lista de pedidos");
@@ -128,6 +139,8 @@ public class OrderController {
 
                     System.out.println("Seleccione una tecla para finalizar");
                     reader.nextLine();
+
+                    saveOrdersDay("Orders.json", orderList);
                     break;
 
                 case 9:
@@ -136,8 +149,7 @@ public class OrderController {
                 default:
                     System.out.println("Valor incorrecto");
             }
-            //Una vez realizado los cambios guardo todo al archivo
-            saveOrdersDay("Orders.json", orderList);
+
         }
 
     }
@@ -393,7 +405,9 @@ public class OrderController {
     public float calculateRawMaterialPrice (ArrayList<RawMaterial> rawMaterialsList){
         float price = 0;
         for (RawMaterial rawMaterial:rawMaterialsList) {
-            price = rawMaterial.getPrice();
+            price += rawMaterial.getPrice();
+            System.out.println("---------------------------");
+            System.out.println("materia prima: " + rawMaterial.getPrice());
         }
         return price;
     }
@@ -416,14 +430,24 @@ public class OrderController {
 
     //endregion
 
+
     //region ORDER
+    public void products2String (ArrayList<Product> products, ArrayList<String> productsName){
+        products.forEach((v)-> {
+            productsName.add(v.getName());
+        });
+    }
+
     public Order createOrder(ArrayList<Product> products) {
         LocalDateTime time = LocalDateTime.now();
 
         float productPrice = calculateProductPrice(products);
         float finalPrice = calculateFinalPrice(products);
 
-        Order newOrder = new Order(products, finalPrice, productPrice,
+        ArrayList<String> productsName = new ArrayList<>();
+        products2String(products, productsName);
+
+        Order newOrder = new Order(productsName, finalPrice, productPrice,
                 finalPrice, time);
 
         return newOrder;
@@ -438,7 +462,10 @@ public class OrderController {
         float finalPrice = calculateFinalPrice(products);
         float totalPrice = finalPrice + Delivery.DELIVERY_PRICE;
 
-        Delivery newDelivery = new Delivery(products, finalPrice, productPrice,
+        ArrayList<String> productsName = new ArrayList<>();
+        products2String(products, productsName);
+
+        Delivery newDelivery = new Delivery(productsName, finalPrice, productPrice,
                 totalPrice, time, employee, timeOut,address);
 
         return newDelivery;

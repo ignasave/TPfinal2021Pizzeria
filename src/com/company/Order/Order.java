@@ -10,7 +10,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class Order {
-    private ArrayList<Product> products;
+    private ArrayList<String> products;
     private float finalPrice;
     private float productPrice;
     private float totalPrice;
@@ -21,7 +21,7 @@ public class Order {
     public Order() {
     }
 
-    public Order( ArrayList<Product> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
+    public Order( ArrayList<String> products, float finalPrice, float productPrice, float totalPrice, LocalDateTime dateTime) {
 
         this.products = products;
         this.finalPrice = finalPrice;
@@ -37,11 +37,11 @@ public class Order {
 
 
 
-    public ArrayList<Product> getProducts() {
+    public ArrayList<String> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<String> products) {
         this.products = products;
     }
 
