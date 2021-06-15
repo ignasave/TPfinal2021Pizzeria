@@ -1,9 +1,6 @@
 package com.company.Order;
 
-import com.company.Product.Product;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Cart <T>{
     private ArrayList<T> products = new ArrayList<>();

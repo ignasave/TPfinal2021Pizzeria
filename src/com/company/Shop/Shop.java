@@ -7,7 +7,6 @@ import com.company.Person.EmployeeController;
 import com.company.Stock.StockController;
 import com.company.Utils.Utils;
 
-import java.util.Scanner;
 
 public class Shop {
     private StockController stockController;
@@ -30,7 +29,6 @@ public class Shop {
     // endregion
 
     public void mainMenu() {
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option; 
         while (!out) {
@@ -41,7 +39,7 @@ public class Shop {
             System.out.println("«4. Caja»");
             System.out.println("«9. Cerrar»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     stockController.stockMenu();

@@ -2,15 +2,12 @@ package com.company.Accounting;
 
 import com.company.Utils.Utils;
 
-import java.util.Scanner;
-
 public class AccountingController {
     public AccountingController() {
     }
 
 
     public static void expensesMenu () {
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -21,7 +18,7 @@ public class AccountingController {
             System.out.println("«4. Empleados»");
             System.out.println("«9. Cerrar»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1, 2, 3, 4:
                     Expenses.printFileExpenses(Expenses.creatingFileName(),option - 1);
@@ -37,7 +34,6 @@ public class AccountingController {
     }
 
     public static void accountingMenu () {
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -50,7 +46,7 @@ public class AccountingController {
             System.out.println("«6. Balances Mensuales»");
             System.out.println("«9. Cerrar»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     expensesMenu();

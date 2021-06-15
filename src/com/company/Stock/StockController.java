@@ -48,10 +48,10 @@ public class StockController {
         Utils.cls();
         if (!stock.searchMaterialNameExists(name)) {
             System.out.println("«Ingrese el precio: »");
-            int price = reader.nextInt();
+            int price = Utils.readInt();
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             RawMaterial rawMaterial = new RawMaterial(name, price);
             stock.addNewStock(rawMaterial, quantity);
             new Expenses(rawMaterial, quantity);
@@ -72,7 +72,7 @@ public class StockController {
         if (rawMaterial != null) {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             stock.addToExistentStock(rawMaterial, quantity);
             new Expenses(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
@@ -93,7 +93,7 @@ public class StockController {
         if (rawMaterial != null) {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             stock.removeFromExistentStock(rawMaterial, quantity);
             stock.saveMaterialsToFile("RawMaterials.json");
         } else {
@@ -103,7 +103,7 @@ public class StockController {
     }
 
     private void rawMatterMenu() {
-        Scanner reader = new Scanner(System.in);
+
         boolean out = false;
         int option; 
         while (!out) {
@@ -113,7 +113,7 @@ public class StockController {
             System.out.println("«3. Deshacer Materia Prima»");
             System.out.println("«9. Atras»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     buyNewRawMatter();
@@ -144,11 +144,11 @@ public class StockController {
 
         Utils.cls();
         System.out.println("«Ingrese el precio de venta: »");
-        int sellPrice = reader.nextInt();
+        int sellPrice = Utils.readInt();
 
         Utils.cls();
         System.out.println("«Ingrese el precio de costo: »");
-        int costPrice = reader.nextInt();
+        int costPrice = Utils.readInt();
 
         Utils.cls();
         BeverageBrand beverageBrand = null;
@@ -161,7 +161,7 @@ public class StockController {
             System.out.println("«4." + BeverageBrand.VILLAVICENCIO.getName() + "»");
             System.out.println("«5." + BeverageBrand.BAGIO.getName() + "»");
             System.out.println("«Ingrese el numero de la marca: »");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     beverageBrand = BeverageBrand.COCACOLA;
@@ -185,8 +185,8 @@ public class StockController {
 
         Utils.cls();
         System.out.println("«Ingrese el tamaño en litros: »");
-        float sizeInL = reader.nextFloat();
-
+        float sizeInL = Utils.readFloat();
+        
         Utils.cls();
         BeverageType beverageType = null;
         int option2; 
@@ -197,7 +197,7 @@ public class StockController {
             System.out.println("«3." + BeverageType.JUICE.getName() + "»");
             System.out.println("«4." + BeverageType.ALCOHOLIC.getName() + "»");
             System.out.println("«Ingrese el numero del tipo de bebida: »");
-            option2 = reader.nextInt();
+            option2 = Utils.readInt();
             switch (option2) {
                 case 1:
                     beverageType = beverageType.WATER;
@@ -217,7 +217,7 @@ public class StockController {
         }
         Utils.cls();
         System.out.println("«Ingrese la cantidad: »");
-        int quantity = reader.nextInt();
+        int quantity = Utils.readInt();
         Beverage beverage = new Beverage(name, sellPrice, costPrice, beverageBrand, sizeInL, beverageType);
         stock.addNewStock(beverage, quantity);
         new Expenses(beverage, quantity);
@@ -234,7 +234,7 @@ public class StockController {
         if (beverage != null) {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             stock.addToExistentStock(beverage, quantity);
             new Expenses(beverage, quantity);
             stock.saveBeveragesToFile("Beverages.json");
@@ -254,7 +254,7 @@ public class StockController {
         if (beverage != null) {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             stock.removeFromExistentStock(beverage, quantity);
             productsList.add(beverage);
         } else {
@@ -287,7 +287,7 @@ public class StockController {
         if (beverage != null) {
             Utils.cls();
             System.out.println("«Ingrese la cantidad: »");
-            int quantity = reader.nextInt();
+            int quantity = Utils.readInt();
             stock.removeFromExistentStock(beverage, quantity);
             stock.saveBeveragesToFile("Beverages.json");
         } else {
@@ -297,7 +297,7 @@ public class StockController {
     }
 
     private void beveragesMenu() {
-        Scanner reader = new Scanner(System.in);
+
         boolean out = false;
         int option; 
         while (!out) {
@@ -307,7 +307,7 @@ public class StockController {
             System.out.println("«3. Deshacer Bebidas»");
             System.out.println("«9. Atras»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     buyNewBeverage();
@@ -330,7 +330,7 @@ public class StockController {
 
     // STOCK
     private void readStock() {
-        Scanner reader = new Scanner(System.in);
+        
         Utils.cls();
         System.out.println("---------- Bebidas ----------");
         stock.showBeverages();
@@ -341,7 +341,7 @@ public class StockController {
     }
 
     public void stockMenu() {
-        Scanner reader = new Scanner(System.in);
+        
         boolean out = false;
         int option; 
         while (!out) {
@@ -351,7 +351,7 @@ public class StockController {
             System.out.println("«3. Ver Stock»");
             System.out.println("«9. Atras»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     rawMatterMenu();

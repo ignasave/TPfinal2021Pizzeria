@@ -109,7 +109,6 @@ public class OrderController {
         else
             readOrderFile(orderFile);
 
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -120,7 +119,7 @@ public class OrderController {
             System.out.println("«3. Eliminar pedido»");
             System.out.println("«9. Finalizar »");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     selectTypeOrder(employeeController, orderList);
@@ -162,7 +161,6 @@ public class OrderController {
 
         Order order = new Order();
 
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -172,7 +170,7 @@ public class OrderController {
             System.out.println("«2. Delivery»");
             System.out.println("«9. Finalizar »");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     productsCart.getProducts().clear();
@@ -211,7 +209,6 @@ public class OrderController {
         stockController.getStock().readBeveragesFromFile(Stock.beverageFile);
         stockController.getStock().readMaterialsFromFile(Stock.rawMaterialFile);
 
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -222,7 +219,7 @@ public class OrderController {
             System.out.println("«3. Bebida»");
             System.out.println("«9. Finalizar »");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     System.out.println("Menú Pizzas");
@@ -252,7 +249,6 @@ public class OrderController {
         ArrayList<RawMaterial> rawMaterialsList = new ArrayList<>();
         ArrayList<String> recipe = new ArrayList<>();
 
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -265,7 +261,7 @@ public class OrderController {
             System.out.println("«4. Emp. Verdura»");
             System.out.println("«9. Salir»");
             System.out.println("Opción incorrecta");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     recipe.add("Choclo");
@@ -311,7 +307,6 @@ public class OrderController {
 
         ArrayList<String> recipe = new ArrayList<>();
 
-        Scanner reader = new Scanner(System.in);
         boolean out = false;
         int option;
         while (!out) {
@@ -330,7 +325,7 @@ public class OrderController {
             System.out.println("«5. Pizza Napolitana»");
             System.out.println("«9. Salir»");
             System.out.println("«Escribe una de las opciones»");
-            option = reader.nextInt();
+            option = Utils.readInt();
             switch (option) {
                 case 1:
                     recipe.add("Aceitunas");
