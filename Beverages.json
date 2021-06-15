@@ -10,5 +10,29 @@
       "costPrice": 100.0
     },
     20
+  ],
+  [
+    {
+      "brand": "QUILMES",
+      "sizeInLt": 1.5,
+      "type": "ALCOHOLIC",
+      "id": "0A13B8C",
+      "name": "Quilmes Negra 1.5l",
+      "sellPrice": 180.0,
+      "costPrice": 140.0
+    },
+    20
+  ],
+  [
+    {
+      "brand": "BAGIO",
+      "sizeInLt": 0.5,
+      "type": "JUICE",
+      "id": "18JAB8H",
+      "name": "Bagio Multifruta 0.5l",
+      "sellPrice": 140.0,
+      "costPrice": 100.0
+    },
+    20
   ]
 ]

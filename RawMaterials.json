@@ -9,56 +9,77 @@
   [
     {
       "name": "Harina",
-      "price": 100.0
+      "price": 80.0
     },
     20
   ],
   [
     {
       "name": "Pure de Tomate",
-      "price": 100.0
+      "price": 120.0
     },
     20
   ],
   [
     {
       "name": "Aceitunas",
-      "price": 100.0
+      "price": 50.0
     },
     20
   ],
   [
     {
       "name": "Calabresa",
-      "price": 100.0
+      "price": 140.0
     },
     20
   ],
   [
     {
       "name": "Cebolla",
-      "price": 100.0
+      "price": 40.0
     },
     20
   ],
   [
     {
       "name": "Rucula",
-      "price": 100.0
+      "price": 60.0
     },
     20
   ],
   [
     {
       "name": "Jamon Crudo",
-      "price": 100.0
+      "price": 200.0
     },
     20
   ],
   [
     {
       "name": "Tomate",
-      "price": 100.0
+      "price": 150.0
+    },
+    20
+  ],
+  [
+    {
+      "name": "Choclo",
+      "price": 90.0
+    },
+    20
+  ],
+  [
+    {
+      "name": "Carne",
+      "price": 190.0
+    },
+    20
+  ],
+  [
+    {
+      "name": "Verdura",
+      "price": 70.0
     },
     20
   ]
