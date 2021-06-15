@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderController {
+    private ArrayList<Order> orderList = new ArrayList<>();
+
     public void showOneOrder(Order order) {
         System.out.println("\n--------------------------------------\n");
         System.out.println(order.getFinalPrice());
@@ -31,7 +33,7 @@ public class OrderController {
         System.out.println(order.getProductPrice());
         System.out.println(order.getId());
         System.out.println(order.getDateTime());
-        order.getProducts().forEach((v)-> System.out.println(v));
+        order.getProducts().forEach((v) -> System.out.println(v));
         System.out.println("\n--------------------------------------\n");
 
     }
@@ -42,7 +44,6 @@ public class OrderController {
         });
     }
 
-    //Genera una comida harcodeada (borrar luego)
     public Food createFood(ArrayList<RawMaterial> materials, String name, String type, float price) {
         Food newFood = new Food(name + type, price + 150, price, name,
                 type, materials);
@@ -63,21 +64,20 @@ public class OrderController {
         return flag;
     }
 
-    public boolean createListRawMaterial (ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe,
-                                          StockController stockController) {
-       boolean flag = checkRawMaterialList(recipe, stockController);
-        if (flag){
+    public boolean createListRawMaterial(ArrayList<RawMaterial> rawMaterialsList, ArrayList<String> recipe,
+                                         StockController stockController) {
+        boolean flag = checkRawMaterialList(recipe, stockController);
+        if (flag) {
             for (int i = 0; i < recipe.size(); i++) {
                 rawMaterialsList.add(stockController.getStock().searchMaterialByName(recipe.get(i)));
             }
-        }
-        else
+        } else
             System.out.println("Materias primas no disponibles");
-       return flag;
+        return flag;
     }
 
-    public void add2Order (ArrayList<RawMaterial> rawMaterialsList, ArrayList<Product> newOrder,
-                           String name, String type, StockController stockController){
+    public void add2Order(ArrayList<RawMaterial> rawMaterialsList, ArrayList<Product> newOrder,
+                          String name, String type, StockController stockController) {
 
         if (stockController.checkRawMaterial(rawMaterialsList)) {
             float price = calculateRawMaterialPrice(rawMaterialsList);
@@ -93,7 +93,7 @@ public class OrderController {
 
     public void menuOrders(EmployeeController employeeController) {
         //descargo todos los pedidos que tengo para trabajarlo localmente
-        ArrayList<Order> orderList = new ArrayList<>();
+
         ArrayList<Employee> employeeList = new ArrayList<>();
 
 
@@ -103,7 +103,7 @@ public class OrderController {
         if (!orderFile.exists())
             System.out.println("El archivo no existe, va a ser creado a continuación");
         else
-            readOrderFile(orderFile, orderList);
+            readOrderFile(orderFile);
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -120,9 +120,9 @@ public class OrderController {
             switch (option) {
                 case 1:
 
-                    selectTypeOrder(employeeController,orderList);
+                    selectTypeOrder(employeeController, orderList);
 
-                    saveOrdersDay("Orders.json", orderList);
+                    saveOrdersDay("Orders.json");
                     break;
                 case 2:
                     System.out.println("Lista de pedidos");
@@ -131,16 +131,21 @@ public class OrderController {
                     reader.nextLine();
                     break;
                 case 3:
-                    System.out.println("Buscador por id");
+                    showOrders(orderList);
                     System.out.println("Seleccionar ID a buscar: ");
-                    int idx = reader.nextInt(); // cambiar ID por int
+                    Scanner sReader = new Scanner(System.in);
+                    String idx = sReader.nextLine();
                     Order order = searchOrderByID(orderList, idx);
-                    showOneOrder(order);
-
+                    if(order != null){
+                        deleteOrder(idx);
+                    } else {
+                        System.out.println("El ID ingresado es incorrecto");
+                    }
+                    Scanner tReader = new Scanner(System.in);
                     System.out.println("Seleccione una tecla para finalizar");
-                    reader.nextLine();
-
-                    saveOrdersDay("Orders.json", orderList);
+                    tReader.nextLine();
+                    System.out.println();
+                    saveOrdersDay("Orders.json");
                     break;
 
                 case 9:
@@ -154,10 +159,10 @@ public class OrderController {
 
     }
 
-    public Order selectTypeOrder (EmployeeController employeeController, ArrayList<Order> orderList) {
+    public Order selectTypeOrder(EmployeeController employeeController, ArrayList<Order> orderList) {
         //descargo todos los pedidos que tengo para trabajarlo localmente
         ArrayList<Product> products = new ArrayList<>();
-        Order order = new Order ();
+        Order order = new Order();
 
         Scanner reader = new Scanner(System.in);
         boolean out = false;
@@ -189,7 +194,7 @@ public class OrderController {
                     products = selectProduct();
 
                     Employee employee = employeeController.getEmployeeDelivery();
-                    storeOrder(createOrderDelivery(products,address, employee), orderList);
+                    storeOrder(createOrderDelivery(products, address, employee), orderList);
                     break;
 
 
@@ -209,7 +214,7 @@ public class OrderController {
     //region SELECTORS
 
     //pasar a modo menu
-    public ArrayList<Product> selectProduct(){
+    public ArrayList<Product> selectProduct() {
 
         ArrayList<Product> newOrder = new ArrayList<>();
 
@@ -282,32 +287,31 @@ public class OrderController {
                 case 1:
                     recipe.add("Choclo");
                     recipe.add("Queso");
-                    createListRawMaterial(rawMaterialsList,recipe,stockController);
-
-                    add2Order(rawMaterialsList,newOrder,"Empanada","Humita",stockController);
+                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Empanada", "Humita", stockController);
+                    }
                     break;
                 case 2:
                     recipe.add("Jamón");
                     recipe.add("Queso");
-                    createListRawMaterial(rawMaterialsList,recipe,stockController);
-
-                    add2Order(rawMaterialsList,newOrder,"Empanada","JYQ",stockController);
+                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                        add2Order(rawMaterialsList, newOrder, "Empanada", "JYQ", stockController);
+                    }
                     break;
                 case 3:
                     recipe.add("Carne");
                     recipe.add("Cebolla");
-                    createListRawMaterial(rawMaterialsList,recipe,stockController);
-
-                    add2Order(rawMaterialsList,newOrder,"Empanada","Carne",stockController);
+                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                        add2Order(rawMaterialsList, newOrder, "Empanada", "Carne", stockController);
+                    }
                     break;
                 case 4:
                     recipe.add("Verdura");
                     recipe.add("Queso");
-                    createListRawMaterial(rawMaterialsList,recipe,stockController);
-
-                    add2Order(rawMaterialsList,newOrder,"Empanada","Verdura",stockController);
+                    if(createListRawMaterial(rawMaterialsList, recipe, stockController)){
+                        add2Order(rawMaterialsList, newOrder, "Empanada", "Verdura", stockController);
+                    }
                     break;
-
                 case 9:
                     out = true;
                     break;
@@ -351,60 +355,55 @@ public class OrderController {
             switch (option) {
                 case 1:
                     recipe.add("Aceitunas");
-                    createListRawMaterial(rawMaterialsList,recipe,stockController);
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Pizza", "Muzzarella", stockController);
+                    }
+                    break;
+                case 2:
+                    recipe.add("Calabresa");
+                    recipe.add("Aceitunas");
 
-                    add2Order(rawMaterialsList,newOrder,"Pizza","Muzzarella",stockController);
-
-            break;
-            case 2:
-
-                recipe.add("Calabresa");
-                recipe.add("Aceitunas");
-
-                createListRawMaterial(rawMaterialsList,recipe,stockController);
-
-                add2Order(rawMaterialsList,newOrder,"Pizza","Calabresa",stockController);
-
-                break;
-            case 3:
-
-                recipe.add("Cebolla");
-                createListRawMaterial(rawMaterialsList,recipe,stockController);
-                add2Order(rawMaterialsList,newOrder,"Pizza","Fugazzetta",stockController);
-
-                break;
-            case 4:
-
-                recipe.add("Rucula");
-                recipe.add("Jamon Crudo");
-                recipe.add("Aceituna");
-
-                createListRawMaterial(rawMaterialsList,recipe,stockController);
-                add2Order(rawMaterialsList,newOrder,"Pizza","Rucula",stockController);
-                break;
-            case 5:
-
-                recipe.add("Tomate");
-                recipe.add("Aceituna");
-                createListRawMaterial(rawMaterialsList,recipe,stockController);
-                add2Order(rawMaterialsList,newOrder,"Pizza","Napolitana",stockController);
-                break;
-            case 9:
-                out = true;
-                break;
-            default:
-                System.out.println("Opción incorrecta");
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Pizza", "Calabresa", stockController);
+                    }
+                    break;
+                case 3:
+                    recipe.add("Cebolla");
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Pizza", "Fugazzetta", stockController);
+                    }
+                    break;
+                case 4:
+                    recipe.add("Rucula");
+                    recipe.add("Jamon Crudo");
+                    recipe.add("Aceituna");
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Pizza", "Rucula", stockController);
+                    }
+                    break;
+                case 5:
+                    recipe.add("Tomate");
+                    recipe.add("Aceituna");
+                    if (createListRawMaterial(rawMaterialsList, recipe, stockController)) {
+                        add2Order(rawMaterialsList, newOrder, "Pizza", "Napolitana", stockController);
+                    }
+                    break;
+                case 9:
+                    out = true;
+                    break;
+                default:
+                    System.out.println("Opción incorrecta");
+            }
         }
-    }
 
-}
+    }
 
     //endregion
 
     //region PRICE CALCULATE
-    public float calculateRawMaterialPrice (ArrayList<RawMaterial> rawMaterialsList){
+    public float calculateRawMaterialPrice(ArrayList<RawMaterial> rawMaterialsList) {
         float price = 0;
-        for (RawMaterial rawMaterial:rawMaterialsList) {
+        for (RawMaterial rawMaterial : rawMaterialsList) {
             price += rawMaterial.getPrice();
             System.out.println("---------------------------");
             System.out.println("materia prima: " + rawMaterial.getPrice());
@@ -432,8 +431,8 @@ public class OrderController {
 
 
     //region ORDER
-    public void products2String (ArrayList<Product> products, ArrayList<String> productsName){
-        products.forEach((v)-> {
+    public void products2String(ArrayList<Product> products, ArrayList<String> productsName) {
+        products.forEach((v) -> {
             productsName.add(v.getName());
         });
     }
@@ -453,7 +452,7 @@ public class OrderController {
         return newOrder;
     }
 
-    public Delivery createOrderDelivery(ArrayList<Product> products,String address, Employee
+    public Delivery createOrderDelivery(ArrayList<Product> products, String address, Employee
             employee) {
 
         LocalDateTime time = LocalDateTime.now();
@@ -466,7 +465,7 @@ public class OrderController {
         products2String(products, productsName);
 
         Delivery newDelivery = new Delivery(productsName, finalPrice, productPrice,
-                totalPrice, time, employee, timeOut,address);
+                totalPrice, time, employee, timeOut, address);
 
         return newDelivery;
     }
@@ -479,9 +478,9 @@ public class OrderController {
     public void storeOrder(Order newOrder, ArrayList<Order> orderList) {
         orderList.add(newOrder);
     }
-    // al terminar el día guardo todas las ordenes de la lista a un archivo para no perder datos.
 
-    public void saveOrdersDay(String nameFile, ArrayList<Order> orderList) {
+
+    public void saveOrdersDay(String nameFile) {
         /// el gson ahora tiene formato mas facil de leer
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -512,15 +511,14 @@ public class OrderController {
         }
     }
 
-    public void readOrderFile(File nameFile, ArrayList<Order> orderList) {
+    public void readOrderFile(File nameFile) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(nameFile));
 
-            orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {}.getType()));
-
-
+            orderList = gson.fromJson(reader, (new TypeToken<List<Order>>() {
+            }.getType()));
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -537,22 +535,21 @@ public class OrderController {
 
     //endregion
 
-    public Order searchOrderByID(ArrayList<Order> orderList, int index) {
-        return orderList.get(index);
+    public Order searchOrderByID(ArrayList<Order> orderList, String id) {
+        Order resultOrder = null;
+        for (Order order: orderList) {
+            if(order.getId().equals(id)) resultOrder = order;
+        }
+        return resultOrder;
     }
-
-    public void discountPrice(Order order2Modify, int percent) {
-        float price = order2Modify.getTotalPrice();
-        order2Modify.setFinalPrice(((100 - percent) * price) / 100);
-    }
-
-    public void increaseOrderPrice(Order order2Modify, int percent) {
-        float price = order2Modify.getTotalPrice();
-        order2Modify.setFinalPrice(((100 + percent) * price) / 100);
-    }
-
-    public void deleteOrder(ArrayList<Order> orderList, int index) {
-        orderList.remove(index);
+    
+    public void deleteOrder(String id) {
+        for(int i = 0; i < orderList.size(); i++){
+            if(orderList.get(i).getId().equals(id) ){
+                orderList.remove(i);
+                break;
+            }
+        }
     }
 
     //------------------------------------------------------------------------

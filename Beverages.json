@@ -1,0 +1,14 @@
+[
+  [
+    {
+      "brand": "COCACOLA",
+      "sizeInLt": 1.0,
+      "type": "SODA",
+      "id": "00073B1",
+      "name": "Coca 1l",
+      "sellPrice": 120.0,
+      "costPrice": 100.0
+    },
+    20
+  ]
+]
