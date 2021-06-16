@@ -315,33 +315,41 @@ public class Accounting {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         BufferedReader reader = null;
+        File file = new File(filename);
+        if (file.exists()) {
 
-        try {
 
-            reader = new BufferedReader(new FileReader(new File(filename)));
-            if (option == 1) {
-                billsToPay = gson.fromJson(reader, billsToPay.getClass());
-            } else {
-                currentAccount = gson.fromJson(reader, currentAccount.getClass());
-            }
-
-            printsBillsToPayOrCurrentAccount(option); /// print content of expenses
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
             try {
-                if (reader != null) {
-                    reader.close();
+
+                reader = new BufferedReader(new FileReader(file));
+                if (option == 1) {
+                    billsToPay = gson.fromJson(reader, billsToPay.getClass());
+                } else {
+                    currentAccount = gson.fromJson(reader, currentAccount.getClass());
                 }
+
+                printsBillsToPayOrCurrentAccount(option); /// print content of expenses
+
             } catch (IOException e) {
                 e.printStackTrace();
+            } finally {
+                try {
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        }else{
+            Utils.cls();
+            System.out.println("La cuenta no dispone con saldos");
+            Utils.pressToContinue();
         }
     }
 
     public static double totalBillsToPayOrCurrentAccount(int option) { // 1 returns total billsToPay and delete. 2
-                                                                       // currentAccount
+        // currentAccount
 
         double total = 0;
 
@@ -392,7 +400,7 @@ public class Accounting {
                 if (btp != 0) {
                     total += btp;
                     btp = 0; // una vez que ya agregue al total el gasto, asigno cero(que es como si lo
-                             // borrara) xq esta funcion solo se llama al finalizar el mes
+                    // borrara) xq esta funcion solo se llama al finalizar el mes
                 }
             }
 
@@ -402,7 +410,7 @@ public class Accounting {
                 if (ca != 0) {
                     total += ca;
                     ca = 0; // una vez que ya agregue al total el cierre de caja, asigno cero(que es como si
-                            // lo borrara)xq esta funcion solo se llama al finalizar el mes
+                    // lo borrara)xq esta funcion solo se llama al finalizar el mes
 
                 }
             }

@@ -1,5 +1,6 @@
 package com.company.Order;
 
+import com.company.Accounting.Incomes;
 import com.company.BeverageBrand.BeverageBrand;
 import com.company.BeverageType.BeverageType;
 import com.company.Person.EmployeeController;
@@ -124,6 +125,7 @@ public class OrderController {
             switch (option) {
                 case 1:
                     selectTypeOrder(employeeController, orderList);
+
                     saveOrdersDay("Orders.json");
                     break;
                 case 2:
@@ -179,6 +181,7 @@ public class OrderController {
                     selectProduct();
                     order = createOrder(this.productsCart.getProducts());
                     orderList.add(order);
+                    new Incomes(order);
                     break;
                 case 2:
                     productsCart.getProducts().clear();
@@ -188,7 +191,10 @@ public class OrderController {
                     String address = sreader.nextLine();
                     selectProduct();
                     Employee employee = employeeController.getEmployeeDelivery();
-                    storeOrder(createOrderDelivery(this.productsCart.getProducts(), address, employee), orderList);
+
+                    order = createOrderDelivery(this.productsCart.getProducts(),address,employee);
+                    new Incomes(order);
+                    orderList.add(order);
                     break;
                 case 9:
                     out = true;
